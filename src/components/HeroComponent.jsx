@@ -1,27 +1,38 @@
-import { Canvas } from "@react-three/fiber";
-import { useGLTF, OrbitControls, Environment } from "@react-three/drei";
+import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
 import { Suspense } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
+import { motion } from "framer-motion";
 
-function Model({ url }) {
-  const { scene } = useGLTF(url);
+function RiveAnimation() {
+  const { RiveComponent } = useRive({
+    src: "/src/assets/birb.riv",
+    layout: new Layout({
+      fit: Fit.Cover,
+      alignment: Alignment.Center,
+    }),
+    autoplay: true,
+  });
 
   return (
-    <primitive
-      object={scene}
-      scale={7}
-      position={[0, 0, 0]}
-      rotation={[0, -0.35, 0]}
-    />
+    <div className="w-full h-full flex items-center justify-center p-16">
+      <div className="w-96 h-96">
+        <RiveComponent className="w-full h-full" />
+      </div>
+    </div>
   );
 }
 
 function HeroComponent() {
   return (
     <>
-      <div className="w-full min-h-screen flex overflow-hidden">
+      <div className="w-full h-screen flex overflow-hidden">
         {/* Text Content Left Side */}
-        <div className="w-1/2 flex flex-col items-start justify-center pl-20 text-white">
+        <motion.div
+          className="w-1/2 flex flex-col items-start justify-center pl-20 text-white"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           {/* Greeting */}
           <div className="flex items-center mb-6">
             <span className="text-6xl mr-4">👋</span>
@@ -43,75 +54,68 @@ function HeroComponent() {
 
           {/* Connect Section */}
           <div className="flex items-center space-x-8">
-            <a
+            <motion.a
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
               href="/src/assets/Resume.pdf"
               download="Ayush_Patel_Resume.pdf"
               className="flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
             >
               <FaDownload className="w-7 h-7" />
               <span>Download Resume</span>
-            </a>
+            </motion.a>
 
             {/* Social Icons */}
             <div className="flex space-x-5">
-              <a
+              <motion.a
+                whileHover={{ scale: 1.05 }}
                 href="https://github.com/ayushptl1810"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300"
               >
                 <FaGithub className="w-8 h-8" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.05 }}
                 href="https://www.linkedin.com/in/ayushptl1810/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300"
               >
                 <FaLinkedin className="w-8 h-8" />
-              </a>
-              <a
+              </motion.a>
+              <motion.a
+                whileHover={{ scale: 1.05 }}
                 href="mailto:ayushptl1810@gmail.com"
                 className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300"
               >
                 <FaEnvelope className="w-8 h-8" />
-              </a>
+              </motion.a>
             </div>
           </div>
-        </div>
+        </motion.div>
 
-        {/* 3D Model Right Side */}
-        <div className="w-1/2 h-screen relative">
+        {/* Rive Animation Right Side */}
+        <motion.div
+          className="w-1/2 h-screen relative"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           {/* Spotlight Effect */}
           <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-blue-400 rounded-full opacity-20 blur-3xl"></div>
 
-          <Canvas
-            camera={{ position: [0, 0, 12], fov: 45 }}
-            gl={{
-              antialias: true,
-              alpha: true,
-              powerPreference: "high-performance",
-              stencil: false,
-              depth: true,
-            }}
-            dpr={[1, 2]}
-            performance={{ min: 0.5 }}
-            className="w-full h-full"
+          <Suspense
+            fallback={
+              <div className="w-full h-full flex items-center justify-center text-white">
+                Loading animation...
+              </div>
+            }
           >
-            <Suspense fallback={null}>
-              <ambientLight intensity={0.8} />
-              <directionalLight position={[5, 5, 5]} intensity={0.8} />
-              <directionalLight position={[-5, -5, -5]} intensity={0.4} />
-              <Model url="/src/assets/optimized.glb" />
-              <OrbitControls
-                enableZoom={false}
-                enablePan={false}
-                enableRotate={false}
-              />
-              <Environment preset="city" />
-            </Suspense>
-          </Canvas>
-        </div>
+            <RiveAnimation />
+          </Suspense>
+        </motion.div>
       </div>
     </>
   );

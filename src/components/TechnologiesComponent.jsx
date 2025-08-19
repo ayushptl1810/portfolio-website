@@ -1,105 +1,15 @@
-import { FaReact, FaVuejs, FaNodeJs, FaGithub } from "react-icons/fa";
-import {
-  SiMongodb,
-  SiExpress,
-  SiTailwindcss,
-  SiNextdotjs,
-  SiFlask,
-  SiRedis,
-  SiCelery,
-  SiFastapi,
-} from "react-icons/si";
+import { motion } from "framer-motion";
+import technologies from "../utils/TechnologyList";
 
 function TechnologiesComponent() {
-  const technologies = [
-    {
-      name: "MongoDB",
-      description: "NoSQL database",
-      icon: SiMongodb,
-      iconColor: "text-green-400",
-      bgColor: "bg-green-900/30",
-    },
-    {
-      name: "React",
-      description: "JavaScript Library",
-      icon: FaReact,
-      iconColor: "text-cyan-300",
-      bgColor: "bg-cyan-900/30",
-    },
-    {
-      name: "Vue",
-      description: "JavaScript framework",
-      icon: FaVuejs,
-      iconColor: "text-green-400",
-      bgColor: "bg-green-900/30",
-    },
-    {
-      name: "Node",
-      description: "Backend runtime",
-      icon: FaNodeJs,
-      iconColor: "text-green-400",
-      bgColor: "bg-green-900/30",
-    },
-    {
-      name: "Express",
-      description: "Node.js framework",
-      icon: SiExpress,
-      iconColor: "text-gray-200",
-      bgColor: "bg-white/10 backdrop-blur-sm",
-    },
-    {
-      name: "Tailwind",
-      description: "CSS framework",
-      icon: SiTailwindcss,
-      iconColor: "text-blue-300",
-      bgColor: "bg-blue-900/30",
-    },
-    {
-      name: "Git",
-      description: "Version control",
-      icon: FaGithub,
-      iconColor: "text-orange-400",
-      bgColor: "bg-orange-900/30",
-    },
-    {
-      name: "Flask",
-      description: "Python framework",
-      icon: SiFlask,
-      iconColor: "text-gray-200",
-      bgColor: "bg-white/10 backdrop-blur-sm",
-    },
-    {
-      name: "Redis",
-      description: "In-memory database",
-      icon: SiRedis,
-      iconColor: "text-red-400",
-      bgColor: "bg-red-900/30",
-    },
-    {
-      name: "Celery",
-      description: "Task queue",
-      icon: SiCelery,
-      iconColor: "text-green-300",
-      bgColor: "bg-green-900/30",
-    },
-    {
-      name: "Next",
-      description: "React framework",
-      icon: SiNextdotjs,
-      iconColor: "text-white",
-      bgColor: "bg-white/10 backdrop-blur-sm",
-    },
-    {
-      name: "FastAPI",
-      description: "Python API framework",
-      icon: SiFastapi,
-      iconColor: "text-green-400",
-      bgColor: "bg-green-900/30",
-    },
-  ];
-
   return (
-    <div className="w-full h-screen px-8 flex items-center">
+    <motion.div
+      initial={{ opacity: 0, y: 18 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.4 }}
+      className="w-full h-screen px-8 flex items-center"
+    >
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="text-center mb-16">
@@ -118,8 +28,16 @@ function TechnologiesComponent() {
           {technologies.map((tech, index) => {
             const IconComponent = tech.icon;
             return (
-              <div
+              <motion.div
                 key={index}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.25,
+                  delay: index * 0.03,
+                  ease: "easeOut",
+                }}
+                viewport={{ once: true, amount: 0.25 }}
                 className="bg-white/5 backdrop-blur-md rounded-xl p-6 hover:bg-white/10 transition-all duration-300 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20"
               >
                 <div className="flex items-stretch space-x-4">
@@ -137,12 +55,12 @@ function TechnologiesComponent() {
                     <p className="text-gray-400 text-sm">{tech.description}</p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
