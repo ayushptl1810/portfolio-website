@@ -2,6 +2,7 @@ import React from "react";
 import HeroComponent from "../components/heroComponent";
 import TechnologiesComponent from "../components/TechnologiesComponent";
 import ProjectComponent from "../components/ProjectComponent";
+import ContactSection from "../components/ContactSection";
 import IncomingTransition from "../transitions/IncomingTransition";
 
 function Home() {
@@ -13,6 +14,7 @@ function Home() {
       <HeroComponent />
       <TechnologiesComponent />
       <ProjectComponent ids={featuredIds} />
+      <ContactSection />
     </>
   );
 }

@@ -44,7 +44,7 @@ function OutgoingTransition({ isActive, label, onComplete }) {
           >
             <span
               className="text-white text-9xl font-bold"
-              style={{ fontSize: "8rem" }}
+              style={{ fontSize: "4rem" }}
             >
               {label}
             </span>

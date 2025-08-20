@@ -105,6 +105,7 @@ function ProjectComponent({ ids }) {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">
               My Projects
             </h2>
+
             <p className="text-gray-300 text-base md:text-lg">
               A selection of my recent work. Click a project to explore more.
             </p>
@@ -135,7 +136,7 @@ function ProjectComponent({ ids }) {
               onClick={
                 onProjectsPage ? handleBackToHome : handleViewAllProjects
               }
-              className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg"
+              className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.98 }}
             >

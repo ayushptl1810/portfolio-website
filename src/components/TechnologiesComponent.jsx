@@ -16,6 +16,7 @@ function TechnologiesComponent() {
           <h2 className="text-5xl font-bold text-white mb-6">
             Current technologies
           </h2>
+
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             I'm proficient in a range of modern technologies that empower me to
             build highly functional solutions. These are some of my main

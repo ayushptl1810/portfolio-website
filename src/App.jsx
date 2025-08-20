@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import FluidMenu from "./components/FluidMenu";
 import PageTransitionManager from "./transitions/PageTransitionManager";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -15,14 +16,18 @@ function App() {
           <div className="fixed inset-0 z-0 pointer-events-none">
             <DarkVeil />
           </div>
-          <div className="relative z-10">
+          <div className="relative z-10" id="app-content">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/projects" element={<ProjectComponent />} />
+              <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
           {/* 3D Model - Clean, simple positioning */}
-          <div className="fixed bottom-0 left-0 z-50 pointer-events-none translate-x-[-10rem] translate-y-[10rem] md:translate-x-[-24.5rem] md:translate-y-[40rem] overflow-visible">
+          <div
+            id="app-spline"
+            className="fixed bottom-0 left-0 z-50 pointer-events-none translate-x-[-10rem] translate-y-[10rem] md:translate-x-[-24.5rem] md:translate-y-[40rem] overflow-visible"
+          >
             <div className="w-[32rem] h-[48rem] origin-bottom-left scale-[1.35] md:scale-[1.75]">
               <Spline
                 scene="https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode"
@@ -34,7 +39,9 @@ function App() {
               />
             </div>
           </div>
-          <FluidMenu />
+          <div id="app-menu">
+            <FluidMenu />
+          </div>
         </div>
       </PageTransitionManager>
     </BrowserRouter>

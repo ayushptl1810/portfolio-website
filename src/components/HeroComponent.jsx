@@ -72,7 +72,7 @@ function HeroComponent() {
                 href="https://github.com/ayushptl1810"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300"
+                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 cursor-pointer"
               >
                 <FaGithub className="w-8 h-8" />
               </motion.a>
@@ -81,14 +81,14 @@ function HeroComponent() {
                 href="https://www.linkedin.com/in/ayushptl1810/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300"
+                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 cursor-pointer"
               >
                 <FaLinkedin className="w-8 h-8" />
               </motion.a>
               <motion.a
                 whileHover={{ scale: 1.05 }}
                 href="mailto:ayushptl1810@gmail.com"
-                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300"
+                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 cursor-pointer"
               >
                 <FaEnvelope className="w-8 h-8" />
               </motion.a>
