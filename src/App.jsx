@@ -1,24 +1,38 @@
-import "./App.css";
 import DarkVeil from "./components/DarkVeil";
 import Spline from "@splinetool/react-spline";
 import ProjectComponent from "./components/ProjectComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
+import About from "./pages/About";
 import FluidMenu from "./components/FluidMenu";
 import PageTransitionManager from "./transitions/PageTransitionManager";
 import Contact from "./pages/Contact";
+import ParticleSystem from "./components/ParticleSystem.jsx";
+import { useScrollToTop } from "./hooks/useScrollToTop";
+
+// Wrapper component that uses the hook (must be inside BrowserRouter)
+function ScrollToTopWrapper() {
+  useScrollToTop();
+  return null; // This component doesn't render anything
+}
 
 function App() {
   return (
     <BrowserRouter>
       <PageTransitionManager>
+        <ScrollToTopWrapper />
         <div className="w-full relative">
           <div className="fixed inset-0 z-0 pointer-events-none">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-purple-900/20" />
+
             <DarkVeil />
+
+            <ParticleSystem />
           </div>
           <div className="relative z-10" id="app-content">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/about" element={<About />} />
               <Route path="/projects" element={<ProjectComponent />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>

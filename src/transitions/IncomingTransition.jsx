@@ -56,6 +56,7 @@ function IncomingTransition() {
             exit={{ opacity: 0 }}
             transition={{
               duration: ANIMATION_TIMING.LABEL_FADE_DURATION,
+              delay: 0.15, // Delay text appearance by 0.5 seconds
               ease: "easeOut",
             }}
           >

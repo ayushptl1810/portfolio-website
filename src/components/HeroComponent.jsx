@@ -103,9 +103,6 @@ function HeroComponent() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {/* Spotlight Effect */}
-          <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-32 h-32 bg-blue-400 rounded-full opacity-20 blur-3xl"></div>
-
           <Suspense
             fallback={
               <div className="w-full h-full flex items-center justify-center text-white">
