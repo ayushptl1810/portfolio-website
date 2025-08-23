@@ -1,0 +1,168 @@
+import React from "react";
+import { motion } from "framer-motion";
+
+const PersonalPassionsPanel = ({ isActive }) => {
+  return (
+    <motion.div
+      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 ${
+        isActive ? "border-blue-400/50 shadow-blue-500/20" : ""
+      }`}
+      whileHover={{
+        scale: 1.03,
+        borderColor: "rgba(59, 130, 246, 0.5)",
+        boxShadow: "0 25px 50px -12px rgba(59, 130, 246, 0.25)",
+      }}
+    >
+      {/* Holographic Border Effect */}
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/10 to-green-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+
+      {/* Content */}
+      <div className="relative z-10">
+        {/* Header */}
+        <motion.div
+          className="flex items-center space-x-3 mb-6"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="w-3 h-3 bg-blue-400 rounded-full" />
+          <h4 className="text-lg font-semibold text-white">
+            Personal Passions
+          </h4>
+          <div className="flex-1 h-px bg-gradient-to-r from-blue-400/50 to-transparent" />
+        </motion.div>
+
+        {/* Main Content Grid */}
+        <div className="grid grid-cols-3 gap-6">
+          {/* Gaming Section - 66% width (2 columns) */}
+          <div className="col-span-2">
+            {/* Games Grid */}
+            <div className="grid grid-cols-2 gap-4 mb-4">
+              {/* Currently Playing */}
+              <motion.div
+                className="relative group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden">
+                  <img
+                    src="/src/assets/EldenRingLogo.jpg"
+                    alt="Elden Ring"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                    <p className="text-sm font-medium text-white">Elden Ring</p>
+                    <p className="text-xs text-gray-300">Currently Playing</p>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Favourite Game */}
+              <motion.div
+                className="relative group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden">
+                  <img
+                    src="/src/assets/WukongLogo.png"
+                    alt="Black Myth Wukong"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
+                    <p className="text-sm font-medium text-white">
+                      Black Myth Wukong
+                    </p>
+                    <p className="text-xs text-gray-300">Favourite Game</p>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Gaming Stats */}
+            <motion.div
+              className="bg-black/40 border border-white/20 rounded-xl p-4"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.3 }}
+            >
+              <div className="grid grid-cols-3 gap-4 text-center">
+                <div>
+                  <div className="text-purple-400 text-sm font-medium">
+                    Genre
+                  </div>
+                  <div className="text-white text-xs">FPS + RPG</div>
+                </div>
+                <div>
+                  <div className="text-blue-400 text-sm font-medium">
+                    Time Invested
+                  </div>
+                  <div className="text-white text-xs">3000+ Hours</div>
+                </div>
+                <div>
+                  <div className="text-green-400 text-sm font-medium">
+                    Style
+                  </div>
+                  <div className="text-white text-xs">Casual</div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Football Section - 33% width (1 column) */}
+          <div className="col-span-1 flex items-center justify-center">
+            {/* Club Logo & Info */}
+            <motion.div
+              className="text-center"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.4 }}
+            >
+              {/* Club Logo */}
+              <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20">
+                <img
+                  src="/src/assets/clubLogo.jpg"
+                  alt="Manchester United FC"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Club Info */}
+              <div className="space-y-2">
+                <h6 className="text-white font-semibold text-sm">
+                  Manchester United FC
+                </h6>
+                <p className="text-gray-300 text-xs">My Club Since 2016</p>
+                <p className="text-gray-400 text-xs">Die-hard Supporter</p>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+
+      {/* Holographic Scan Lines */}
+      <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent"
+          animate={{
+            y: ["-100%", "100%"],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+export default PersonalPassionsPanel;

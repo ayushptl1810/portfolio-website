@@ -4,7 +4,7 @@ import PersonalIdentityPanel from "../components/PersonalIdentityPanel";
 import SoftSkillsPanel from "../components/SoftSkillsPanel";
 import CurrentStatusPanel from "../components/CurrentStatusPanel";
 import QuickFactsPanel from "../components/QuickFactsPanel";
-import WorkStylePanel from "../components/WorkStylePanel";
+import PersonalPassionsPanel from "../components/PersonalPassionsPanel";
 
 const About = () => {
   const [activePanel, setActivePanel] = useState(null);
@@ -26,7 +26,7 @@ const About = () => {
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
-          className="text-center mb-20"
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -53,23 +53,25 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="flex-1 space-y-6">
+            <div className="flex-1 space-y-8">
               <PersonalIdentityPanel />
 
               {/* Education Container */}
               <motion.div
-                className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-xl transition-all duration-300 flex-1 flex flex-col justify-center"
+                className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 flex-1 flex flex-col justify-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: 0.2 }}
                 whileHover={{
                   scale: 1.03,
                   borderColor: "rgba(147, 51, 234, 0.5)",
                   boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
                 }}
               >
+                {/* Quantum Status Border Effect */}
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+
                 <div className="text-center mb-4">
                   <h4 className="text-xl font-bold text-white mb-2">
                     Education
@@ -94,7 +96,7 @@ const About = () => {
                   </div>
 
                   {/* Divider */}
-                  <div className="h-px bg-white/10" />
+                  <div className="h-px bg-white/10 my-6" />
 
                   {/* DJ Sanghvi */}
                   <div className="text-left">
@@ -103,7 +105,7 @@ const About = () => {
                         Dwarkadas J. Sanghvi College
                       </h5>
                       <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">
-                        CGPA: 9.32
+                        CGPA: 9.33
                       </span>
                     </div>
                     <p className="text-blue-400 text-xs font-medium mb-1">
@@ -135,13 +137,16 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
+              className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(147, 51, 234, 0.5)",
                 boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
               }}
             >
+              {/* Quantum Status Border Effect */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+
               <div className="text-center mb-6">
                 <h3 className="text-2xl font-bold text-white mb-4">About Me</h3>
                 <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-4" />
@@ -206,7 +211,7 @@ const About = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <div className="flex-1 space-y-6">
+            <div className="flex-1 space-y-8">
               {panels.slice(1).map((panel, index) => (
                 <motion.div
                   key={panel.id}
@@ -232,14 +237,39 @@ const About = () => {
 
         {/* Bottom Row - Additional Panels */}
         <motion.div
-          className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
         >
           <QuickFactsPanel isActive={activePanel === "facts"} />
-          <WorkStylePanel isActive={activePanel === "workstyle"} />
+          <PersonalPassionsPanel isActive={activePanel === "passions"} />
+        </motion.div>
+
+        {/* Back to Home Button */}
+        <motion.div
+          className="text-center mt-12"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+        >
+          <motion.button
+            type="button"
+            onClick={() => {
+              if (window.triggerPageTransition) {
+                window.triggerPageTransition("/");
+              } else {
+                window.location.href = "/";
+              }
+            }}
+            className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            <span>Back to Home</span>
+          </motion.button>
         </motion.div>
       </div>
     </section>

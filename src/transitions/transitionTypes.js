@@ -3,23 +3,23 @@ export const TRANSITION_TYPES = {
   HOME: {
     label: "Home",
     duration: 0.55,
-    ease: "easeInOut"
+    ease: "easeInOut",
   },
   PROJECTS: {
-    label: "Projects", 
+    label: "Projects",
     duration: 0.55,
-    ease: "easeInOut"
+    ease: "easeInOut",
   },
   ABOUT: {
     label: "About Me",
     duration: 0.55,
-    ease: "easeInOut"
+    ease: "easeInOut",
   },
   CONTACT: {
     label: "Contact Me",
     duration: 0.55,
-    ease: "easeInOut"
-  }
+    ease: "easeInOut",
+  },
 };
 
 // Get transition config for a given path
@@ -28,12 +28,21 @@ export const getTransitionConfig = (path) => {
   if (path === "/projects") return TRANSITION_TYPES.PROJECTS;
   if (path === "/about") return TRANSITION_TYPES.ABOUT;
   if (path === "/contact") return TRANSITION_TYPES.CONTACT;
-  
+
+  // Handle project detail pages
+  if (path.startsWith("/projects/")) {
+    return {
+      label: "Project",
+      duration: 0.55,
+      ease: "easeInOut",
+    };
+  }
+
   // Default fallback
   return {
     label: "Loading...",
     duration: 0.55,
-    ease: "easeInOut"
+    ease: "easeInOut",
   };
 };
 
@@ -43,5 +52,5 @@ export const ANIMATION_TIMING = {
   INCOMING_DURATION: 0.85,
   LABEL_FADE_DURATION: 0.25,
   HOLD_DURATION: 100, // ms
-  EASING: "easeInOut"
+  EASING: "easeInOut",
 };

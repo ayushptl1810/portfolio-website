@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 const PersonalIdentityPanel = () => {
   return (
     <motion.div
-      className="relative bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300"
+      className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300"
       whileHover={{
         scale: 1.03,
         borderColor: "rgba(147, 51, 234, 0.5)",
@@ -12,7 +12,7 @@ const PersonalIdentityPanel = () => {
       }}
     >
       {/* Holographic Border Effect */}
-      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 to-blue-500/20 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
       {/* Content */}
       <div className="relative z-10">

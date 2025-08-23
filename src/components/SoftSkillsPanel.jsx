@@ -22,7 +22,7 @@ const SoftSkillsPanel = ({ isActive }) => {
 
   return (
     <motion.div
-      className={`relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-lg transition-all duration-300 ${
+      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-8 shadow-lg transition-all duration-300 ${
         isActive ? "border-blue-400/50 shadow-blue-500/20" : ""
       }`}
       whileHover={{
@@ -32,7 +32,7 @@ const SoftSkillsPanel = ({ isActive }) => {
       }}
     >
       {/* Neural Network Border Effect */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-purple-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-blue-500/10 to-green-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
       {/* Content */}
       <div className="relative z-10">

@@ -37,7 +37,7 @@ const CurrentStatusPanel = ({ isActive }) => {
 
   return (
     <motion.div
-      className={`relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-lg transition-all duration-300 ${
+      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-8 shadow-lg transition-all duration-300 ${
         isActive ? "border-green-400/50 shadow-green-500/20" : ""
       }`}
       whileHover={{
@@ -47,7 +47,7 @@ const CurrentStatusPanel = ({ isActive }) => {
       }}
     >
       {/* Quantum Status Border Effect */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-500/10 to-purple-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
       {/* Content */}
       <div className="relative z-10">

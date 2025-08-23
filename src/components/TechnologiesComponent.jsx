@@ -39,7 +39,7 @@ function TechnologiesComponent() {
                   ease: "easeOut",
                 }}
                 viewport={{ once: true, amount: 0.25 }}
-                className="bg-white/5 backdrop-blur-md rounded-xl p-6 hover:bg-white/10 transition-all duration-300 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20"
+                className="bg-zinc-950/70 backdrop-blur-md rounded-xl p-6 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20"
               >
                 <div className="flex items-stretch space-x-4">
                   <div

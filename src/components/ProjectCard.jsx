@@ -1,6 +1,7 @@
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 /*
@@ -85,36 +86,46 @@ function ProjectCard({ project }) {
         </div>
 
         {/* Bottom: actions */}
-        <div className="flex items-center gap-3 mt-4">
-          <a
-            href={github_url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base"
-          >
-            <FaGithub className="w-5 h-5" />
-            <span>GitHub</span>
-          </a>
+        <div className="flex flex-col gap-3 mt-4">
+          {/* All buttons in one row */}
+          <div className="flex items-center gap-3">
+            <Link
+              to={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
+              className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-base font-medium flex-1"
+            >
+              <span>View Details</span>
+            </Link>
 
-          {hasDemo ? (
             <a
-              href={demoHref}
+              href={github_url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base"
             >
-              <HiOutlineExternalLink className="w-5 h-5" />
-              <span>Live Demo</span>
+              <FaGithub className="w-5 h-5" />
+              <span>GitHub</span>
             </a>
-          ) : (
-            <span
-              className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white/40 rounded-full text-white/60 cursor-not-allowed text-base"
-              title="Live demo not available"
-            >
-              <HiOutlineExternalLink className="w-5 h-5" />
-              <span>Live Demo</span>
-            </span>
-          )}
+
+            {hasDemo ? (
+              <a
+                href={demoHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-300 text-base"
+              >
+                <HiOutlineExternalLink className="w-5 h-5" />
+                <span>Live Demo</span>
+              </a>
+            ) : (
+              <span
+                className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white/40 rounded-full text-white/60 cursor-not-allowed text-base"
+                title="Live demo not available"
+              >
+                <HiOutlineExternalLink className="w-5 h-5" />
+                <span>Live Demo</span>
+              </span>
+            )}
+          </div>
         </div>
       </div>
     </motion.div>

@@ -23,7 +23,7 @@ const QuickFactsPanel = ({ isActive }) => {
     },
     {
       label: "Hackathons Attended ",
-      value: "25+",
+      value: "10+",
       description: "Competitive coding events",
       color: "from-green-500 to-blue-600",
     },
@@ -31,17 +31,17 @@ const QuickFactsPanel = ({ isActive }) => {
 
   return (
     <motion.div
-      className={`relative bg-white/5 backdrop-blur-md border border-white/10 rounded-xl p-6 shadow-lg transition-all duration-300 ${
-        isActive ? "border-purple-400/50 shadow-purple-500/20" : ""
+      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-8 shadow-lg transition-all duration-300 ${
+        isActive ? "border-green-400/50 shadow-green-500/20" : ""
       }`}
       whileHover={{
         scale: 1.03,
-        borderColor: "rgba(147, 51, 234, 0.5)",
-        boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
+        borderColor: "rgba(34, 197, 94, 0.5)",
+        boxShadow: "0 25px 50px -12px rgba(34, 197, 94, 0.25)",
       }}
     >
-      {/* Key Metrics Border Effect */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+      {/* Quantum Status Border Effect */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-green-500/10 to-purple-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
       {/* Content */}
       <div className="relative z-10">
@@ -53,9 +53,9 @@ const QuickFactsPanel = ({ isActive }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse" />
+          <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
           <h4 className="text-lg font-semibold text-white">Key Metrics</h4>
-          <div className="flex-1 h-px bg-gradient-to-r from-purple-400/50 to-transparent" />
+          <div className="flex-1 h-px bg-gradient-to-r from-green-400/50 to-transparent" />
         </motion.div>
 
         {/* Facts Grid */}

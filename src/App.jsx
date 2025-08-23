@@ -4,6 +4,7 @@ import ProjectComponent from "./components/ProjectComponent";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import ProjectDetail from "./pages/ProjectDetail";
 import FluidMenu from "./components/FluidMenu";
 import PageTransitionManager from "./transitions/PageTransitionManager";
 import Contact from "./pages/Contact";
@@ -34,6 +35,10 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/projects" element={<ProjectComponent />} />
+              <Route
+                path="/projects/:projectName"
+                element={<ProjectDetail />}
+              />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </div>
