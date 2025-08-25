@@ -136,11 +136,24 @@ function ProjectComponent({ ids }) {
               onClick={
                 onProjectsPage ? handleBackToHome : handleViewAllProjects
               }
-              className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
-              whileHover={{ scale: 1.04 }}
+              className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-500 text-lg cursor-pointer relative overflow-hidden group"
+              whileHover={{
+                scale: 1.05,
+                borderColor: "rgba(147, 51, 234, 0.8)",
+                boxShadow: "0 0 30px rgba(147, 51, 234, 0.3)",
+              }}
               whileTap={{ scale: 0.98 }}
             >
-              <span>
+              {/* Hover Background Effect */}
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full"
+                initial={{ scale: 0, opacity: 0 }}
+                whileHover={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              />
+
+              {/* Button Content */}
+              <span className="relative z-10">
                 {onProjectsPage ? "Back to Home" : "View All Projects"}
               </span>
             </motion.button>

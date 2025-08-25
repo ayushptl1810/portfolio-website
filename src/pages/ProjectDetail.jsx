@@ -102,7 +102,7 @@ const ProjectDetail = () => {
             </motion.button>
 
             {/* Tech Stack Card */}
-            <div className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+            <div className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
               {/* Animated background gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-purple-500/5 animate-pulse" />
 
@@ -136,6 +136,32 @@ const ProjectDetail = () => {
                     </motion.div>
                   ))}
                 </div>
+              </div>
+
+              {/* Hover Particles */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                {[...Array(3)].map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute w-1 h-1 bg-blue-400/60 rounded-full"
+                    initial={{
+                      x: Math.random() * 200,
+                      y: Math.random() * 100,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      x: Math.random() * 200,
+                      y: Math.random() * 100,
+                      opacity: [0, 0.8, 0],
+                    }}
+                    transition={{
+                      duration: 3 + i * 0.3,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.2,
+                    }}
+                  />
+                ))}
               </div>
             </div>
 
@@ -312,13 +338,31 @@ const ProjectDetail = () => {
                     code: ({ children, className }) => {
                       const isInline = !className;
                       return isInline ? (
-                        <code className="bg-gray-800 text-blue-400 px-1 py-0.5 rounded text-sm font-mono">
+                        <motion.code
+                          className="bg-gray-800 text-blue-400 px-1 py-0.5 rounded text-sm font-mono"
+                          whileHover={{
+                            scale: 1.02,
+                            backgroundColor: "rgba(31, 41, 55, 0.9)",
+                          }}
+                          transition={{ duration: 0.2 }}
+                        >
                           {children}
-                        </code>
+                        </motion.code>
                       ) : (
-                        <code className="block bg-gray-800 text-blue-400 p-3 rounded-lg text-sm font-mono overflow-x-auto">
+                        <motion.code
+                          className="block bg-gray-800 text-blue-400 p-3 rounded-lg text-sm font-mono overflow-x-auto relative"
+                          initial={{ opacity: 0, y: 10 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.5 }}
+                          whileHover={{
+                            scale: 1.01,
+                            backgroundColor: "rgba(31, 41, 55, 0.95)",
+                            boxShadow: "0 0 20px rgba(59, 130, 246, 0.2)",
+                          }}
+                        >
                           {children}
-                        </code>
+                        </motion.code>
                       );
                     },
                     pre: ({ children }) => (

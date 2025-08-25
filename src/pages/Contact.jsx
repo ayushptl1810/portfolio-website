@@ -177,12 +177,18 @@ function Contact() {
                   <label className="block text-sm text-gray-300 mb-1">
                     Name
                   </label>
-                  <input
+                  <motion.input
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-white/30"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none resize-none"
                     placeholder="Your name"
                     autoComplete="name"
+                    whileFocus={{
+                      scale: 1.02,
+                      borderColor: "rgba(147, 51, 234, 0.8)",
+                      boxShadow: "0 0 20px rgba(147, 51, 234, 0.2)"
+                    }}
+                    transition={{ duration: 0.3 }}
                   />
                 </div>
 
@@ -191,14 +197,20 @@ function Contact() {
                     <label className="block text-sm text-gray-300 mb-1">
                       Email
                     </label>
-                    <input
+                    <motion.input
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-white/30"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none resize-none"
                       placeholder="you@example.com"
                       autoComplete="email"
                       type="email"
                       required
+                      whileFocus={{
+                        scale: 1.02,
+                        borderColor: "rgba(59, 130, 246, 0.8)",
+                        boxShadow: "0 0 20px rgba(59, 130, 246, 0.2)"
+                      }}
+                      transition={{ duration: 0.3 }}
                     />
                   </div>
                 ) : (
@@ -206,14 +218,20 @@ function Contact() {
                     <label className="block text-sm text-gray-300 mb-1">
                       LinkedIn URL
                     </label>
-                    <input
+                    <motion.input
                       value={linkedinUrl}
                       onChange={(e) => setLinkedinUrl(e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-white/30"
+                      className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none resize-none"
                       placeholder="https://www.linkedin.com/in/your-handle"
                       type="url"
                       pattern="https?://(www\.)?linkedin\.com/.*"
                       required
+                      whileFocus={{
+                        scale: 1.02,
+                        borderColor: "rgba(236, 72, 153, 0.8)",
+                        boxShadow: "0 0 20px rgba(236, 72, 153, 0.2)"
+                      }}
+                      transition={{ duration: 0.3 }}
                     />
                   </div>
                 )}
@@ -232,12 +250,18 @@ function Contact() {
                   <label className="block text-sm text-gray-300 mb-1">
                     Message
                   </label>
-                  <textarea
+                  <motion.textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     rows={6}
-                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-white/30 resize-none"
+                    className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none resize-none"
                     placeholder="Tell me about your idea..."
+                    whileFocus={{
+                      scale: 1.01,
+                      borderColor: "rgba(34, 197, 94, 0.8)",
+                      boxShadow: "0 0 20px rgba(34, 197, 94, 0.2)"
+                    }}
+                    transition={{ duration: 0.3 }}
                   />
                 </div>
 

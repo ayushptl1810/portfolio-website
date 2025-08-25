@@ -1,7 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { FaSpotify, FaInstagram, FaWhatsapp } from "react-icons/fa";
 
-const PersonalIdentityPanel = () => {
+const PersonalIdentityPanel = ({ isActive, links }) => {
   return (
     <motion.div
       className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300"
@@ -56,20 +57,64 @@ const PersonalIdentityPanel = () => {
           </div>
         </motion.div>
 
-        {/* Status Indicator */}
+        {/* Social Links */}
         <motion.div
-          className="text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          className="mt-6 flex items-center justify-center space-x-4"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 1 }}
         >
-          <div className="inline-flex items-center space-x-2 px-4 py-2 bg-green-500/20 border border-green-400/30 rounded-full">
-            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-green-400 text-sm font-medium">
-              Available
-            </span>
-          </div>
+          {[
+            {
+              key: "spotify",
+              Icon: FaSpotify,
+              href: links?.spotify,
+              hoverBorder: "rgba(34, 197, 94, 0.8)",
+              hoverGlow: "0 0 20px rgba(34, 197, 94, 0.4)",
+            },
+            {
+              key: "instagram",
+              Icon: FaInstagram,
+              href: links?.instagram,
+              hoverBorder: "rgba(236, 72, 153, 0.8)",
+              hoverGlow: "0 0 20px rgba(236, 72, 153, 0.4)",
+            },
+            {
+              key: "whatsapp",
+              Icon: FaWhatsapp,
+              href: links?.whatsapp,
+              hoverBorder: "rgba(16, 185, 129, 0.8)",
+              hoverGlow: "0 0 20px rgba(16, 185, 129, 0.4)",
+            },
+          ].map(({ key, Icon, href, hoverBorder, hoverGlow }) => (
+            <motion.a
+              key={key}
+              whileHover={{
+                scale: href ? 1.1 : 1,
+                rotate: href ? 360 : 0,
+                borderColor: href ? hoverBorder : undefined,
+                boxShadow: href ? hoverGlow : undefined,
+              }}
+              animate={{ rotate: 0 }}
+              transition={{
+                duration: 0.6,
+                ease: "easeInOut",
+                rotate: { duration: 0.6, ease: "easeInOut" },
+              }}
+              href={href || undefined}
+              target={href ? "_blank" : undefined}
+              rel={href ? "noopener noreferrer" : undefined}
+              aria-disabled={!href}
+              className={`w-12 h-12 border-2 rounded-full flex items-center justify-center cursor-pointer transition-colors duration-300 ${
+                href
+                  ? "border-white text-white hover:bg-white hover:text-blue-900"
+                  : "border-white/30 text-white/40 cursor-not-allowed"
+              }`}
+            >
+              <Icon className="w-6 h-6" />
+            </motion.a>
+          ))}
         </motion.div>
       </div>
 
@@ -87,6 +132,34 @@ const PersonalIdentityPanel = () => {
           }}
         />
       </div>
+
+      {/* Status Particles */}
+      {isActive && (
+        <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-purple-400 rounded-full"
+              initial={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: 0,
+              }}
+              animate={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 };

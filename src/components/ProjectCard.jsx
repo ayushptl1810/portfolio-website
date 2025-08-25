@@ -89,12 +89,25 @@ function ProjectCard({ project }) {
         <div className="flex flex-col gap-3 mt-4">
           {/* All buttons in one row */}
           <div className="flex items-center gap-3">
-            <Link
-              to={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
-              className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-base font-medium flex-1"
+            <motion.div
+              className="flex-1"
+              whileHover={{ scale: 1.02 }}
+              transition={{ duration: 0.2 }}
             >
-              <span>View Details</span>
-            </Link>
+              <Link
+                to={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
+                className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full transition-all duration-300 text-base font-medium w-full relative overflow-hidden group"
+              >
+                {/* Transmission Room Style Hover Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full"
+                  initial={{ scale: 0, opacity: 0 }}
+                  whileHover={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <span className="relative z-10">View Details</span>
+              </Link>
+            </motion.div>
 
             <a
               href={github_url}

@@ -14,7 +14,7 @@ function RiveAnimation() {
   });
 
   return (
-    <div className="w-full h-full flex items-center justify-center p-16">
+    <div className="w-full h-full flex items-center justify-center">
       <div className="w-96 h-96">
         <RiveComponent className="w-full h-full" />
       </div>
@@ -68,27 +68,60 @@ function HeroComponent() {
             {/* Social Icons */}
             <div className="flex space-x-5">
               <motion.a
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 360,
+                  borderColor: "rgba(147, 51, 234, 0.8)",
+                  boxShadow: "0 0 20px rgba(147, 51, 234, 0.4)",
+                }}
+                animate={{ rotate: 0 }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeInOut",
+                  rotate: { duration: 0.6, ease: "easeInOut" },
+                }}
                 href="https://github.com/ayushptl1810"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 cursor-pointer"
+                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
               >
                 <FaGithub className="w-8 h-8" />
               </motion.a>
               <motion.a
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 360,
+                  borderColor: "rgba(59, 130, 246, 0.8)",
+                  boxShadow: "0 0 20px rgba(59, 130, 246, 0.4)",
+                }}
+                animate={{ rotate: 0 }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeInOut",
+                  rotate: { duration: 0.6, ease: "easeInOut" },
+                }}
                 href="https://www.linkedin.com/in/ayushptl1810/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 cursor-pointer"
+                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
               >
                 <FaLinkedin className="w-8 h-8" />
               </motion.a>
               <motion.a
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  scale: 1.1,
+                  rotate: 360,
+                  borderColor: "rgba(147, 51, 234, 0.8)",
+                  boxShadow: "0 0 20px rgba(147, 51, 234, 0.4)",
+                }}
+                animate={{ rotate: 0 }}
+                transition={{
+                  duration: 0.6,
+                  ease: "easeInOut",
+                  rotate: { duration: 0.6, ease: "easeInOut" },
+                }}
                 href="mailto:ayushptl1810@gmail.com"
-                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 cursor-pointer"
+                className="w-16 h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
               >
                 <FaEnvelope className="w-8 h-8" />
               </motion.a>
@@ -98,7 +131,7 @@ function HeroComponent() {
 
         {/* Rive Animation Right Side */}
         <motion.div
-          className="w-1/2 h-screen relative"
+          className="w-1/2 h-screen relative flex items-center justify-center"
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -110,7 +143,18 @@ function HeroComponent() {
               </div>
             }
           >
-            <RiveAnimation />
+            <motion.div
+              animate={{
+                scale: [1.5, 1.52, 1.5],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <RiveAnimation />
+            </motion.div>
           </Suspense>
         </motion.div>
       </div>

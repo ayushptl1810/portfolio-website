@@ -88,28 +88,28 @@ const QuickFactsPanel = ({ isActive }) => {
         </div>
       </div>
 
-      {/* Metrics Particles */}
+      {/* Status Particles */}
       {isActive && (
         <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
-          {[...Array(6)].map((_, i) => (
+          {[...Array(3)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-1 h-1 bg-purple-400 rounded-full"
+              className="absolute w-1 h-1 bg-green-400 rounded-full"
               initial={{
-                x: Math.random() * 250,
-                y: Math.random() * 150,
+                x: Math.random() * 200,
+                y: Math.random() * 100,
                 opacity: 0,
               }}
               animate={{
-                x: Math.random() * 250,
-                y: Math.random() * 150,
+                x: Math.random() * 200,
+                y: Math.random() * 100,
                 opacity: [0, 1, 0],
               }}
               transition={{
-                duration: 2.5,
+                duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut",
-                delay: i * 0.3,
+                delay: i * 0.5,
               }}
             />
           ))}

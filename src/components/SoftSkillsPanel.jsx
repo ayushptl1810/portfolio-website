@@ -124,6 +124,34 @@ const SoftSkillsPanel = ({ isActive }) => {
           </svg>
         </div>
       )}
+
+      {/* Status Particles */}
+      {isActive && (
+        <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400 rounded-full"
+              initial={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: 0,
+              }}
+              animate={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 };

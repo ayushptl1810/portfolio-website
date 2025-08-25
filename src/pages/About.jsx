@@ -54,11 +54,18 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <div className="flex-1 space-y-8">
-              <PersonalIdentityPanel />
+              <PersonalIdentityPanel
+                links={{
+                  spotify:
+                    "https://open.spotify.com/user/31xc7fhc4lr4asucvkoopjpc3ete",
+                  instagram: "https://www.instagram.com/ayus_hpatel05/",
+                  whatsapp: "https://wa.me/917208494565",
+                }}
+              />
 
               {/* Education Container */}
               <motion.div
-                className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 flex-1 flex flex-col justify-center"
+                className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 flex-1 flex flex-col justify-center"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -69,59 +76,76 @@ const About = () => {
                   boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
                 }}
               >
-                {/* Quantum Status Border Effect */}
-                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                {/* Holographic Border Effect */}
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
-                <div className="text-center mb-4">
-                  <h4 className="text-xl font-bold text-white mb-2">
-                    Education
-                  </h4>
-                  <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto" />
-                </div>
+                <div className="relative z-10">
+                  <div className="text-center mb-4">
+                    <h4 className="text-xl font-bold text-white mb-2">
+                      Education
+                    </h4>
+                    <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto" />
+                  </div>
 
-                <div className="space-y-4">
-                  {/* IIT Madras */}
-                  <div className="text-left">
-                    <div className="flex items-start justify-between mb-1">
-                      <h5 className="text-white font-semibold text-sm">
-                        IIT Madras
-                      </h5>
-                      <span className="text-purple-400 text-xs font-mono bg-purple-400/10 px-2 py-1 rounded">
-                        CGPA: 7.99
+                  <div className="space-y-4">
+                    {/* IIT Madras */}
+                    <div className="text-left">
+                      <div className="flex items-start justify-between mb-1">
+                        <h5 className="text-white font-semibold text-sm">
+                          IIT Madras
+                        </h5>
+                        <span className="text-purple-400 text-xs font-mono bg-purple-400/10 px-2 py-1 rounded">
+                          CGPA: 7.99
+                        </span>
+                      </div>
+                      <p className="text-blue-400 text-xs font-medium mb-1">
+                        BS in Data Science • 2023 - Present
+                      </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="h-px bg-white/10 my-6" />
+
+                    {/* DJ Sanghvi */}
+                    <div className="text-left">
+                      <div className="flex items-start justify-between mb-1">
+                        <h5 className="text-white font-semibold text-sm">
+                          Dwarkadas J. Sanghvi College
+                        </h5>
+                        <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">
+                          CGPA: 9.33
+                        </span>
+                      </div>
+                      <p className="text-blue-400 text-xs font-medium mb-1">
+                        BTech CSE (Data Science) • 2023 - Present
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Status Badge */}
+                  <div className="mt-4 pt-3 border-t border-white/10">
+                    <div className="flex items-center justify-center space-x-2">
+                      <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                      <span className="text-green-400 text-xs font-medium">
+                        Currently Enrolled
                       </span>
                     </div>
-                    <p className="text-blue-400 text-xs font-medium mb-1">
-                      BS in Data Science • 2023 - Present
-                    </p>
-                  </div>
-
-                  {/* Divider */}
-                  <div className="h-px bg-white/10 my-6" />
-
-                  {/* DJ Sanghvi */}
-                  <div className="text-left">
-                    <div className="flex items-start justify-between mb-1">
-                      <h5 className="text-white font-semibold text-sm">
-                        Dwarkadas J. Sanghvi College
-                      </h5>
-                      <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">
-                        CGPA: 9.33
-                      </span>
-                    </div>
-                    <p className="text-blue-400 text-xs font-medium mb-1">
-                      BTech CSE (Data Science) • 2023 - Present
-                    </p>
                   </div>
                 </div>
 
-                {/* Status Badge */}
-                <div className="mt-4 pt-3 border-t border-white/10">
-                  <div className="flex items-center justify-center space-x-2">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                    <span className="text-green-400 text-xs font-medium">
-                      Currently Enrolled
-                    </span>
-                  </div>
+                {/* Holographic Scan Lines */}
+                <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent"
+                    animate={{
+                      y: ["-100%", "100%"],
+                    }}
+                    transition={{
+                      duration: 3,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  />
                 </div>
               </motion.div>
             </div>
@@ -137,67 +161,86 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
+              className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(147, 51, 234, 0.5)",
                 boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
               }}
             >
-              {/* Quantum Status Border Effect */}
-              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              {/* Holographic Border Effect */}
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
 
-              <div className="text-center mb-6">
-                <h3 className="text-2xl font-bold text-white mb-4">About Me</h3>
-                <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-4" />
-              </div>
-
-              <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
-                <p>
-                  I'm a passionate Full Stack Developer with a love for creating
-                  elegant, user-centric web applications. My journey in tech
-                  started with curiosity and has evolved into a deep
-                  appreciation for clean code and innovative solutions.
-                </p>
-
-                <p>
-                  When I'm not coding, you'll find me exploring new
-                  technologies, contributing to open source projects, or diving
-                  into the latest development trends. I believe in continuous
-                  learning and pushing the boundaries of what's possible on the
-                  web.
-                </p>
-
-                <p>
-                  My approach combines technical expertise with creative
-                  problem-solving, always keeping the end user in mind. Every
-                  project is an opportunity to learn, grow, and create something
-                  meaningful.
-                </p>
-              </div>
-
-              {/* Tech Stack Preview */}
-              <div className="mt-6 pt-4 border-t border-white/10">
-                <h4 className="text-white font-semibold mb-3 text-center">
-                  Tech Stack
-                </h4>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {[
-                    "React",
-                    "Node.js",
-                    "Next.js",
-                    "Flask",
-                    "MongoDB",
-                    "Deployment",
-                  ].map((tech, index) => (
-                    <span
-                      key={tech}
-                      className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs text-white"
-                    >
-                      {tech}
-                    </span>
-                  ))}
+              <div className="relative z-10">
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-white mb-4">
+                    About Me
+                  </h3>
+                  <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-4" />
                 </div>
+
+                <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
+                  <p>
+                    I'm a passionate Full Stack Developer with a love for
+                    creating elegant, user-centric web applications. My journey
+                    in tech started with curiosity and has evolved into a deep
+                    appreciation for clean code and innovative solutions.
+                  </p>
+
+                  <p>
+                    When I'm not coding, you'll find me exploring new
+                    technologies, contributing to open source projects, or
+                    diving into the latest development trends. I believe in
+                    continuous learning and pushing the boundaries of what's
+                    possible on the web.
+                  </p>
+
+                  <p>
+                    My approach combines technical expertise with creative
+                    problem-solving, always keeping the end user in mind. Every
+                    project is an opportunity to learn, grow, and create
+                    something meaningful.
+                  </p>
+                </div>
+
+                {/* Tech Stack Preview */}
+                <div className="mt-6 pt-4 border-t border-white/10">
+                  <h4 className="text-white font-semibold mb-3 text-center">
+                    Tech Stack
+                  </h4>
+                  <div className="flex flex-wrap justify-center gap-2">
+                    {[
+                      "React",
+                      "Node.js",
+                      "Next.js",
+                      "Flask",
+                      "MongoDB",
+                      "Deployment",
+                    ].map((tech, index) => (
+                      <span
+                        key={tech}
+                        className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs text-white"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Holographic Scan Lines */}
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent"
+                  animate={{
+                    y: ["-100%", "100%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
+                />
               </div>
             </motion.div>
           </motion.div>

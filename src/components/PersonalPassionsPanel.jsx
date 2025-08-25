@@ -47,7 +47,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.1 }}
               >
-                <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden">
+                <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden relative">
                   <img
                     src="/src/assets/EldenRingLogo.jpg"
                     alt="Elden Ring"
@@ -68,7 +68,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.2 }}
               >
-                <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden">
+                <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden relative">
                   <img
                     src="/src/assets/WukongLogo.png"
                     alt="Black Myth Wukong"
@@ -90,7 +90,16 @@ const PersonalPassionsPanel = ({ isActive }) => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+              animate={{
+                opacity: [0, 1, 1],
+                y: [20, 0, 0],
+                scale: [1, 1.02, 1],
+              }}
+              transition={{
+                opacity: { duration: 0.5, delay: 0.3 },
+                y: { duration: 0.5, delay: 0.3 },
+                scale: { duration: 6, repeat: Infinity, ease: "easeInOut" },
+              }}
             >
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
@@ -116,7 +125,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
           </div>
 
           {/* Football Section - 33% width (1 column) */}
-          <div className="col-span-1 flex items-center justify-center">
+          <div className="col-span-1 flex items-center justify-center group">
             {/* Club Logo & Info */}
             <motion.div
               className="text-center"
@@ -126,13 +135,26 @@ const PersonalPassionsPanel = ({ isActive }) => {
               transition={{ duration: 0.5, delay: 0.4 }}
             >
               {/* Club Logo */}
-              <div className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20">
+              <motion.div
+                className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20 relative"
+                animate={{
+                  y: [0, -3, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
                 <img
                   src="/src/assets/clubLogo.jpg"
                   alt="Manchester United FC"
                   className="w-full h-full object-cover"
                 />
-              </div>
+
+                {/* Glow Effect */}
+                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-red-500/20 to-red-600/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm" />
+              </motion.div>
 
               {/* Club Info */}
               <div className="space-y-2">
@@ -161,6 +183,34 @@ const PersonalPassionsPanel = ({ isActive }) => {
           }}
         />
       </div>
+
+      {/* Status Particles */}
+      {isActive && (
+        <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+          {[...Array(3)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-blue-400 rounded-full"
+              initial={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: 0,
+              }}
+              animate={{
+                x: Math.random() * 200,
+                y: Math.random() * 100,
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </div>
+      )}
     </motion.div>
   );
 };
