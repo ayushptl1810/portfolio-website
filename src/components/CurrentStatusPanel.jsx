@@ -60,7 +60,9 @@ const CurrentStatusPanel = ({ isActive }) => {
           transition={{ duration: 0.5 }}
         >
           <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-          <h4 className="text-lg font-semibold text-white">Current Status</h4>
+          <h4 className="text-lg font-semibold text-white font-display">
+            Current Status
+          </h4>
           <div className="flex-1 h-px bg-gradient-to-r from-green-400/50 to-transparent" />
         </motion.div>
 
@@ -83,14 +85,14 @@ const CurrentStatusPanel = ({ isActive }) => {
             <div className="flex-1 min-w-0">
               <div className="flex items-center space-x-2 mb-1">
                 <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs text-green-400 font-medium">
+                <span className="text-xs text-green-400 font-medium font-ui">
                   Currently Listening
                 </span>
               </div>
-              <div className="text-white font-medium text-sm truncate">
+              <div className="text-white font-medium text-sm truncate font-ui">
                 {spotifyStatus.track}
               </div>
-              <div className="text-gray-400 text-xs truncate">
+              <div className="text-gray-400 text-xs truncate font-body">
                 {spotifyStatus.artist}
               </div>
             </div>
@@ -110,13 +112,13 @@ const CurrentStatusPanel = ({ isActive }) => {
               <span className="text-blue-400 text-lg">🌍</span>
             </div>
             <div className="flex-1">
-              <div className="text-xs text-blue-400 font-medium mb-1">
+              <div className="text-xs text-blue-400 font-medium mb-1 font-ui">
                 Mumbai Time
               </div>
-              <div className="text-white font-mono text-lg">
+              <div className="text-white font-mono text-lg font-ui">
                 {formatTime(currentTime)}
               </div>
-              <div className="text-gray-400 text-xs">
+              <div className="text-gray-400 text-xs font-body">
                 {formatDate(currentTime)}
               </div>
             </div>
@@ -136,13 +138,15 @@ const CurrentStatusPanel = ({ isActive }) => {
               <span className="text-purple-400 text-lg">📚</span>
             </div>
             <div className="flex-1">
-              <div className="text-xs text-purple-400 font-medium mb-1">
+              <div className="text-xs text-purple-400 font-medium mb-1 font-ui">
                 Learning Focus
               </div>
-              <div className="text-white font-medium text-sm">
+              <div className="text-white font-medium text-sm font-ui">
                 Unreal Engine & Unity
               </div>
-              <div className="text-gray-400 text-xs">Starting Soon</div>
+              <div className="text-gray-400 text-xs font-body">
+                Starting Soon
+              </div>
             </div>
           </div>
         </motion.div>
@@ -155,10 +159,12 @@ const CurrentStatusPanel = ({ isActive }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <div className="text-xs text-gray-400">System Status:</div>
+          <div className="text-xs text-gray-400 font-ui">System Status:</div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-            <span className="text-green-400 text-xs font-medium">Stable</span>
+            <span className="text-green-400 text-xs font-medium font-ui">
+              Stable
+            </span>
           </div>
         </motion.div>
       </div>

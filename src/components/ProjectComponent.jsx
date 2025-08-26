@@ -99,15 +99,16 @@ function ProjectComponent({ ids }) {
             className="mb-8 text-center"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.4 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-2">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 text-center font-display">
               My Projects
             </h2>
 
-            <p className="text-gray-300 text-base md:text-lg">
-              A selection of my recent work. Click a project to explore more.
+            <p className="text-xl text-gray-300 mb-12 text-center max-w-3xl mx-auto font-body">
+              Here are some of the projects I've built. Each one represents a
+              unique challenge and learning experience.
             </p>
           </motion.div>
 
@@ -115,12 +116,14 @@ function ProjectComponent({ ids }) {
             {dataset.map((project, idx) => (
               <motion.div
                 key={project.id}
-                initial={{ opacity: 0, y: 18 }}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{
-                  duration: 0.25,
-                  delay: idx * 0.03,
-                  ease: "easeOut",
+                  type: "spring",
+                  stiffness: 120,
+                  damping: 22,
+                  mass: 0.9,
+                  delay: idx * 0.06,
                 }}
                 viewport={{ once: true, amount: 0.25 }}
                 className="w-full"
@@ -149,11 +152,11 @@ function ProjectComponent({ ids }) {
                 className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full"
                 initial={{ scale: 0, opacity: 0 }}
                 whileHover={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.45, ease: "easeOut" }}
               />
 
               {/* Button Content */}
-              <span className="relative z-10">
+              <span className="relative z-10 font-ui">
                 {onProjectsPage ? "Back to Home" : "View All Projects"}
               </span>
             </motion.button>

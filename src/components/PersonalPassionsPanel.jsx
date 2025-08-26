@@ -27,7 +27,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
           transition={{ duration: 0.5 }}
         >
           <div className="w-3 h-3 bg-blue-400 rounded-full" />
-          <h4 className="text-lg font-semibold text-white">
+          <h4 className="text-lg font-semibold text-white font-display">
             Personal Passions
           </h4>
           <div className="flex-1 h-px bg-gradient-to-r from-blue-400/50 to-transparent" />
@@ -54,8 +54,12 @@ const PersonalPassionsPanel = ({ isActive }) => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                    <p className="text-sm font-medium text-white">Elden Ring</p>
-                    <p className="text-xs text-gray-300">Currently Playing</p>
+                    <p className="text-sm font-medium text-white font-ui">
+                      Elden Ring
+                    </p>
+                    <p className="text-xs text-gray-300 font-body">
+                      Currently Playing
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -75,10 +79,12 @@ const PersonalPassionsPanel = ({ isActive }) => {
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3">
-                    <p className="text-sm font-medium text-white">
+                    <p className="text-sm font-medium text-white font-ui">
                       Black Myth Wukong
                     </p>
-                    <p className="text-xs text-gray-300">Favourite Game</p>
+                    <p className="text-xs text-gray-300 font-body">
+                      Favourite Game
+                    </p>
                   </div>
                 </div>
               </motion.div>
@@ -103,22 +109,24 @@ const PersonalPassionsPanel = ({ isActive }) => {
             >
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <div className="text-purple-400 text-sm font-medium">
+                  <div className="text-purple-400 text-sm font-medium font-ui">
                     Genre
                   </div>
-                  <div className="text-white text-xs">FPS + RPG</div>
+                  <div className="text-white text-xs font-body">FPS + RPG</div>
                 </div>
                 <div>
-                  <div className="text-blue-400 text-sm font-medium">
+                  <div className="text-blue-400 text-sm font-medium font-ui">
                     Time Invested
                   </div>
-                  <div className="text-white text-xs">3000+ Hours</div>
+                  <div className="text-white text-xs font-body">
+                    3000+ Hours
+                  </div>
                 </div>
                 <div>
-                  <div className="text-green-400 text-sm font-medium">
+                  <div className="text-green-400 text-sm font-medium font-ui">
                     Style
                   </div>
-                  <div className="text-white text-xs">Casual</div>
+                  <div className="text-white text-xs font-body">Casual</div>
                 </div>
               </div>
             </motion.div>
@@ -158,11 +166,15 @@ const PersonalPassionsPanel = ({ isActive }) => {
 
               {/* Club Info */}
               <div className="space-y-2">
-                <h6 className="text-white font-semibold text-sm">
+                <h6 className="text-white font-semibold text-sm font-ui">
                   Manchester United FC
                 </h6>
-                <p className="text-gray-300 text-xs">My Club Since 2016</p>
-                <p className="text-gray-400 text-xs">Die-hard Supporter</p>
+                <p className="text-gray-300 text-xs font-body">
+                  My Club Since 2016
+                </p>
+                <p className="text-gray-400 text-xs font-body">
+                  Die-hard Supporter
+                </p>
               </div>
             </motion.div>
           </div>

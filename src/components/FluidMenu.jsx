@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { HiBars3 } from "react-icons/hi2";
+import { HiBars3BottomLeft } from "react-icons/hi2";
 
 function FluidMenu() {
   const navigate = useNavigate();
@@ -46,9 +46,16 @@ function FluidMenu() {
       <button
         type="button"
         onClick={toggleButton}
-        className="fixed top-6 right-6 z-[80] h-12 w-12 rounded-full border-2 border-white text-white flex items-center justify-center hover:bg-white hover:text-blue-900 transition-colors"
+        aria-expanded={isOpen}
+        className="fixed top-6 right-6 z-[80] h-12 w-12 rounded-full border-2 border-white text-white flex items-center justify-center hover:bg-white hover:text-blue-900 transition-colors cursor-pointer"
       >
-        <HiBars3 className="h-6 w-6" />
+        <motion.span
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.25, ease: "easeInOut" }}
+          className="inline-flex"
+        >
+          <HiBars3BottomLeft className="h-6 w-6" />
+        </motion.span>
       </button>
 
       {/* Sidebar */}
@@ -65,11 +72,11 @@ function FluidMenu() {
               <motion.button
                 key={item.label}
                 onClick={() => handleSelect(item.path, item.label)}
-                className="text-white text-3xl font-semibold hover:opacity-80"
+                className="text-white text-3xl font-semibold hover:opacity-80 font-ui cursor-pointer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
-                {item.label}
+                <span className="font-ui">{item.label}</span>
               </motion.button>
             ))}
           </div>

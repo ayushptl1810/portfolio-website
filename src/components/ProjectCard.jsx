@@ -58,10 +58,10 @@ function ProjectCard({ project }) {
       <div className="p-5 md:p-6 flex-1 flex flex-col justify-between">
         {/* Top: title + description */}
         <div>
-          <h3 className="text-xl md:text-2xl font-semibold text-white">
+          <h3 className="text-xl font-bold text-white mb-3 font-display">
             {name}
           </h3>
-          <p className="mt-2 text-xs md:text-sm text-gray-400 leading-relaxed h-16 md:h-20 overflow-hidden">
+          <p className="text-gray-300 text-sm leading-relaxed mb-4 font-body">
             {description}
           </p>
         </div>
@@ -76,7 +76,7 @@ function ProjectCard({ project }) {
               {tags.map((tag, idx) => (
                 <span
                   key={`${name}-tag-${idx}`}
-                  className="px-3 py-1 rounded-full border border-white/20 text-white bg-black font-semibold text-[11px] md:text-xs"
+                  className="px-2 py-1 bg-white/10 border border-white/20 rounded text-xs text-white font-ui"
                 >
                   {tag}
                 </span>
@@ -105,7 +105,7 @@ function ProjectCard({ project }) {
                   whileHover={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />
-                <span className="relative z-10">View Details</span>
+                <span className="relative z-10 font-ui">View Details</span>
               </Link>
             </motion.div>
 
@@ -116,7 +116,7 @@ function ProjectCard({ project }) {
               className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base"
             >
               <FaGithub className="w-5 h-5" />
-              <span>GitHub</span>
+              <span className="font-ui">GitHub</span>
             </a>
 
             {hasDemo ? (
@@ -127,7 +127,7 @@ function ProjectCard({ project }) {
                 className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-300 text-base"
               >
                 <HiOutlineExternalLink className="w-5 h-5" />
-                <span>Live Demo</span>
+                <span className="font-ui">Live Demo</span>
               </a>
             ) : (
               <span
@@ -135,7 +135,7 @@ function ProjectCard({ project }) {
                 title="Live demo not available"
               >
                 <HiOutlineExternalLink className="w-5 h-5" />
-                <span>Live Demo</span>
+                <span className="font-ui">Live Demo</span>
               </span>
             )}
           </div>

@@ -45,15 +45,17 @@ const PersonalIdentityPanel = ({ isActive, links }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <h3 className="text-2xl font-bold text-white mb-2">Ayush Patel</h3>
-          <div className="text-lg text-purple-400 mb-4 font-semibold">
+          <h3 className="text-2xl font-bold text-white mb-2 font-display">
+            Ayush Patel
+          </h3>
+          <div className="text-lg text-purple-400 mb-4 font-semibold font-display">
             Full Stack Developer
           </div>
 
           {/* Location with icon */}
-          <div className="flex items-center justify-center space-x-2 text-gray-300 mb-6">
+          <div className="flex items-center justify-center space-x-2 text-gray-300 mb-6 font-body">
             <div className="w-4 h-4 bg-blue-400 rounded-full" />
-            <span>Mumbai, India</span>
+            <span className="font-body">Mumbai, India</span>
           </div>
         </motion.div>
 

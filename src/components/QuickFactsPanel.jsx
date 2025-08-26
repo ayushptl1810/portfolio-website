@@ -54,7 +54,9 @@ const QuickFactsPanel = ({ isActive }) => {
           transition={{ duration: 0.5 }}
         >
           <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
-          <h4 className="text-lg font-semibold text-white">Key Metrics</h4>
+          <h4 className="text-lg font-semibold text-white font-display">
+            Quick Facts
+          </h4>
           <div className="flex-1 h-px bg-gradient-to-r from-green-400/50 to-transparent" />
         </motion.div>
 
@@ -71,18 +73,20 @@ const QuickFactsPanel = ({ isActive }) => {
             >
               {/* Value */}
               <div
-                className={`text-2xl font-bold bg-gradient-to-r ${fact.color} bg-clip-text text-transparent mb-1`}
+                className={`text-2xl font-bold bg-gradient-to-r ${fact.color} bg-clip-text text-transparent mb-1 font-ui`}
               >
                 {fact.value}
               </div>
 
               {/* Label */}
-              <div className="text-white font-medium text-sm mb-1">
+              <div className="text-white font-medium text-sm mb-1 font-ui">
                 {fact.label}
               </div>
 
               {/* Description */}
-              <div className="text-gray-400 text-xs">{fact.description}</div>
+              <div className="text-gray-400 text-xs font-body">
+                {fact.description}
+              </div>
             </motion.div>
           ))}
         </div>

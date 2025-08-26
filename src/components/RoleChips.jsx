@@ -32,8 +32,8 @@ function RoleChips({ value, onChange, options = [] }) {
                 : "text-white border-white hover:bg-white hover:text-blue-900"
             }`}
           >
-            <span>{iconFor(opt)}</span>
-            <span className="text-sm font-semibold">{opt}</span>
+            <span className="font-ui">{iconFor(opt)}</span>
+            <span className="font-ui">{opt}</span>
           </motion.button>
         );
       })}

@@ -56,12 +56,12 @@ const ProjectDetail = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-6xl md:text-7xl font-bold text-white mb-6">
-            {project.name}
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 font-display">
+            {project?.name || "Project Details"}
           </h1>
           <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-6" />
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            {project.description}
+          <p className="text-xl text-gray-300 mb-8 font-body">
+            {project?.description || "Explore the details of this project."}
           </p>
         </motion.div>
 
@@ -75,10 +75,14 @@ const ProjectDetail = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="aspect-video bg-black/20 rounded-2xl border border-white/10 flex items-center justify-center">
-              <div className="text-center text-gray-400">
+              <div className="text-center text-gray-400 font-body">
                 <div className="text-6xl mb-4">🎥</div>
-                <p>Video placeholder for {project.name}</p>
-                <p className="text-sm">Replace with actual video content</p>
+                <p className="font-body">
+                  Video placeholder for {project.name}
+                </p>
+                <p className="text-sm font-ui">
+                  Replace with actual video content
+                </p>
               </div>
             </div>
           </motion.div>
@@ -98,7 +102,7 @@ const ProjectDetail = () => {
               whileTap={{ scale: 0.98 }}
             >
               <FaArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-              <span className="font-medium">Back to Projects</span>
+              <span className="font-medium font-ui">Back to Projects</span>
             </motion.button>
 
             {/* Tech Stack Card */}
@@ -107,7 +111,7 @@ const ProjectDetail = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-blue-500/5 to-purple-500/5 animate-pulse" />
 
               <div className="relative z-10">
-                <h4 className="text-lg font-bold text-white mb-4 flex items-center">
+                <h4 className="text-lg font-bold text-white mb-4 flex items-center font-display">
                   <span className="w-3 h-3 bg-blue-400 rounded-full mr-3" />
                   Technologies
                   <div className="flex-1 h-px bg-gradient-to-r from-blue-400/50 to-transparent ml-3" />
@@ -129,7 +133,7 @@ const ProjectDetail = () => {
                     >
                       <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-lg blur-sm group-hover:blur-none transition-all duration-300" />
                       <div className="relative bg-black/60 border border-white/20 rounded-lg p-3 text-center hover:border-purple-400/50 transition-all duration-300 backdrop-blur-sm">
-                        <span className="text-white text-xs font-medium block truncate">
+                        <span className="text-white text-xs font-medium block truncate font-ui">
                           {tech}
                         </span>
                       </div>
@@ -177,7 +181,7 @@ const ProjectDetail = () => {
                   whileTap={{ scale: 0.98 }}
                 >
                   <FaExternalLinkAlt className="w-4 h-4" />
-                  <span>Live Demo</span>
+                  <span className="font-ui">Live Demo</span>
                 </motion.a>
               )}
 
@@ -191,7 +195,7 @@ const ProjectDetail = () => {
                   whileTap={{ scale: 0.98 }}
                 >
                   <FaGithub className="w-4 h-4" />
-                  <span>Source Code</span>
+                  <span className="font-ui">Source Code</span>
                 </motion.a>
               )}
             </div>
@@ -206,33 +210,39 @@ const ProjectDetail = () => {
           transition={{ duration: 0.8, delay: 0.2 }}
         >
           <div className="bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl">
-            <h3 className="text-2xl font-bold text-white mb-6">
+            <h3 className="text-2xl font-bold text-white mb-6 font-display">
               Project Details
             </h3>
 
             {loading && (
-              <div className="text-center py-12">
+              <div className="text-center py-12 font-body">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-400 mx-auto mb-4"></div>
-                <p className="text-gray-400">Loading project details...</p>
+                <p className="text-gray-400 font-body">
+                  Loading project details...
+                </p>
               </div>
             )}
 
             {error && (
-              <div className="text-center py-12">
+              <div className="text-center py-12 font-body">
                 <div className="text-red-400 text-6xl mb-4">⚠️</div>
-                <p className="text-red-400 mb-2">Failed to load README</p>
-                <p className="text-gray-400 text-sm mb-4">{error}</p>
+                <p className="text-red-400 mb-2 font-ui">
+                  Failed to load README
+                </p>
+                <p className="text-gray-400 text-sm mb-4 font-body">{error}</p>
 
                 {/* Fallback: Show project details from ProjectList */}
                 <div className="mt-8 text-left max-w-4xl mx-auto">
-                  <h4 className="text-xl font-bold text-white mb-4">
+                  <h4 className="text-xl font-bold text-white mb-4 font-display">
                     Project Overview
                   </h4>
-                  <p className="text-gray-300 mb-6">{project.description}</p>
+                  <p className="text-gray-300 mb-6 font-body">
+                    {project.description}
+                  </p>
 
                   {project.points && project.points.length > 0 && (
                     <div className="mb-6">
-                      <h5 className="text-lg font-semibold text-white mb-3">
+                      <h5 className="text-lg font-semibold text-white mb-3 font-ui">
                         Key Features
                       </h5>
                       <ul className="space-y-2">
@@ -242,7 +252,7 @@ const ProjectDetail = () => {
                             className="flex items-start space-x-3"
                           >
                             <span className="text-blue-400 mt-1">•</span>
-                            <span className="text-gray-300 text-sm">
+                            <span className="text-gray-300 text-sm font-body">
                               {point}
                             </span>
                           </li>
@@ -251,9 +261,9 @@ const ProjectDetail = () => {
                     </div>
                   )}
 
-                  <div className="text-center">
-                    <p className="text-gray-300 text-sm mb-4">
-                      You can also view the project directly on GitHub:
+                  <div className="text-center font-body">
+                    <p className="text-gray-300 text-sm mb-4 font-body">
+                      No README content available for this project.
                     </p>
                     {project.github_url && (
                       <a
@@ -263,7 +273,7 @@ const ProjectDetail = () => {
                         className="inline-flex items-center space-x-2 px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg transition-colors duration-300"
                       >
                         <FaGithub className="w-5 h-5" />
-                        <span>View on GitHub</span>
+                        <span className="font-ui">View on GitHub</span>
                       </a>
                     )}
                   </div>
@@ -277,27 +287,27 @@ const ProjectDetail = () => {
                   components={{
                     // Custom styling for different markdown elements
                     h1: ({ children }) => (
-                      <h1 className="text-3xl font-bold text-white mb-4 mt-6">
+                      <h1 className="text-3xl font-bold text-white mb-4 mt-6 font-display">
                         {children}
                       </h1>
                     ),
                     h2: ({ children }) => (
-                      <h2 className="text-2xl font-bold text-white mb-3 mt-5">
+                      <h2 className="text-2xl font-bold text-white mb-3 mt-5 font-display">
                         {children}
                       </h2>
                     ),
                     h3: ({ children }) => (
-                      <h3 className="text-xl font-bold text-white mb-3 mt-4">
+                      <h3 className="text-xl font-bold text-white mb-3 mt-4 font-display">
                         {children}
                       </h3>
                     ),
                     h4: ({ children }) => (
-                      <h4 className="text-lg font-bold text-white mb-2 mt-3">
+                      <h4 className="text-lg font-bold text-white mb-2 mt-3 font-display">
                         {children}
                       </h4>
                     ),
                     p: ({ children }) => (
-                      <p className="text-gray-300 mb-3 leading-relaxed">
+                      <p className="text-gray-300 mb-3 leading-relaxed font-body">
                         {children}
                       </p>
                     ),
@@ -333,13 +343,17 @@ const ProjectDetail = () => {
                           (child.type === "ul" || child.type === "ol")
                       );
 
-                      return <li className="text-gray-300 ml-4">{children}</li>;
+                      return (
+                        <li className="text-gray-300 ml-4 font-body">
+                          {children}
+                        </li>
+                      );
                     },
                     code: ({ children, className }) => {
                       const isInline = !className;
                       return isInline ? (
                         <motion.code
-                          className="bg-gray-800 text-blue-400 px-1 py-0.5 rounded text-sm font-mono"
+                          className="bg-gray-800 text-blue-400 px-1 py-0.5 rounded text-sm font-mono font-ui"
                           whileHover={{
                             scale: 1.02,
                             backgroundColor: "rgba(31, 41, 55, 0.9)",
@@ -350,7 +364,7 @@ const ProjectDetail = () => {
                         </motion.code>
                       ) : (
                         <motion.code
-                          className="block bg-gray-800 text-blue-400 p-3 rounded-lg text-sm font-mono overflow-x-auto relative"
+                          className="block bg-gray-800 text-blue-400 p-3 rounded-lg text-sm font-mono overflow-x-auto relative font-ui"
                           initial={{ opacity: 0, y: 10 }}
                           whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true }}
@@ -371,7 +385,7 @@ const ProjectDetail = () => {
                       </pre>
                     ),
                     blockquote: ({ children }) => (
-                      <blockquote className="border-l-4 border-blue-400 pl-4 italic text-gray-400 mb-3">
+                      <blockquote className="border-l-4 border-blue-400 pl-4 italic text-gray-400 mb-3 font-body">
                         {children}
                       </blockquote>
                     ),
@@ -380,18 +394,20 @@ const ProjectDetail = () => {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-400 hover:text-blue-300 underline"
+                        className="text-blue-400 hover:text-blue-300 underline font-ui"
                       >
                         {children}
                       </a>
                     ),
                     strong: ({ children }) => (
-                      <strong className="font-bold text-white">
+                      <strong className="font-bold text-white font-ui">
                         {children}
                       </strong>
                     ),
                     em: ({ children }) => (
-                      <em className="italic text-gray-200">{children}</em>
+                      <em className="italic text-gray-200 font-body">
+                        {children}
+                      </em>
                     ),
                     hr: () => <hr className="border-gray-600 my-6" />,
                     table: ({ children }) => (
@@ -402,12 +418,12 @@ const ProjectDetail = () => {
                       </div>
                     ),
                     th: ({ children }) => (
-                      <th className="border border-gray-600 px-4 py-2 text-left text-white font-bold bg-gray-800">
+                      <th className="border border-gray-600 px-4 py-2 text-left text-white font-bold bg-gray-800 font-ui">
                         {children}
                       </th>
                     ),
                     td: ({ children }) => (
-                      <td className="border border-gray-600 px-4 py-2 text-gray-300">
+                      <td className="border border-gray-600 px-4 py-2 text-gray-300 font-body">
                         {children}
                       </td>
                     ),

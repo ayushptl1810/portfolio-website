@@ -18,25 +18,24 @@ function ContactSection() {
         <div className="text-center">
           {/* Main heading */}
           <motion.h2
-            className="text-6xl md:text-7xl font-bold text-white mb-6"
+            className="text-4xl md:text-5xl font-bold text-white mb-8 text-center font-display"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            Ready to Collaborate?
+            Get In Touch
           </motion.h2>
 
           {/* Subtitle */}
           <motion.p
-            className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto"
+            className="text-xl text-gray-300 mb-12 text-center max-w-3xl mx-auto font-body"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
           >
-            Let's discuss your next project, explore opportunities, or just have
-            a tech conversation
+            Ready to collaborate? Let's discuss your next project or just have a chat about technology.
           </motion.p>
 
           {/* CTA Button */}
@@ -59,7 +58,7 @@ function ContactSection() {
               {/* Button content */}
               <div className="relative flex items-center space-x-3">
                 <FaRocket className="w-6 h-6" />
-                <span>Open Transmission Room</span>
+                <span className="font-ui">Open Transmission Room</span>
               </div>
 
               {/* Button border glow */}
@@ -75,7 +74,7 @@ function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
           >
-            <span className="text-lg">Or reach out directly:</span>
+            <span className="text-lg font-body">Or reach out directly:</span>
 
             <motion.a
               href="mailto:ayushptl1810@gmail.com"
@@ -83,7 +82,7 @@ function ContactSection() {
               whileHover={{ scale: 1.05 }}
             >
               <FaEnvelope className="w-5 h-5" />
-              <span>ayushptl1810@gmail.com</span>
+              <span className="font-ui">ayushptl1810@gmail.com</span>
             </motion.a>
 
             <motion.a
@@ -94,7 +93,7 @@ function ContactSection() {
               whileHover={{ scale: 1.05 }}
             >
               <FaLinkedin className="w-5 h-5" />
-              <span>LinkedIn</span>
+              <span className="font-ui">LinkedIn</span>
             </motion.a>
 
             <motion.a
@@ -105,7 +104,7 @@ function ContactSection() {
               whileHover={{ scale: 1.05 }}
             >
               <FaGithub className="w-5 h-5" />
-              <span>GitHub</span>
+              <span className="font-ui">GitHub</span>
             </motion.a>
           </motion.div>
         </div>

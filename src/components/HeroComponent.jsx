@@ -35,22 +35,23 @@ function HeroComponent() {
         >
           {/* Greeting */}
           <div className="flex items-center mb-6">
-            <span className="text-6xl mr-4">👋</span>
-            <h1 className="text-6xl font-bold">I'm Ayush</h1>
+            <h1 className="text-5xl font-bold font-display">Hey! I'm Ayush</h1>
           </div>
 
           {/* Professional Role with Gradient */}
           <div className="mb-8">
-            <h2 className="text-7xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+            <h2 className="text-6xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-display">
               Full Stack Developer
             </h2>
           </div>
 
           {/* Welcome Message */}
-          <p className="text-2xl text-gray-300 mb-3">
-            Welcome to my digital playground!
+          <p className="text-2xl text-gray-300 mb-3 font-body">
+            Welcome to my sanctuary!
           </p>
-          <p className="text-xl text-gray-400 mb-10">Based in Mumbai, India.</p>
+          <p className="text-xl text-gray-400 mb-10 font-body">
+            Based in Mumbai, India.
+          </p>
 
           {/* Connect Section */}
           <div className="flex items-center space-x-8">
@@ -62,7 +63,7 @@ function HeroComponent() {
               className="flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
             >
               <FaDownload className="w-7 h-7" />
-              <span>Download Resume</span>
+              <span className="font-ui">Download Resume</span>
             </motion.a>
 
             {/* Social Icons */}

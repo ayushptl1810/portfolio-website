@@ -33,11 +33,11 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-6xl md:text-7xl font-bold text-white mb-6">
+          <h2 className="text-6xl md:text-7xl font-bold text-white mb-6 font-display">
             About Me
           </h2>
           <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-6" />
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto font-body">
             Exploring the frontiers of development, one innovation at a time
           </p>
         </motion.div>
@@ -81,7 +81,7 @@ const About = () => {
 
                 <div className="relative z-10">
                   <div className="text-center mb-4">
-                    <h4 className="text-xl font-bold text-white mb-2">
+                    <h4 className="text-xl font-bold text-white mb-2 font-display">
                       Education
                     </h4>
                     <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto" />
@@ -91,14 +91,14 @@ const About = () => {
                     {/* IIT Madras */}
                     <div className="text-left">
                       <div className="flex items-start justify-between mb-1">
-                        <h5 className="text-white font-semibold text-sm">
+                        <h5 className="text-white font-semibold text-sm font-ui">
                           IIT Madras
                         </h5>
-                        <span className="text-purple-400 text-xs font-mono bg-purple-400/10 px-2 py-1 rounded">
+                        <span className="text-purple-400 text-xs font-mono bg-purple-400/10 px-2 py-1 rounded font-ui">
                           CGPA: 7.99
                         </span>
                       </div>
-                      <p className="text-blue-400 text-xs font-medium mb-1">
+                      <p className="text-blue-400 text-xs font-medium mb-1 font-body">
                         BS in Data Science • 2023 - Present
                       </p>
                     </div>
@@ -109,14 +109,14 @@ const About = () => {
                     {/* DJ Sanghvi */}
                     <div className="text-left">
                       <div className="flex items-start justify-between mb-1">
-                        <h5 className="text-white font-semibold text-sm">
+                        <h5 className="text-white font-semibold text-sm font-ui">
                           Dwarkadas J. Sanghvi College
                         </h5>
-                        <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded">
+                        <span className="text-green-400 text-xs font-mono bg-green-400/10 px-2 py-1 rounded font-ui">
                           CGPA: 9.33
                         </span>
                       </div>
-                      <p className="text-blue-400 text-xs font-medium mb-1">
+                      <p className="text-blue-400 text-xs font-medium mb-1 font-body">
                         BTech CSE (Data Science) • 2023 - Present
                       </p>
                     </div>
@@ -126,7 +126,7 @@ const About = () => {
                   <div className="mt-4 pt-3 border-t border-white/10">
                     <div className="flex items-center justify-center space-x-2">
                       <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                      <span className="text-green-400 text-xs font-medium">
+                      <span className="text-green-400 text-xs font-medium font-ui">
                         Currently Enrolled
                       </span>
                     </div>
@@ -173,13 +173,13 @@ const About = () => {
 
               <div className="relative z-10">
                 <div className="text-center mb-6">
-                  <h3 className="text-2xl font-bold text-white mb-4">
+                  <h3 className="text-2xl font-bold text-white mb-4 font-display">
                     About Me
                   </h3>
                   <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-4" />
                 </div>
 
-                <div className="space-y-4 text-gray-300 text-sm leading-relaxed">
+                <div className="space-y-4 text-gray-300 text-sm leading-relaxed font-body">
                   <p>
                     I'm a passionate Full Stack Developer with a love for
                     creating elegant, user-centric web applications. My journey
@@ -205,7 +205,7 @@ const About = () => {
 
                 {/* Tech Stack Preview */}
                 <div className="mt-6 pt-4 border-t border-white/10">
-                  <h4 className="text-white font-semibold mb-3 text-center">
+                  <h4 className="text-white font-semibold mb-3 text-center font-ui">
                     Tech Stack
                   </h4>
                   <div className="flex flex-wrap justify-center gap-2">
@@ -219,7 +219,7 @@ const About = () => {
                     ].map((tech, index) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs text-white"
+                        className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs text-white font-ui"
                       >
                         {tech}
                       </span>
@@ -311,7 +311,7 @@ const About = () => {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span>Back to Home</span>
+            <span className="font-ui">Back to Home</span>
           </motion.button>
         </motion.div>
       </div>

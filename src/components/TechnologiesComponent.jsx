@@ -13,14 +13,13 @@ function TechnologiesComponent() {
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-white mb-6">
-            Current technologies
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 text-center font-display">
+            Technologies I Work With
           </h2>
 
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            I'm proficient in a range of modern technologies that empower me to
-            build highly functional solutions. These are some of my main
-            technologies.
+          <p className="text-xl text-gray-300 mb-12 text-center max-w-3xl mx-auto font-body">
+            A comprehensive overview of the tools, languages, and frameworks I
+            use to bring ideas to life.
           </p>
         </div>
 
@@ -63,10 +62,12 @@ function TechnologiesComponent() {
                     </div>
                   </motion.div>
                   <div className="flex-1 flex flex-col justify-center">
-                    <h3 className="text-white font-semibold text-lg mb-1">
+                    <h3 className="text-white font-semibold text-lg mb-1 font-ui">
                       {tech.name}
                     </h3>
-                    <p className="text-gray-400 text-sm">{tech.description}</p>
+                    <p className="text-gray-400 text-sm font-body">
+                      {tech.description}
+                    </p>
                   </div>
                 </div>
 

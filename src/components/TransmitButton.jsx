@@ -63,7 +63,7 @@ function TransmitButton({
       disabled={disabled}
       whileHover={!disabled ? { scale: 1.02 } : undefined}
       whileTap={!disabled ? { scale: 0.98 } : undefined}
-      className={`relative w-40 h-40 rounded-full border backdrop-blur-md text-white overflow-hidden ${
+      className={`relative w-40 h-40 rounded-full border backdrop-blur-md text-white overflow-hidden cursor-pointer ${
         disabled
           ? "bg-white/5 border-white/10 opacity-50 cursor-not-allowed"
           : "bg-white/5 border-white/15"
@@ -117,9 +117,6 @@ function TransmitButton({
           strokeLinecap="round"
         />
       </svg>
-      <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold tracking-widest px-6 text-center">
-        {label}
-      </span>
     </motion.button>
   );
 }

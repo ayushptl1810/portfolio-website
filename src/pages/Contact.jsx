@@ -20,6 +20,9 @@ function Contact() {
   const [showTxBanner, setShowTxBanner] = React.useState(false);
   const [pageReturning, setPageReturning] = React.useState(true);
 
+  // Track the in-flight request for diagnostics
+  const sendRef = React.useRef(null);
+
   const roleToSubject = {
     General: "General Inquiry",
     Freelance: "Freelance Project",
@@ -40,6 +43,48 @@ function Contact() {
     if (submitting || !formValid) return;
     setSubmitting(true);
     setBlastActive(true);
+
+    // Start request in parallel with animation (do not await here)
+    const startedAt = performance.now();
+    const payload = {
+      name,
+      email,
+      linkedinUrl,
+      role,
+      subject,
+      message,
+      replyVia,
+      meta: {
+        ua: navigator.userAgent,
+        ts: Date.now(),
+      },
+    };
+
+    sendRef.current = fetch("http://localhost:3001/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    })
+      .then(async (res) => {
+        const ok = res.ok;
+        const ms = Math.round(performance.now() - startedAt);
+        if (!ok)
+          throw new Error(`Contact send failed (${res.status}) in ${ms}ms`);
+        // Reset form on success
+        setName("");
+        setEmail("");
+        setLinkedinUrl("");
+        setMessage("");
+        console.log(`Contact sent successfully in ${ms}ms`);
+      })
+      .catch((err) => {
+        const ms = Math.round(performance.now() - startedAt);
+        console.error(`Contact send error after ${ms}ms:`, err);
+      })
+      .finally(() => {
+        setSubmitting(false);
+        setProgress(0);
+      });
   };
 
   return (
@@ -51,17 +96,18 @@ function Contact() {
         showFlash={false}
         onDone={() => {
           setBlastActive(false);
-          setSubmitting(false);
-          setProgress(0);
-          // 1) Show banner first
+          // Show banner immediately when animation completes (independent of network)
           setShowTxBanner(true);
           setPageReturning(false);
-          // 2) Hide banner, then after a short gap, bring page back
-          const BANNER_MS = 1200;
-          const GAP_MS = 600;
+
+          // Hide banner after delay, then bring page back
+          const BANNER_MS = 2500;
+          const GAP_MS = 1000;
           window.setTimeout(() => {
             setShowTxBanner(false);
-            window.setTimeout(() => setPageReturning(true), GAP_MS);
+            window.setTimeout(() => {
+              setPageReturning(true);
+            }, GAP_MS);
           }, BANNER_MS);
         }}
       />
@@ -69,20 +115,52 @@ function Contact() {
         {showTxBanner && (
           <motion.div
             key="tx-banner"
-            className="fixed inset-0 z-[80] flex items-center justify-center pointer-events-none"
+            className="fixed inset-0 z-[90] flex items-center justify-center pointer-events-none"
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: -20 }}
             exit={{ opacity: 0, y: -240 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <span
-              className="text-white font-bold text-center"
-              style={{ fontSize: "4rem", letterSpacing: "0.08em" }}
-            >
-              MESSAGE
-              <br />
-              TRANSMITTED
-            </span>
+            <div className="text-center">
+              <motion.div
+                className="w-16 h-16 bg-green-500 rounded-full mx-auto mb-6 flex items-center justify-center"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              >
+                <svg
+                  className="w-8 h-8 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </motion.div>
+              <motion.span
+                className="text-white font-bold text-center font-ui block"
+                style={{ fontSize: "3.5rem", letterSpacing: "0.08em" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+              >
+                MESSAGE
+              </motion.span>
+              <motion.span
+                className="text-white font-bold text-center font-ui block"
+                style={{ fontSize: "3.5rem", letterSpacing: "0.08em" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+              >
+                TRANSMITTED
+              </motion.span>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -99,7 +177,7 @@ function Contact() {
           {/* Left */}
           <div>
             <motion.h1
-              className="text-6xl md:text-7xl font-extrabold text-white mb-2"
+              className="text-6xl md:text-7xl font-bold text-white mb-6 font-display"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
@@ -113,13 +191,13 @@ function Contact() {
               transition={{ duration: 0.4, ease: "easeOut" }}
             />
             <motion.p
-              className="text-gray-300 text-lg mb-6 max-w-xl"
+              className="text-xl text-gray-300 mb-8 font-body"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
             >
-              Calibrate your signal, compose your message, then hold to
-              transmit.
+              Let's discuss your next project or just have a chat about
+              technology.
             </motion.p>
 
             <RoleChips
@@ -143,7 +221,7 @@ function Contact() {
                 className="flex items-center space-x-2 px-5 py-2 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base cursor-pointer"
               >
                 <FaDownload className="w-5 h-5" />
-                <span>Download Resume</span>
+                <span className="font-ui">Download Resume</span>
               </motion.a>
             </div>
           </div>
@@ -174,7 +252,7 @@ function Contact() {
             >
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm text-gray-300 mb-1">
+                  <label className="block text-sm text-gray-300 mb-1 font-ui">
                     Name
                   </label>
                   <motion.input
@@ -186,7 +264,7 @@ function Contact() {
                     whileFocus={{
                       scale: 1.02,
                       borderColor: "rgba(147, 51, 234, 0.8)",
-                      boxShadow: "0 0 20px rgba(147, 51, 234, 0.2)"
+                      boxShadow: "0 0 20px rgba(147, 51, 234, 0.2)",
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -194,7 +272,7 @@ function Contact() {
 
                 {replyVia === "Email" ? (
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">
+                    <label className="block text-sm text-gray-300 mb-1 font-ui">
                       Email
                     </label>
                     <motion.input
@@ -208,14 +286,14 @@ function Contact() {
                       whileFocus={{
                         scale: 1.02,
                         borderColor: "rgba(59, 130, 246, 0.8)",
-                        boxShadow: "0 0 20px rgba(59, 130, 246, 0.2)"
+                        boxShadow: "0 0 20px rgba(59, 130, 246, 0.2)",
                       }}
                       transition={{ duration: 0.3 }}
                     />
                   </div>
                 ) : (
                   <div>
-                    <label className="block text-sm text-gray-300 mb-1">
+                    <label className="block text-sm text-gray-300 mb-1 font-ui">
                       LinkedIn URL
                     </label>
                     <motion.input
@@ -229,7 +307,7 @@ function Contact() {
                       whileFocus={{
                         scale: 1.02,
                         borderColor: "rgba(236, 72, 153, 0.8)",
-                        boxShadow: "0 0 20px rgba(236, 72, 153, 0.2)"
+                        boxShadow: "0 0 20px rgba(236, 72, 153, 0.2)",
                       }}
                       transition={{ duration: 0.3 }}
                     />
@@ -237,7 +315,7 @@ function Contact() {
                 )}
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-300 mb-1">
+                  <label className="block text-sm text-gray-300 mb-1 font-ui">
                     Subject
                   </label>
                   <input
@@ -247,7 +325,7 @@ function Contact() {
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm text-gray-300 mb-1">
+                  <label className="block text-sm text-gray-300 mb-1 font-ui">
                     Message
                   </label>
                   <motion.textarea
@@ -259,7 +337,7 @@ function Contact() {
                     whileFocus={{
                       scale: 1.01,
                       borderColor: "rgba(34, 197, 94, 0.8)",
-                      boxShadow: "0 0 20px rgba(34, 197, 94, 0.2)"
+                      boxShadow: "0 0 20px rgba(34, 197, 94, 0.2)",
                     }}
                     transition={{ duration: 0.3 }}
                   />
@@ -287,7 +365,7 @@ function Contact() {
         </div>
 
         {/* Back to Home Button */}
-        <div className="text-center mt-8">
+        <div className="text-center mt-8 font-body">
           <motion.button
             type="button"
             onClick={() => {
@@ -301,7 +379,7 @@ function Contact() {
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span>Back to Home</span>
+            <span className="font-ui">Back to Home</span>
           </motion.button>
         </div>
       </motion.div>

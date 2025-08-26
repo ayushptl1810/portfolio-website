@@ -45,7 +45,9 @@ const SoftSkillsPanel = ({ isActive }) => {
           transition={{ duration: 0.5 }}
         >
           <div className="w-3 h-3 bg-blue-400 rounded-full animate-pulse" />
-          <h4 className="text-lg font-semibold text-white">Core Skills</h4>
+          <h4 className="text-lg font-semibold text-white font-display">
+            Core Skills
+          </h4>
           <div className="flex-1 h-px bg-gradient-to-r from-blue-400/50 to-transparent" />
         </motion.div>
 
@@ -62,11 +64,15 @@ const SoftSkillsPanel = ({ isActive }) => {
             >
               {/* Skill Header */}
               <div className="mb-2">
-                <h5 className="text-white font-medium text-sm">{skill.name}</h5>
+                <h5 className="text-white font-medium text-sm font-ui">
+                  {skill.name}
+                </h5>
               </div>
 
               {/* Skill Description */}
-              <p className="text-xs text-gray-400 mb-2">{skill.description}</p>
+              <p className="text-xs text-gray-400 mb-2 font-body">
+                {skill.description}
+              </p>
             </motion.div>
           ))}
         </div>
@@ -79,10 +85,14 @@ const SoftSkillsPanel = ({ isActive }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          <div className="text-xs text-gray-400">Performance Level:</div>
+          <div className="text-xs text-gray-400 font-ui">
+            Performance Level:
+          </div>
           <div className="flex items-center space-x-2">
             <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse" />
-            <span className="text-blue-400 text-xs font-medium">Optimal</span>
+            <span className="text-blue-400 text-xs font-medium font-ui">
+              Optimal
+            </span>
           </div>
         </motion.div>
       </div>
