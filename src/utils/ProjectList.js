@@ -151,8 +151,8 @@ const ProjectList = [
       "Deployed Scalable Vector Search Infrastructure: Deployed scalable vector search infrastructure using Pinecone and LLaMA v2 embeddings after migrating from FAISS and Sentence Transformers, with optimized batch upserts, rate-limit handling, and metadata-aware indexing for efficient, large-scale semantic search.",
       "Implemented Adaptive, TF-IDF-Driven Search Logic: Developed a hybrid search algorithm that dynamically learns keyword weights, chunks and ranks context intelligently, and fuses course and forum content to return rich, relevant results, which are then passed to Gemini AI for final answer generation.",
     ],
-    image: null,
-    video: null,
+    image: "src/assets/images/VirtualTeachingAssistant.png",
+    video: "https://virtual-teaching-assistant-iitm.streamlit.app/",
     deployed_url: "https://tds-project-1-ujvv.onrender.com",
   },
   {
