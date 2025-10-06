@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
 import { createPortal } from "react-dom";
 
-function RocketRive({ src = "/src/assets/chainless.riv" }) {
+function RocketRive({ src }) {
   const [ready, setReady] = React.useState(false);
   const { RiveComponent } = useRive({
     src,
@@ -31,7 +31,7 @@ function RocketRive({ src = "/src/assets/chainless.riv" }) {
 
 export default function TransmissionBlast({
   active,
-  src = "/src/assets/chainless.riv",
+  src,
   onDone,
   timing,
   background = "transparent", // "transparent" | "gradient"

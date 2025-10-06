@@ -1,5 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
+import eldenRingLogo from "../assets/EldenRingLogo.jpg";
+import wukongLogo from "../assets/WukongLogo.png";
+import clubLogo from "../assets/clubLogo.jpg";
 
 const PersonalPassionsPanel = ({ isActive }) => {
   return (
@@ -49,7 +52,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
               >
                 <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden relative">
                   <img
-                    src="/src/assets/EldenRingLogo.jpg"
+                    src={eldenRingLogo}
                     alt="Elden Ring"
                     className="w-full h-full object-cover"
                   />
@@ -74,7 +77,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
               >
                 <div className="h-48 bg-black/40 border border-white/20 rounded-xl overflow-hidden relative">
                   <img
-                    src="/src/assets/WukongLogo.png"
+                    src={wukongLogo}
                     alt="Black Myth Wukong"
                     className="w-full h-full object-cover"
                   />
@@ -155,7 +158,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
                 }}
               >
                 <img
-                  src="/src/assets/clubLogo.jpg"
+                  src={clubLogo}
                   alt="Manchester United FC"
                   className="w-full h-full object-cover"
                 />

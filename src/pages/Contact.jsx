@@ -6,6 +6,8 @@ import TransmitButton from "../components/TransmitButton";
 import SegmentedToggle from "../components/SegmentedToggle";
 import { FaDownload } from "react-icons/fa";
 import TransmissionBlast from "../components/TransmissionBlast";
+import chainlessRocket from "../assets/chainless_rocket.riv";
+import resumePdf from "../assets/Resume.pdf";
 
 function Contact() {
   const [name, setName] = React.useState("");
@@ -60,7 +62,7 @@ function Contact() {
       },
     };
 
-    sendRef.current = fetch("http://localhost:3001/api/contact", {
+    sendRef.current = fetch("/api/contact", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -92,7 +94,7 @@ function Contact() {
       <IncomingTransition />
       <TransmissionBlast
         active={blastActive}
-        src="/src/assets/chainless_rocket.riv"
+        src={chainlessRocket}
         showFlash={false}
         onDone={() => {
           setBlastActive(false);
@@ -216,7 +218,7 @@ function Contact() {
               <motion.a
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
-                href="/src/assets/Resume.pdf"
+                href={resumePdf}
                 download="Ayush_Patel_Resume.pdf"
                 className="flex items-center space-x-2 px-5 py-2 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base cursor-pointer"
               >

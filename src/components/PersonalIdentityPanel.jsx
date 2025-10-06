@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaSpotify, FaInstagram, FaWhatsapp } from "react-icons/fa";
+import meImage from "../assets/Me.jpeg";
 
 const PersonalIdentityPanel = ({ isActive, links }) => {
   return (
@@ -29,7 +30,7 @@ const PersonalIdentityPanel = ({ isActive, links }) => {
             {/* Profile Photo */}
             <div className="w-41 h-41 rounded-full overflow-hidden shadow-2xl shadow-purple-500/30 border-4 border-white/20">
               <img
-                src="/src/assets/Me.jpeg"
+                src={meImage}
                 alt="Ayush Patel"
                 className="w-full h-full object-cover"
               />

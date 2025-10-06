@@ -2,10 +2,12 @@ import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
 import { Suspense } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
+import birbRiv from "../assets/birb.riv";
+import resumePdf from "../assets/Resume.pdf";
 
 function RiveAnimation() {
   const { RiveComponent } = useRive({
-    src: "/src/assets/birb.riv",
+    src: birbRiv,
     layout: new Layout({
       fit: Fit.Cover,
       alignment: Alignment.Center,
@@ -58,7 +60,7 @@ function HeroComponent() {
             <motion.a
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
-              href="/src/assets/Resume.pdf"
+              href={resumePdf}
               download="Ayush_Patel_Resume.pdf"
               className="flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
             >

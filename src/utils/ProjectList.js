@@ -1,3 +1,11 @@
+// Import project images
+import influenceNetImage from "../assets/images/InfluenceNet.png";
+import codecircuitImage from "../assets/images/Codecircuit.png";
+import quizAppImage from "../assets/images/QuizApp.png";
+import zentryImage from "../assets/images/Zentry.png";
+import todoListImage from "../assets/images/TodoList.png";
+import virtualTeachingAssistantImage from "../assets/images/VirtualTeachingAssistant.png";
+
 const ProjectList = [
   {
     id: 1,
@@ -15,7 +23,7 @@ const ProjectList = [
       "Developed search, filter, and analytics features for improved user insights.",
       "Created optimized RESTful API endpoints with secure authentication.",
     ],
-    image: "src/assets/images/InfluenceNet.png",
+    image: influenceNetImage,
     video: null,
     deployed_url: null,
   },
@@ -33,7 +41,7 @@ const ProjectList = [
       "Implemented real-time visualization with smooth camera transitions, animated globe interactions, and instant location highlighting.",
       "Developed dynamic filtering and search capabilities, allowing users to refine results with contextual filters per activity type.",
     ],
-    image: "src/assets/images/Codecircuit.png",
+    image: codecircuitImage,
     video: null,
     deployed_url: "https://codecircuit-one.vercel.app/",
   },
@@ -52,7 +60,7 @@ const ProjectList = [
       "Built content management tools for subjects, chapters, quizzes, and student records.",
       "Developed automated reporting and analytics with Celery background tasks and interactive Chart.js dashboards.",
     ],
-    image: "src/assets/images/QuizApp.png",
+    image: quizAppImage,
     video: null,
     deployed_url: null,
   },
@@ -115,7 +123,7 @@ const ProjectList = [
       "Implemented multiple animations using pure CSS, enhancing user experience with smooth transitions and effects.",
       "A clean, dark-themed design with a focus on user experience.",
     ],
-    image: "src/assets/images/Zentry.png",
+    image: zentryImage,
     video: null,
     deployed_url: "https://zentryclone-one.vercel.app/",
   },
@@ -133,7 +141,7 @@ const ProjectList = [
       "Implemented a responsive, accessible UI with Tailwind CSS and React hooks, using Axios for API communication and @react-spring/web for smooth, animated list interactions and state changes.",
       "Engineered a configurable, deployment-ready setup using environment variables (e.g., MONGO_URI), CORS-enabled server, and a clear client/server monorepo for seamless local replication and cloud deployment.",
     ],
-    image: "src/assets/images/TodoList.png",
+    image: todoListImage,
     video: null,
     deployed_url: "https://todolist-w5aa.onrender.com/",
   },
@@ -151,7 +159,7 @@ const ProjectList = [
       "Deployed Scalable Vector Search Infrastructure: Deployed scalable vector search infrastructure using Pinecone and LLaMA v2 embeddings after migrating from FAISS and Sentence Transformers, with optimized batch upserts, rate-limit handling, and metadata-aware indexing for efficient, large-scale semantic search.",
       "Implemented Adaptive, TF-IDF-Driven Search Logic: Developed a hybrid search algorithm that dynamically learns keyword weights, chunks and ranks context intelligently, and fuses course and forum content to return rich, relevant results, which are then passed to Gemini AI for final answer generation.",
     ],
-    image: "src/assets/images/VirtualTeachingAssistant.png",
+    image: virtualTeachingAssistantImage,
     video: "https://virtual-teaching-assistant-iitm.streamlit.app/",
     deployed_url: "https://tds-project-1-ujvv.onrender.com",
   },
