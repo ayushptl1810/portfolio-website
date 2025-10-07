@@ -45,9 +45,9 @@ function App() {
           {/* 3D Model - Clean, simple positioning */}
           <div
             id="app-spline"
-            className="fixed bottom-0 left-0 z-50 pointer-events-none translate-x-[-10rem] translate-y-[10rem] md:translate-x-[-24.5rem] md:translate-y-[40rem] overflow-visible"
+            className="hidden lg:block fixed bottom-0 left-0 z-50 pointer-events-none translate-x-[-10rem] translate-y-[10rem] lg:translate-x-[-24.5rem] lg:translate-y-[40rem] overflow-visible"
           >
-            <div className="w-[32rem] h-[48rem] origin-bottom-left scale-[1.35] md:scale-[1.75]">
+            <div className="w-[32rem] h-[48rem] origin-bottom-left scale-[1.35] lg:scale-[1.75]">
               <Spline
                 scene="https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode"
                 className="w-full h-full"

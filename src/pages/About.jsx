@@ -20,10 +20,10 @@ const About = () => {
   ];
 
   return (
-    <section className="w-full min-h-screen py-24 relative overflow-hidden">
+    <section className="w-full min-h-screen py-16 md:py-24 relative overflow-hidden">
       {/* Background Quantum Field */}
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <motion.div
           className="text-center mb-12"
@@ -33,17 +33,17 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-6xl md:text-7xl font-bold text-white mb-6 font-display">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 font-display">
             About Me
           </h2>
           <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-6" />
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto font-body">
+          <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto font-body">
             Exploring the frontiers of development, one innovation at a time
           </p>
         </motion.div>
 
         {/* Quantum Identity Matrix */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Left Panel - Personal Identity + Additional Content */}
           <motion.div
             className="lg:col-span-1 flex flex-col h-full"
@@ -161,7 +161,7 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
+              className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(147, 51, 234, 0.5)",
@@ -179,7 +179,7 @@ const About = () => {
                   <div className="h-1 w-16 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-4" />
                 </div>
 
-                <div className="space-y-4 text-gray-300 text-sm leading-relaxed font-body">
+                <div className="space-y-4 text-gray-300 text-sm leading-relaxed font-body max-w-prose mx-auto">
                   <p>
                     I'm a passionate Full Stack Developer with a love for
                     creating elegant, user-centric web applications. My journey
@@ -208,7 +208,7 @@ const About = () => {
                   <h4 className="text-white font-semibold mb-3 text-center font-ui">
                     Tech Stack
                   </h4>
-                  <div className="flex flex-wrap justify-center gap-2">
+                  <div className="flex flex-wrap justify-center gap-2 max-w-xl mx-auto">
                     {[
                       "React",
                       "Node.js",
@@ -219,7 +219,7 @@ const About = () => {
                     ].map((tech, index) => (
                       <span
                         key={tech}
-                        className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-xs text-white font-ui"
+                        className="px-3 py-1 bg-white/10 border border-white/20 rounded-full text-[11px] sm:text-xs text-white font-ui"
                       >
                         {tech}
                       </span>
@@ -258,7 +258,7 @@ const About = () => {
               {panels.slice(1).map((panel, index) => (
                 <motion.div
                   key={panel.id}
-                  className="flex-1"
+                  className="flex-1 min-h-[12rem]"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -280,7 +280,7 @@ const About = () => {
 
         {/* Bottom Row - Additional Panels */}
         <motion.div
-          className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8"
+          className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -292,7 +292,7 @@ const About = () => {
 
         {/* Back to Home Button */}
         <motion.div
-          className="text-center mt-12"
+          className="text-center mt-10 md:mt-12"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -307,7 +307,7 @@ const About = () => {
                 window.location.href = "/";
               }
             }}
-            className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"
+            className="inline-flex items-center space-x-3 px-6 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base md:text-lg cursor-pointer"
             whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.98 }}
           >

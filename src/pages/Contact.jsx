@@ -21,6 +21,21 @@ function Contact() {
   const [blastActive, setBlastActive] = React.useState(false);
   const [showTxBanner, setShowTxBanner] = React.useState(false);
   const [pageReturning, setPageReturning] = React.useState(true);
+  const [isMobileOrReduced, setIsMobileOrReduced] = React.useState(false);
+  // Detect mobile viewport or prefers-reduced-motion
+  React.useEffect(() => {
+    const mqMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const mqMobile = window.matchMedia("(max-width: 767px)");
+    const update = () =>
+      setIsMobileOrReduced(mqMotion.matches || mqMobile.matches);
+    update();
+    mqMotion.addEventListener?.("change", update);
+    mqMobile.addEventListener?.("change", update);
+    return () => {
+      mqMotion.removeEventListener?.("change", update);
+      mqMobile.removeEventListener?.("change", update);
+    };
+  }, []);
 
   // Track the in-flight request for diagnostics
   const sendRef = React.useRef(null);
@@ -44,7 +59,9 @@ function Contact() {
   const handleCommit = async () => {
     if (submitting || !formValid) return;
     setSubmitting(true);
-    setBlastActive(true);
+    if (!isMobileOrReduced) {
+      setBlastActive(true);
+    }
 
     // Start request in parallel with animation (do not await here)
     const startedAt = performance.now();
@@ -92,27 +109,29 @@ function Contact() {
   return (
     <>
       <IncomingTransition />
-      <TransmissionBlast
-        active={blastActive}
-        src={chainlessRocket}
-        showFlash={false}
-        onDone={() => {
-          setBlastActive(false);
-          // Show banner immediately when animation completes (independent of network)
-          setShowTxBanner(true);
-          setPageReturning(false);
+      {!isMobileOrReduced && (
+        <TransmissionBlast
+          active={blastActive}
+          src={chainlessRocket}
+          showFlash={false}
+          onDone={() => {
+            setBlastActive(false);
+            // Show banner immediately when animation completes (independent of network)
+            setShowTxBanner(true);
+            setPageReturning(false);
 
-          // Hide banner after delay, then bring page back
-          const BANNER_MS = 2500;
-          const GAP_MS = 1000;
-          window.setTimeout(() => {
-            setShowTxBanner(false);
+            // Hide banner after delay, then bring page back
+            const BANNER_MS = 2500;
+            const GAP_MS = 1000;
             window.setTimeout(() => {
-              setPageReturning(true);
-            }, GAP_MS);
-          }, BANNER_MS);
-        }}
-      />
+              setShowTxBanner(false);
+              window.setTimeout(() => {
+                setPageReturning(true);
+              }, GAP_MS);
+            }, BANNER_MS);
+          }}
+        />
+      )}
       <AnimatePresence>
         {showTxBanner && (
           <motion.div

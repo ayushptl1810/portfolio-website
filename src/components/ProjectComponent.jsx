@@ -93,26 +93,26 @@ function ProjectComponent({ ids }) {
   return (
     <>
       <IncomingTransition />
-      <div className="w-full min-h-screen px-4 md:px-6 py-10">
+      <div className="w-full min-h-screen px-4 sm:px-5 md:px-6 py-8 md:py-10">
         <div className="max-w-6xl mx-auto">
           <motion.div
-            className="mb-8 text-center"
+            className="mb-6 md:mb-8 text-center"
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.4 }}
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-8 text-center font-display">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
               My Projects
             </h2>
 
-            <p className="text-xl text-gray-300 mb-12 text-center max-w-3xl mx-auto font-body">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 md:mb-12 text-center max-w-3xl mx-auto font-body">
               Here are some of the projects I've built. Each one represents a
               unique challenge and learning experience.
             </p>
           </motion.div>
 
-          <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 place-items-center">
+          <div className="grid gap-5 sm:gap-6 grid-cols-1 md:grid-cols-2 place-items-center">
             {dataset.map((project, idx) => (
               <motion.div
                 key={project.id}
@@ -133,17 +133,17 @@ function ProjectComponent({ ids }) {
             ))}
           </div>
 
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 md:mt-12">
             <motion.button
               type="button"
               onClick={
                 onProjectsPage ? handleBackToHome : handleViewAllProjects
               }
-              className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-500 text-lg cursor-pointer relative overflow-hidden group"
+              className="inline-flex items-center justify-center gap-3 px-5 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white transition-all duration-300 text-base md:text-lg cursor-pointer relative overflow-hidden group"
               whileHover={{
-                scale: 1.05,
-                borderColor: "rgba(147, 51, 234, 0.8)",
-                boxShadow: "0 0 30px rgba(147, 51, 234, 0.3)",
+                scale: 1.03,
+                borderColor: "rgba(147, 51, 234, 0.7)",
+                boxShadow: "0 0 24px rgba(147, 51, 234, 0.25)",
               }}
               whileTap={{ scale: 0.98 }}
             >
@@ -152,11 +152,11 @@ function ProjectComponent({ ids }) {
                 className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full"
                 initial={{ scale: 0, opacity: 0 }}
                 whileHover={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.45, ease: "easeOut" }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
               />
 
               {/* Button Content */}
-              <span className="relative z-10 font-ui">
+              <span className="relative z-10 font-ui whitespace-nowrap">
                 {onProjectsPage ? "Back to Home" : "View All Projects"}
               </span>
             </motion.button>

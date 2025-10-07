@@ -87,16 +87,16 @@ function ProjectCard({ project }) {
 
         {/* Bottom: actions */}
         <div className="flex flex-col gap-3 mt-4">
-          {/* All buttons in one row */}
-          <div className="flex items-center gap-3">
+          {/* All buttons responsive */}
+          <div className="flex items-center gap-3 flex-wrap">
             <motion.div
-              className="flex-1"
+              className="flex-1 min-w-[9rem]"
               whileHover={{ scale: 1.02 }}
               transition={{ duration: 0.2 }}
             >
               <Link
                 to={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
-                className="flex items-center justify-center space-x-2 px-5 py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full transition-all duration-300 text-base font-medium w-full relative overflow-hidden group"
+                className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full transition-all duration-300 text-sm md:text-base font-medium w-full relative overflow-hidden group"
               >
                 {/* Transmission Room Style Hover Effect */}
                 <motion.div
@@ -113,9 +113,9 @@ function ProjectCard({ project }) {
               href={github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base"
+              className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-sm md:text-base flex-1 min-w-[8.5rem]"
             >
-              <FaGithub className="w-5 h-5" />
+              <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
               <span className="font-ui">GitHub</span>
             </a>
 
@@ -124,17 +124,17 @@ function ProjectCard({ project }) {
                 href={demoHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-300 text-base"
+                className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-300 text-sm md:text-base flex-1 min-w-[9rem]"
               >
-                <HiOutlineExternalLink className="w-5 h-5" />
+                <HiOutlineExternalLink className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-ui">Live Demo</span>
               </a>
             ) : (
               <span
-                className="flex items-center space-x-2 px-5 py-2.5 border-2 border-white/40 rounded-full text-white/60 cursor-not-allowed text-base"
+                className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white/40 rounded-full text-white/60 cursor-not-allowed text-sm md:text-base flex-1 min-w-[9rem]"
                 title="Live demo not available"
               >
-                <HiOutlineExternalLink className="w-5 h-5" />
+                <HiOutlineExternalLink className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-ui">Live Demo</span>
               </span>
             )}

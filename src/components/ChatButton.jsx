@@ -7,7 +7,7 @@ export default function ChatButton({ open, onToggle }) {
     <motion.button
       type="button"
       onClick={onToggle}
-      className="fixed bottom-6 right-6 z-[70] w-14 h-14 rounded-full border-2 border-white/20 text-white bg-zinc-950/70 backdrop-blur-md shadow-2xl flex items-center justify-center hover:bg-white hover:text-blue-900 transition-all duration-300 group cursor-pointer"
+      className="fixed bottom-[max(env(safe-area-inset-bottom),1.25rem)] right-[max(env(safe-area-inset-right),1.25rem)] z-[70] w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/20 text-white bg-zinc-950/70 backdrop-blur-md shadow-2xl flex items-center justify-center hover:bg-white hover:text-blue-900 transition-all duration-300 group cursor-pointer"
       whileHover={{
         scale: 1.06,
         rotate: 10,
@@ -26,7 +26,7 @@ export default function ChatButton({ open, onToggle }) {
         animate={{ rotate: open ? 180 : 0 }}
         transition={{ duration: 0.25, ease: "easeInOut" }}
       >
-        <FaComments className="w-6 h-6" />
+        <FaComments className="w-5 h-5 md:w-6 md:h-6" />
       </motion.span>
 
       {/* Pulse ring */}
