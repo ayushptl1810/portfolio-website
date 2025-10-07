@@ -3,7 +3,8 @@ import { motion } from "framer-motion";
 import { useSpotifyAuth } from "../hooks/useSpotifyAuth";
 
 const CurrentStatusPanel = ({ isActive }) => {
-  const { isAuthenticated, error, authenticate } = useSpotifyAuth();
+  const { isAuthenticated, error, authenticate, isCheckingAuth } =
+    useSpotifyAuth();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [spotifyData, setSpotifyData] = useState(null);
   const [lastPlayed, setLastPlayed] = useState(null);
@@ -18,14 +19,10 @@ const CurrentStatusPanel = ({ isActive }) => {
   }, []);
 
   useEffect(() => {
-    console.log("CurrentStatusPanel - Auth state changed:", {
-      isAuthenticated,
-      error,
-    });
     if (isAuthenticated) {
       fetchSpotifyData();
-      // Refresh every 30 seconds
-      const interval = setInterval(fetchSpotifyData, 30000);
+      // Refresh every 2 minutes to reduce churn
+      const interval = setInterval(fetchSpotifyData, 120000);
       return () => clearInterval(interval);
     } else {
       setSpotifyData(null);
@@ -37,28 +34,19 @@ const CurrentStatusPanel = ({ isActive }) => {
 
     setIsLoadingSpotify(true);
     try {
-      console.log("Attempting to fetch Spotify data...");
       const response = await fetch("/api/spotify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "get_playback" }),
       });
-
-      console.log("Raw response:", response);
       const data = await response.json();
-      console.log("Spotify API Response:", { response: response.ok, data });
 
       if (response.ok) {
         setSpotifyData(data);
         if (data?.lastPlayed) {
           setLastPlayed(data.lastPlayed);
-          console.log("Using backend-provided lastPlayed:", data.lastPlayed);
         }
         const noCurrentTrack = !data?.isPlaying || !data?.track?.name;
-        console.log("Playback check:", {
-          isPlaying: data?.isPlaying,
-          hasTrack: !!data?.track?.name,
-        });
         // If nothing is currently playing OR the payload doesn't include a track, fetch the most recent track
         if (noCurrentTrack && !data?.lastPlayed) {
           await fetchLastPlayed();
@@ -66,13 +54,11 @@ const CurrentStatusPanel = ({ isActive }) => {
           setLastPlayed(null);
         }
       } else {
-        console.error("Spotify API Error:", data.error);
         setSpotifyData(null);
         // Also attempt to fetch last played so UI still shows something
         await fetchLastPlayed();
       }
     } catch (err) {
-      console.error("Failed to fetch Spotify data:", err);
       setSpotifyData(null);
       await fetchLastPlayed();
     } finally {
@@ -82,27 +68,18 @@ const CurrentStatusPanel = ({ isActive }) => {
 
   const fetchLastPlayed = async () => {
     try {
-      console.log("Fetching last played tracks...");
       const r = await fetch("/api/spotify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "get_recent" }),
       });
       const json = await r.json();
-      console.log("Recent tracks response:", {
-        ok: r.ok,
-        count: json?.tracks?.length || 0,
-        sample: json?.tracks?.[0],
-      });
       if (r.ok && Array.isArray(json?.tracks) && json.tracks.length > 0) {
         setLastPlayed(json.tracks[0]);
-        console.log("Set lastPlayed:", json.tracks[0]);
       } else {
         setLastPlayed(null);
-        console.log("No recent tracks available.");
       }
     } catch (e) {
-      console.error("Failed to fetch last played:", e);
       setLastPlayed(null);
     }
   };
@@ -163,7 +140,23 @@ const CurrentStatusPanel = ({ isActive }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          {!isAuthenticated ? (
+          {isCheckingAuth ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center">
+                  <div className="w-4 h-4 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs text-gray-400 font-medium mb-1 font-ui">
+                    Preparing Spotify…
+                  </div>
+                  <div className="text-white font-medium text-sm font-ui">
+                    Connecting
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : !isAuthenticated ? (
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center">
@@ -181,26 +174,7 @@ const CurrentStatusPanel = ({ isActive }) => {
                   )}
                 </div>
               </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={authenticate}
-                  className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-lg transition-colors"
-                >
-                  Connect
-                </button>
-                <button
-                  onClick={() => {
-                    console.log("Testing API ping...");
-                    fetch("/api/ping")
-                      .then((r) => r.json())
-                      .then((d) => console.log("Ping result:", d))
-                      .catch((e) => console.error("Ping error:", e));
-                  }}
-                  className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded-lg transition-colors"
-                >
-                  Test API
-                </button>
-              </div>
+              {/* Buttons removed per requirement; auto-connect handles this */}
             </div>
           ) : spotifyData?.isPlaying ? (
             <div className="flex items-center justify-between">
@@ -230,13 +204,6 @@ const CurrentStatusPanel = ({ isActive }) => {
                   </div>
                 </div>
               </div>
-              <button
-                onClick={fetchSpotifyData}
-                disabled={isLoadingSpotify}
-                className="px-3 py-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 text-white text-xs rounded-lg transition-colors"
-              >
-                {isLoadingSpotify ? "..." : "Refresh"}
-              </button>
             </div>
           ) : (
             <div className="flex items-center space-x-3">
@@ -279,13 +246,6 @@ const CurrentStatusPanel = ({ isActive }) => {
                   </div>
                 )}
               </div>
-              <button
-                onClick={fetchSpotifyData}
-                disabled={isLoadingSpotify}
-                className="px-3 py-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-500 text-white text-xs rounded-lg transition-colors"
-              >
-                {isLoadingSpotify ? "..." : "Refresh"}
-              </button>
             </div>
           )}
         </motion.div>

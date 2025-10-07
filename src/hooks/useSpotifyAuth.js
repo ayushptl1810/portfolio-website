@@ -4,6 +4,8 @@ export const useSpotifyAuth = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [autoAuthTriggered, setAutoAuthTriggered] = useState(false);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
 
   useEffect(() => {
     // Check for URL parameters indicating auth success/failure
@@ -27,28 +29,31 @@ export const useSpotifyAuth = () => {
 
   const checkAuthenticationStatus = async () => {
     try {
-      console.log("Checking authentication status...");
       const response = await fetch("/api/spotify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "get_playback" }),
       });
 
-      console.log("Auth check response:", {
-        ok: response.ok,
-        status: response.status,
-      });
-
       if (response.ok) {
         setIsAuthenticated(true);
-        console.log("Authentication status: AUTHENTICATED");
       } else {
         setIsAuthenticated(false);
-        console.log("Authentication status: NOT AUTHENTICATED");
+        // Auto-start OAuth on first load if not authenticated and no error/success flags
+        const params = new URLSearchParams(window.location.search);
+        const hasError = !!params.get("spotify_error");
+        const hasSuccess = params.get("spotify_success") === "true";
+        const onCallbackPath = window.location.pathname === "/callback";
+        if (!autoAuthTriggered && !hasError && !hasSuccess && !onCallbackPath) {
+          setAutoAuthTriggered(true);
+          authenticate();
+        }
       }
     } catch (err) {
       console.error("Auth check failed:", err);
       setIsAuthenticated(false);
+    } finally {
+      setIsCheckingAuth(false);
     }
   };
 
@@ -57,29 +62,20 @@ export const useSpotifyAuth = () => {
     setError(null);
 
     try {
-      console.log("Initiating Spotify authentication...");
       const response = await fetch("/api/spotify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action: "authorize" }),
       });
 
-      console.log("Auth response:", {
-        ok: response.ok,
-        status: response.status,
-      });
       const data = await response.json();
-      console.log("Auth data:", data);
 
       if (response.ok && data.authUrl) {
-        console.log("Redirecting to:", data.authUrl);
         window.location.href = data.authUrl;
       } else {
-        console.error("Failed to get auth URL:", data);
         setError("Failed to initiate Spotify authentication");
       }
     } catch (err) {
-      console.error("Authentication error:", err);
       setError("Network error during authentication");
     } finally {
       setIsLoading(false);
@@ -89,6 +85,7 @@ export const useSpotifyAuth = () => {
   return {
     isAuthenticated,
     isLoading,
+    isCheckingAuth,
     error,
     authenticate,
     setError,
