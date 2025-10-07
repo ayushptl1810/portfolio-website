@@ -37,9 +37,9 @@ const PersonalPassionsPanel = ({ isActive }) => {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Gaming Section - 66% width (2 columns) */}
-          <div className="col-span-2">
+          <div className="lg:col-span-2">
             {/* Games Grid */}
             <div className="grid grid-cols-2 gap-4 mb-4">
               {/* Currently Playing */}
@@ -136,7 +136,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
           </div>
 
           {/* Football Section - 33% width (1 column) */}
-          <div className="col-span-1 flex items-center justify-center group">
+          <div className="lg:col-span-1 flex items-center justify-center group">
             {/* Club Logo & Info */}
             <motion.div
               className="text-center"
@@ -147,7 +147,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
             >
               {/* Club Logo */}
               <motion.div
-                className="w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20 relative"
+                className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20 relative"
                 animate={{
                   y: [0, -3, 0],
                 }}

@@ -3,8 +3,15 @@ import { motion } from "framer-motion";
 import { useSpotifyAuth } from "../hooks/useSpotifyAuth";
 
 const CurrentStatusPanel = ({ isActive }) => {
-  const { isAuthenticated, error, authenticate, isCheckingAuth } =
-    useSpotifyAuth();
+  const {
+    isAuthenticated,
+    error,
+    authenticate,
+    isCheckingAuth,
+    autoAuthDisabled,
+    disableAutoAuth,
+    enableAutoAuth,
+  } = useSpotifyAuth();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [spotifyData, setSpotifyData] = useState(null);
   const [lastPlayed, setLastPlayed] = useState(null);
@@ -103,7 +110,7 @@ const CurrentStatusPanel = ({ isActive }) => {
 
   return (
     <motion.div
-      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-8 shadow-lg transition-all duration-300 ${
+      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-6 md:p-8 shadow-lg transition-all duration-300 h-full ${
         isActive ? "border-green-400/50 shadow-green-500/20" : ""
       }`}
       whileHover={{
@@ -157,24 +164,21 @@ const CurrentStatusPanel = ({ isActive }) => {
               </div>
             </div>
           ) : !isAuthenticated ? (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center">
-                  <span className="text-gray-400 text-lg">🎵</span>
-                </div>
-                <div className="flex-1">
-                  <div className="text-xs text-gray-400 font-medium mb-1 font-ui">
-                    Spotify Not Connected
-                  </div>
-                  <div className="text-white font-medium text-sm font-ui">
-                    Connect to show current track
-                  </div>
-                  {error && (
-                    <div className="text-red-400 text-xs mt-1">{error}</div>
-                  )}
-                </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center">
+                <span className="text-gray-400 text-lg">🎵</span>
               </div>
-              {/* Buttons removed per requirement; auto-connect handles this */}
+              <div className="flex-1">
+                <div className="text-xs text-gray-400 font-medium mb-1 font-ui">
+                  Spotify Not Connected
+                </div>
+                <div className="text-white font-medium text-sm font-ui">
+                  Connecting...
+                </div>
+                {error && (
+                  <div className="text-red-400 text-xs mt-1">{error}</div>
+                )}
+              </div>
             </div>
           ) : spotifyData?.isPlaying ? (
             <div className="flex items-center justify-between">

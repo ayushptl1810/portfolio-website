@@ -6,6 +6,16 @@ export const useSpotifyAuth = () => {
   const [error, setError] = useState(null);
   const [autoAuthTriggered, setAutoAuthTriggered] = useState(false);
   const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [autoAuthDisabled, setAutoAuthDisabled] = useState(() => {
+    try {
+      const urlParams = new URLSearchParams(window.location.search);
+      const disabledParam = urlParams.get("disable_spotify");
+      const stored = localStorage.getItem("spotifyAutoAuthDisabled");
+      return disabledParam === "1" || stored === "true";
+    } catch (_) {
+      return false;
+    }
+  });
 
   useEffect(() => {
     // Check for URL parameters indicating auth success/failure
@@ -44,7 +54,13 @@ export const useSpotifyAuth = () => {
         const hasError = !!params.get("spotify_error");
         const hasSuccess = params.get("spotify_success") === "true";
         const onCallbackPath = window.location.pathname === "/callback";
-        if (!autoAuthTriggered && !hasError && !hasSuccess && !onCallbackPath) {
+        if (
+          !autoAuthDisabled &&
+          !autoAuthTriggered &&
+          !hasError &&
+          !hasSuccess &&
+          !onCallbackPath
+        ) {
           setAutoAuthTriggered(true);
           authenticate();
         }
@@ -82,6 +98,20 @@ export const useSpotifyAuth = () => {
     }
   };
 
+  const disableAutoAuth = () => {
+    try {
+      localStorage.setItem("spotifyAutoAuthDisabled", "true");
+    } catch (_) {}
+    setAutoAuthDisabled(true);
+  };
+
+  const enableAutoAuth = () => {
+    try {
+      localStorage.removeItem("spotifyAutoAuthDisabled");
+    } catch (_) {}
+    setAutoAuthDisabled(false);
+  };
+
   return {
     isAuthenticated,
     isLoading,
@@ -89,5 +119,8 @@ export const useSpotifyAuth = () => {
     error,
     authenticate,
     setError,
+    autoAuthDisabled,
+    disableAutoAuth,
+    enableAutoAuth,
   };
 };

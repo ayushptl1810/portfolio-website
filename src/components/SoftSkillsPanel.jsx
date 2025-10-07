@@ -22,7 +22,7 @@ const SoftSkillsPanel = ({ isActive }) => {
 
   return (
     <motion.div
-      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-8 shadow-lg transition-all duration-300 ${
+      className={`relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-xl p-6 md:p-8 shadow-lg transition-all duration-300 h-full ${
         isActive ? "border-blue-400/50 shadow-blue-500/20" : ""
       }`}
       whileHover={{
