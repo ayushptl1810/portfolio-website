@@ -202,33 +202,65 @@ async function handleGetPlayback(req, res) {
       }
     );
 
-    if (playbackResponse.status === 204) {
-      return res.json({
-        isPlaying: false,
-        message: "No track currently playing",
-      });
+    let payload = {
+      isPlaying: false,
+      message: "No track currently playing",
+    };
+
+    if (playbackResponse.status !== 204) {
+      const playbackData = await playbackResponse.json();
+
+      if (!playbackResponse.ok) {
+        return res.status(playbackResponse.status).json({
+          error: playbackData.error?.message || "Failed to fetch playback data",
+        });
+      }
+
+      if (playbackData?.is_playing && playbackData?.item) {
+        payload = {
+          isPlaying: true,
+          track: {
+            name: playbackData.item?.name,
+            artist: playbackData.item?.artists?.[0]?.name,
+            album: playbackData.item?.album?.name,
+            image: playbackData.item?.album?.images?.[0]?.url,
+            duration: playbackData.item?.duration_ms,
+            progress: playbackData.progress_ms,
+            external_url: playbackData.item?.external_urls?.spotify,
+          },
+        };
+      }
     }
 
-    const playbackData = await playbackResponse.json();
-
-    if (!playbackResponse.ok) {
-      return res.status(playbackResponse.status).json({
-        error: playbackData.error?.message || "Failed to fetch playback data",
-      });
+    // If not playing, also include lastPlayed for convenience
+    if (!payload.isPlaying) {
+      try {
+        const recentResponse = await fetch(
+          "https://api.spotify.com/v1/me/player/recently-played?limit=1",
+          {
+            headers: {
+              Authorization: `Bearer ${tokens.access_token}`,
+            },
+          }
+        );
+        if (recentResponse.ok) {
+          const recentData = await recentResponse.json();
+          const item = recentData?.items?.[0];
+          if (item?.track) {
+            payload.lastPlayed = {
+              name: item.track?.name,
+              artist: item.track?.artists?.[0]?.name,
+              album: item.track?.album?.name,
+              image: item.track?.album?.images?.[0]?.url,
+              played_at: item.played_at,
+              external_url: item.track?.external_urls?.spotify,
+            };
+          }
+        }
+      } catch {}
     }
 
-    return res.json({
-      isPlaying: playbackData.is_playing,
-      track: {
-        name: playbackData.item?.name,
-        artist: playbackData.item?.artists?.[0]?.name,
-        album: playbackData.item?.album?.name,
-        image: playbackData.item?.album?.images?.[0]?.url,
-        duration: playbackData.item?.duration_ms,
-        progress: playbackData.progress_ms,
-        external_url: playbackData.item?.external_urls?.spotify,
-      },
-    });
+    return res.json(payload);
   } catch (error) {
     console.error("Playback fetch error:", error);
     return res.status(500).json({ error: "Failed to fetch playback data" });

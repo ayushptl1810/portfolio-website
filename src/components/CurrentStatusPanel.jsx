@@ -6,6 +6,7 @@ const CurrentStatusPanel = ({ isActive }) => {
   const { isAuthenticated, error, authenticate } = useSpotifyAuth();
   const [currentTime, setCurrentTime] = useState(new Date());
   const [spotifyData, setSpotifyData] = useState(null);
+  const [lastPlayed, setLastPlayed] = useState(null);
   const [isLoadingSpotify, setIsLoadingSpotify] = useState(false);
 
   useEffect(() => {
@@ -49,15 +50,60 @@ const CurrentStatusPanel = ({ isActive }) => {
 
       if (response.ok) {
         setSpotifyData(data);
+        if (data?.lastPlayed) {
+          setLastPlayed(data.lastPlayed);
+          console.log("Using backend-provided lastPlayed:", data.lastPlayed);
+        }
+        const noCurrentTrack = !data?.isPlaying || !data?.track?.name;
+        console.log("Playback check:", {
+          isPlaying: data?.isPlaying,
+          hasTrack: !!data?.track?.name,
+        });
+        // If nothing is currently playing OR the payload doesn't include a track, fetch the most recent track
+        if (noCurrentTrack && !data?.lastPlayed) {
+          await fetchLastPlayed();
+        } else {
+          setLastPlayed(null);
+        }
       } else {
         console.error("Spotify API Error:", data.error);
         setSpotifyData(null);
+        // Also attempt to fetch last played so UI still shows something
+        await fetchLastPlayed();
       }
     } catch (err) {
       console.error("Failed to fetch Spotify data:", err);
       setSpotifyData(null);
+      await fetchLastPlayed();
     } finally {
       setIsLoadingSpotify(false);
+    }
+  };
+
+  const fetchLastPlayed = async () => {
+    try {
+      console.log("Fetching last played tracks...");
+      const r = await fetch("/api/spotify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "get_recent" }),
+      });
+      const json = await r.json();
+      console.log("Recent tracks response:", {
+        ok: r.ok,
+        count: json?.tracks?.length || 0,
+        sample: json?.tracks?.[0],
+      });
+      if (r.ok && Array.isArray(json?.tracks) && json.tracks.length > 0) {
+        setLastPlayed(json.tracks[0]);
+        console.log("Set lastPlayed:", json.tracks[0]);
+      } else {
+        setLastPlayed(null);
+        console.log("No recent tracks available.");
+      }
+    } catch (e) {
+      console.error("Failed to fetch last played:", e);
+      setLastPlayed(null);
     }
   };
 
@@ -199,11 +245,39 @@ const CurrentStatusPanel = ({ isActive }) => {
               </div>
               <div className="flex-1">
                 <div className="text-xs text-gray-400 font-medium mb-1 font-ui">
-                  Spotify Connected
+                  {lastPlayed || spotifyData?.lastPlayed
+                    ? "Last Played"
+                    : "Spotify Connected"}
                 </div>
-                <div className="text-white font-medium text-sm font-ui">
-                  {spotifyData?.message || "No track currently playing"}
-                </div>
+                {lastPlayed || spotifyData?.lastPlayed ? (
+                  <div className="flex items-center gap-3">
+                    {(lastPlayed?.image || spotifyData?.lastPlayed?.image) && (
+                      <img
+                        src={
+                          lastPlayed?.image || spotifyData?.lastPlayed?.image
+                        }
+                        alt={
+                          lastPlayed?.album ||
+                          spotifyData?.lastPlayed?.album ||
+                          "Album Art"
+                        }
+                        className="w-10 h-10 rounded object-cover"
+                      />
+                    )}
+                    <div className="min-w-0">
+                      <div className="text-white font-medium text-sm truncate font-ui">
+                        {lastPlayed?.name || spotifyData?.lastPlayed?.name}
+                      </div>
+                      <div className="text-gray-400 text-xs truncate font-body">
+                        {lastPlayed?.artist || spotifyData?.lastPlayed?.artist}
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-white font-medium text-sm font-ui">
+                    {spotifyData?.message || "No track currently playing"}
+                  </div>
+                )}
               </div>
               <button
                 onClick={fetchSpotifyData}
