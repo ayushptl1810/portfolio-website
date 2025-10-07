@@ -147,7 +147,7 @@ const PersonalPassionsPanel = ({ isActive }) => {
             >
               {/* Club Logo */}
               <motion.div
-                className="w-40 h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20 relative"
+                className="w-28 h-28 sm:w-36 sm:h-36 lg:w-40 lg:h-40 mx-auto mb-4 overflow-hidden rounded-full border-2 border-white/20 relative"
                 animate={{
                   y: [0, -3, 0],
                 }}

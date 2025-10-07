@@ -43,7 +43,7 @@ const About = () => {
         </motion.div>
 
         {/* Quantum Identity Matrix */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           {/* Left Panel - Personal Identity + Additional Content */}
           <motion.div
             className="lg:col-span-1 flex flex-col h-full"
@@ -161,15 +161,16 @@ const About = () => {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.div
-              className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
+              className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center max-w-2xl mx-auto"
               whileHover={{
                 scale: 1.03,
                 borderColor: "rgba(147, 51, 234, 0.5)",
                 boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
               }}
+              whileTap={{ scale: 1.0 }}
             >
               {/* Holographic Border Effect */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/10 to-blue-500/10 opacity-0 md:hover:opacity-100 transition-opacity duration-300" />
 
               <div className="relative z-10">
                 <div className="text-center mb-6">
@@ -232,14 +233,9 @@ const About = () => {
               <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
                 <motion.div
                   className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent"
-                  animate={{
-                    y: ["-100%", "100%"],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
+                  animate={{ y: ["-100%", "100%"] }}
+                  transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                  style={{ display: "none" }}
                 />
               </div>
             </motion.div>
@@ -247,18 +243,18 @@ const About = () => {
 
           {/* Right Panel - Content Matrix */}
           <motion.div
-            className="lg:col-span-1 flex flex-col h-full"
+            className="lg:col-span-1 flex flex-col h-full md:grid md:grid-cols-2 md:gap-6"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
-            <div className="flex-1 space-y-8">
+            <div className="flex-1 space-y-8 md:space-y-0">
               {panels.slice(1).map((panel, index) => (
                 <motion.div
                   key={panel.id}
-                  className="flex-1 min-h-[12rem]"
+                  className="flex-1 min-h-[12rem] max-w-2xl mx-auto md:max-w-none"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -280,7 +276,7 @@ const About = () => {
 
         {/* Bottom Row - Additional Panels */}
         <motion.div
-          className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8"
+          className="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
