@@ -5,6 +5,7 @@ import { dirname, join } from "path";
 import fs from "fs/promises";
 import contactHandler from "./src/server/contactHandler.js";
 import llmHandler from "./src/server/llmHandler.js";
+import spotifyHandler from "./src/server/spotifyHandler.js";
 import dotenv from "dotenv";
 import { Resend } from "resend";
 
@@ -16,6 +17,7 @@ const __dirname = dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3001;
+const DEPLOYED_URL = process.env.DEPLOYED_URL || "https://ayush.info";
 
 // Middleware
 app.use(cors());
@@ -137,6 +139,41 @@ const fetchProjectReadme = async (owner, repo) => {
 app.post("/api/llm", (req, res) => llmHandler(req, res));
 
 app.post("/api/contact", (req, res) => contactHandler(req, res));
+
+app.post("/api/spotify", (req, res) => spotifyHandler(req, res));
+
+// Spotify OAuth callback route
+app.get("/callback", async (req, res) => {
+  const { code, error } = req.query;
+
+  if (error) {
+    return res.redirect(
+      `${DEPLOYED_URL}/about?spotify_error=${encodeURIComponent(error)}`
+    );
+  }
+
+  if (!code) {
+    return res.redirect(`${DEPLOYED_URL}/about?spotify_error=no_code`);
+  }
+
+  try {
+    // Exchange code for tokens
+    const tokenResponse = await fetch(`${DEPLOYED_URL}/api/spotify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "callback", code }),
+    });
+
+    if (tokenResponse.ok) {
+      res.redirect(`${DEPLOYED_URL}/about?spotify_success=true`);
+    } else {
+      res.redirect(`${DEPLOYED_URL}/about?spotify_error=token_exchange_failed`);
+    }
+  } catch (error) {
+    console.error("Callback error:", error);
+    res.redirect(`${DEPLOYED_URL}/about?spotify_error=callback_error`);
+  }
+});
 
 // Simple ping for connectivity diagnostics
 app.get("/api/ping", (req, res) => {

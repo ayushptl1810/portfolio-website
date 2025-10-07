@@ -4,11 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "npm run build && node server.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "vite:dev": "vite"
+    "vite:dev": "vite",
+    "dev:frontend": "vite",
+    "dev:backend": "node server.js"
   },
   "dependencies": {
     "@rive-app/react-canvas": "^4.23.1",

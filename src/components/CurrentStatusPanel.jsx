@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useSpotifyAuth } from "../hooks/useSpotifyAuth";
 
 const CurrentStatusPanel = ({ isActive }) => {
+  const { isAuthenticated, error, authenticate } = useSpotifyAuth();
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [spotifyStatus, setSpotifyStatus] = useState({
-    isListening: true,
-    track: "Bohemian Rhapsody",
-    artist: "Queen",
-    albumArt: "https://via.placeholder.com/40x40/8B5CF6/FFFFFF?text=🎵",
-  });
+  const [spotifyData, setSpotifyData] = useState(null);
+  const [isLoadingSpotify, setIsLoadingSpotify] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -17,6 +15,51 @@ const CurrentStatusPanel = ({ isActive }) => {
 
     return () => clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    console.log("CurrentStatusPanel - Auth state changed:", {
+      isAuthenticated,
+      error,
+    });
+    if (isAuthenticated) {
+      fetchSpotifyData();
+      // Refresh every 30 seconds
+      const interval = setInterval(fetchSpotifyData, 30000);
+      return () => clearInterval(interval);
+    } else {
+      setSpotifyData(null);
+    }
+  }, [isAuthenticated]);
+
+  const fetchSpotifyData = async () => {
+    if (!isAuthenticated) return;
+
+    setIsLoadingSpotify(true);
+    try {
+      console.log("Attempting to fetch Spotify data...");
+      const response = await fetch("/api/spotify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "get_playback" }),
+      });
+
+      console.log("Raw response:", response);
+      const data = await response.json();
+      console.log("Spotify API Response:", { response: response.ok, data });
+
+      if (response.ok) {
+        setSpotifyData(data);
+      } else {
+        console.error("Spotify API Error:", data.error);
+        setSpotifyData(null);
+      }
+    } catch (err) {
+      console.error("Failed to fetch Spotify data:", err);
+      setSpotifyData(null);
+    } finally {
+      setIsLoadingSpotify(false);
+    }
+  };
 
   const formatTime = (date) => {
     return date.toLocaleTimeString("en-US", {
@@ -74,29 +117,103 @@ const CurrentStatusPanel = ({ isActive }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-lg overflow-hidden">
-              <img
-                src={spotifyStatus.albumArt}
-                alt="Album Art"
-                className="w-full h-full object-cover"
-              />
+          {!isAuthenticated ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center">
+                  <span className="text-gray-400 text-lg">🎵</span>
+                </div>
+                <div className="flex-1">
+                  <div className="text-xs text-gray-400 font-medium mb-1 font-ui">
+                    Spotify Not Connected
+                  </div>
+                  <div className="text-white font-medium text-sm font-ui">
+                    Connect to show current track
+                  </div>
+                  {error && (
+                    <div className="text-red-400 text-xs mt-1">{error}</div>
+                  )}
+                </div>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={authenticate}
+                  className="px-3 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-lg transition-colors"
+                >
+                  Connect
+                </button>
+                <button
+                  onClick={() => {
+                    console.log("Testing API ping...");
+                    fetch("/api/ping")
+                      .then((r) => r.json())
+                      .then((d) => console.log("Ping result:", d))
+                      .catch((e) => console.error("Ping error:", e));
+                  }}
+                  className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white text-xs rounded-lg transition-colors"
+                >
+                  Test API
+                </button>
+              </div>
             </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center space-x-2 mb-1">
-                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-                <span className="text-xs text-green-400 font-medium font-ui">
-                  Currently Listening
-                </span>
+          ) : spotifyData?.isPlaying ? (
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-lg overflow-hidden">
+                  <img
+                    src={
+                      spotifyData.track.image ||
+                      "https://via.placeholder.com/40x40/8B5CF6/FFFFFF?text=🎵"
+                    }
+                    alt="Album Art"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center space-x-2 mb-1">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                    <span className="text-xs text-green-400 font-medium font-ui">
+                      Currently Listening
+                    </span>
+                  </div>
+                  <div className="text-white font-medium text-sm truncate font-ui">
+                    {spotifyData.track.name}
+                  </div>
+                  <div className="text-gray-400 text-xs truncate font-body">
+                    {spotifyData.track.artist}
+                  </div>
+                </div>
               </div>
-              <div className="text-white font-medium text-sm truncate font-ui">
-                {spotifyStatus.track}
-              </div>
-              <div className="text-gray-400 text-xs truncate font-body">
-                {spotifyStatus.artist}
-              </div>
+              <button
+                onClick={fetchSpotifyData}
+                disabled={isLoadingSpotify}
+                className="px-3 py-1 bg-green-600 hover:bg-green-700 disabled:bg-gray-500 text-white text-xs rounded-lg transition-colors"
+              >
+                {isLoadingSpotify ? "..." : "Refresh"}
+              </button>
             </div>
-          </div>
+          ) : (
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-gray-600/20 rounded-lg flex items-center justify-center">
+                <span className="text-gray-400 text-lg">⏸️</span>
+              </div>
+              <div className="flex-1">
+                <div className="text-xs text-gray-400 font-medium mb-1 font-ui">
+                  Spotify Connected
+                </div>
+                <div className="text-white font-medium text-sm font-ui">
+                  {spotifyData?.message || "No track currently playing"}
+                </div>
+              </div>
+              <button
+                onClick={fetchSpotifyData}
+                disabled={isLoadingSpotify}
+                className="px-3 py-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-500 text-white text-xs rounded-lg transition-colors"
+              >
+                {isLoadingSpotify ? "..." : "Refresh"}
+              </button>
+            </div>
+          )}
         </motion.div>
 
         {/* Time and Date */}
