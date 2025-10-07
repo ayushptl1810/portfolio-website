@@ -2,6 +2,7 @@
   "routes": [
     { "handle": "filesystem" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
+    { "src": "/callback", "dest": "/api/callback" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
