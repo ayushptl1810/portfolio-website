@@ -78,11 +78,11 @@ const ParticleSystem = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 pointer-events-none overflow-hidden"
+      className="absolute inset-0 pointer-events-none overflow-hidden"
       style={{
-        zIndex: 10,
-        width: "100vw",
-        height: "100vh",
+        zIndex: 0,
+        width: "100%",
+        height: "100%",
       }}
     >
       {particlesRef.current.map((particle) => (

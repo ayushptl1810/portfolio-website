@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 
-function FluidMenu() {
+function FluidMenu({ basePath = "" }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = React.useState(false);
@@ -34,10 +34,10 @@ function FluidMenu() {
   };
 
   const menuItems = [
-    { label: "Home", path: "/" },
-    { label: "Projects", path: "/projects" },
-    { label: "About Me", path: "/about" },
-    { label: "Contact Me", path: "/contact" },
+    { label: "Home", path: basePath ? basePath : "/" },
+    { label: "Projects", path: `${basePath}/projects` },
+    { label: "About Me", path: `${basePath}/about` },
+    { label: "Contact Me", path: `${basePath}/contact` },
   ];
 
   return (
