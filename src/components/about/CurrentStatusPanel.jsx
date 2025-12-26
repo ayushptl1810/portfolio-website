@@ -27,6 +27,16 @@ const CurrentStatusPanel = ({ isActive }) => {
 
   useEffect(() => {
     if (isAuthenticated) {
+      // Try to load from session storage instantly to avoid flicker
+      try {
+        const cached = sessionStorage.getItem("cached_spotify_status");
+        if (cached) {
+          const parsed = JSON.parse(cached);
+          setSpotifyData(parsed);
+          if (parsed?.lastPlayed) setLastPlayed(parsed.lastPlayed);
+        }
+      } catch (e) {}
+
       fetchSpotifyData();
       // Refresh every 2 minutes to reduce churn
       const interval = setInterval(fetchSpotifyData, 120000);
@@ -39,7 +49,9 @@ const CurrentStatusPanel = ({ isActive }) => {
   const fetchSpotifyData = async () => {
     if (!isAuthenticated) return;
 
-    setIsLoadingSpotify(true);
+    // Only show loading if we don't have data already (cached or otherwise)
+    if (!spotifyData) setIsLoadingSpotify(true);
+
     try {
       const response = await fetch("/api/spotify", {
         method: "POST",
@@ -50,6 +62,11 @@ const CurrentStatusPanel = ({ isActive }) => {
 
       if (response.ok) {
         setSpotifyData(data);
+        // Cache it
+        try {
+          sessionStorage.setItem("cached_spotify_status", JSON.stringify(data));
+        } catch (e) {}
+
         if (data?.lastPlayed) {
           setLastPlayed(data.lastPlayed);
         }

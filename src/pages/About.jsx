@@ -100,7 +100,7 @@ const About = () => {
                           IIT Madras
                         </h5>
                         <span className="text-purple-400 text-xs font-mono bg-purple-400/10 px-2 py-1 rounded font-ui">
-                          CGPA: 7.99
+                          CGPA: 8.06
                         </span>
                       </div>
                       <p className="text-blue-400 text-xs font-medium mb-1 font-body">

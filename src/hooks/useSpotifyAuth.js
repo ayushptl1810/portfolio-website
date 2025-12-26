@@ -49,21 +49,17 @@ export const useSpotifyAuth = () => {
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
-        // Auto-start OAuth on first load if not authenticated and no error/success flags
-        const params = new URLSearchParams(window.location.search);
-        const hasError = !!params.get("spotify_error");
-        const hasSuccess = params.get("spotify_success") === "true";
-        const onCallbackPath = window.location.pathname === "/callback";
-        if (
-          !autoAuthDisabled &&
-          !autoAuthTriggered &&
-          !hasError &&
-          !hasSuccess &&
-          !onCallbackPath
-        ) {
-          setAutoAuthTriggered(true);
-          authenticate();
+        // Try to get error message specifically
+        try {
+          const errData = await response.json();
+          if (errData.error) {
+            setError(errData.error);
+          }
+        } catch (e) {
+          // If json parse fails, just ignore
         }
+        // Auto-auth is removed to prevent visitor redirects/reloads.
+        // We now rely on server-side pre-auth (SPOTIFY_REFRESH_TOKEN).
       }
     } catch (err) {
       console.error("Auth check failed:", err);

@@ -152,9 +152,15 @@ async function handleRefresh(req, res, refreshToken) {
   }
 }
 
+const playbackCache = {
+  data: null,
+  timestamp: 0,
+  ttl: 5000, // 5 seconds cache
+};
+
 async function handleGetPlayback(req, res) {
   const userId = "default_user";
-  const tokens = tokenStore.get(userId);
+  let tokens = tokenStore.get(userId);
 
   console.log("GetPlayback - Token check:", {
     hasTokens: !!tokens,
@@ -162,32 +168,54 @@ async function handleGetPlayback(req, res) {
     userId,
   });
 
+  if (!SPOTIFY_CLIENT_ID || !SPOTIFY_CLIENT_SECRET) {
+    return res
+      .status(500)
+      .json({ error: "Missing Server Env: Client ID/Secret" });
+  }
+
+  /* 
+     Critical Fix: Initialize tokens from Environment Variable if missing in memory.
+     This ensures the server can fetch data without any user visiting the site having to log in.
+  */
+  if (!tokens && process.env.SPOTIFY_REFRESH_TOKEN) {
+    console.log("GetPlayback - Using server-side refresh token");
+    tokens = {
+      access_token: "", // Will be refreshed immediately
+      refresh_token: process.env.SPOTIFY_REFRESH_TOKEN,
+      expires_at: 0, // Force refresh
+    };
+    tokenStore.set(userId, tokens);
+  }
+
   if (!tokens) {
     console.log("GetPlayback - No tokens found, returning 401");
+    // Attempt to return cached data even if auth fails, if it's recent enough?
+    // No, security first. But wait, this is public display data.
+    // Let's just stick to standard flow.
     return res.status(401).json({ error: "Not authenticated" });
+  }
+
+  // Check cache first
+  const now = Date.now();
+  if (playbackCache.data && now - playbackCache.timestamp < playbackCache.ttl) {
+    console.log("Serving playback from cache");
+    return res.json(playbackCache.data);
   }
 
   // Check if token needs refresh
   if (Date.now() >= tokens.expires_at) {
     try {
-      const refreshResponse = await fetch(`${DEPLOYED_URL}/api/spotify`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "refresh",
-          refresh_token: tokens.refresh_token,
-        }),
-      });
-
-      if (refreshResponse.ok) {
-        const refreshData = await refreshResponse.json();
-        tokens.access_token = refreshData.access_token;
-        tokens.expires_at = Date.now() + refreshData.expires_in * 1000;
+      const refreshedTokens = await refreshAccessToken(tokens.refresh_token);
+      if (refreshedTokens) {
+        tokens.access_token = refreshedTokens.access_token;
+        tokens.expires_at = Date.now() + refreshedTokens.expires_in * 1000;
         tokenStore.set(userId, tokens);
       } else {
         return res.status(401).json({ error: "Token refresh failed" });
       }
     } catch (error) {
+      console.error("Internal refresh error:", error);
       return res.status(401).json({ error: "Token refresh failed" });
     }
   }
@@ -260,6 +288,10 @@ async function handleGetPlayback(req, res) {
       } catch {}
     }
 
+    // Update cache
+    playbackCache.data = payload;
+    playbackCache.timestamp = Date.now();
+
     return res.json(payload);
   } catch (error) {
     console.error("Playback fetch error:", error);
@@ -278,24 +310,16 @@ async function handleGetRecent(req, res) {
   // Check if token needs refresh
   if (Date.now() >= tokens.expires_at) {
     try {
-      const refreshResponse = await fetch(`${DEPLOYED_URL}/api/spotify`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          action: "refresh",
-          refresh_token: tokens.refresh_token,
-        }),
-      });
-
-      if (refreshResponse.ok) {
-        const refreshData = await refreshResponse.json();
-        tokens.access_token = refreshData.access_token;
-        tokens.expires_at = Date.now() + refreshData.expires_in * 1000;
+      const refreshedTokens = await refreshAccessToken(tokens.refresh_token);
+      if (refreshedTokens) {
+        tokens.access_token = refreshedTokens.access_token;
+        tokens.expires_at = Date.now() + refreshedTokens.expires_in * 1000;
         tokenStore.set(userId, tokens);
       } else {
         return res.status(401).json({ error: "Token refresh failed" });
       }
     } catch (error) {
+      console.error("Internal refresh error:", error);
       return res.status(401).json({ error: "Token refresh failed" });
     }
   }
@@ -343,4 +367,40 @@ function generateRandomString(length) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
   }
   return text;
+}
+
+// Internal helper for refreshing tokens avoiding self-fetch
+async function refreshAccessToken(refreshToken) {
+  try {
+    const tokenResponse = await fetch(
+      "https://accounts.spotify.com/api/token",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: new URLSearchParams({
+          client_id: SPOTIFY_CLIENT_ID,
+          client_secret: SPOTIFY_CLIENT_SECRET,
+          grant_type: "refresh_token",
+          refresh_token: refreshToken,
+        }),
+      }
+    );
+
+    const tokenData = await tokenResponse.json();
+
+    if (!tokenResponse.ok) {
+      console.error("Refresh failed upstream:", tokenData);
+      return null;
+    }
+
+    return {
+      access_token: tokenData.access_token,
+      expires_in: tokenData.expires_in,
+    };
+  } catch (error) {
+    console.error("Refresh helper error:", error);
+    return null;
+  }
 }
