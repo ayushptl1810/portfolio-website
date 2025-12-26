@@ -40,6 +40,11 @@ function FluidMenu({ basePath = "" }) {
     { label: "Contact Me", path: `${basePath}/contact` },
   ];
 
+  // Add Switch Persona if we are in a sub-route (basePath is set)
+  if (basePath) {
+    menuItems.push({ label: "Switch Persona", path: "/", isSpecial: true });
+  }
+
   return (
     <>
       {/* Top-right hamburger always above overlays */}
@@ -72,7 +77,9 @@ function FluidMenu({ basePath = "" }) {
               <motion.button
                 key={item.label}
                 onClick={() => handleSelect(item.path, item.label)}
-                className="text-white text-3xl font-semibold hover:opacity-80 font-ui cursor-pointer"
+                className={`text-3xl font-semibold hover:opacity-80 font-ui cursor-pointer ${
+                  item.isSpecial ? "text-gray-400 mt-4 text-2xl" : "text-white"
+                }`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >

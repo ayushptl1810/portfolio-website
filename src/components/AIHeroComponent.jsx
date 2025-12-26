@@ -18,9 +18,9 @@ function AIHeroComponent() {
   return (
     <>
       <div className="w-full py-14 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative">
-        {/* Background Matrix/Grid Effect (Local to Hero) */}
+        {/* Background Matrix/Grid Effect (Local to Hero) - Removed to fix border issue */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-emerald-900/10 to-transparent" />
+          {/* Removed per user request */}
         </div>
 
         {/* Text Content Left Side */}
@@ -49,7 +49,7 @@ function AIHeroComponent() {
             Developing next-generation models and agentic workflows.
           </p>
           <p className="text-base sm:text-xl text-gray-400 mb-10 font-body">
-            Based in the Cloud.
+            Based in Mumbai, India.
           </p>
 
           {/* Connect Section */}
@@ -137,10 +137,10 @@ function AIHeroComponent() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="w-full h-full relative">
+            <div className="w-full h-full relative flex items-center justify-center scale-[1.8] translate-x-[40%] translate-y-[-5%]">
               <Spline
                 className="w-full h-full"
-                scene="https://prod.spline.design/U7vu58eDKrh8iDLm/scene.splinecode"
+                scene="https://prod.spline.design/AqJ4j3ogsligEDfj/scene.splinecode"
                 style={{ background: "transparent" }}
                 onLoad={(splineApp) => {
                   if (splineApp.setBackgroundColor) {

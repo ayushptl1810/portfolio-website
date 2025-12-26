@@ -18,7 +18,8 @@ import { motion } from "framer-motion";
   }
 */
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, theme = "default" }) {
+  const isEmerald = theme === "emerald";
   const {
     name,
     description,
@@ -30,6 +31,7 @@ function ProjectCard({ project }) {
   } = project || {};
 
   const location = useLocation();
+  // Determine base path based on location OR theme fallback
   const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
 
   const demoHref = demo_url || deployed_url;
@@ -101,11 +103,19 @@ function ProjectCard({ project }) {
                 to={`${basePath}/projects/${name
                   .toLowerCase()
                   .replace(/\s+/g, "-")}`}
-                className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full transition-all duration-300 text-sm md:text-base font-medium w-full relative overflow-hidden group"
+                className={`flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-gradient-to-r ${
+                  isEmerald
+                    ? "from-emerald-500 to-cyan-600"
+                    : "from-blue-500 to-purple-600"
+                } text-white rounded-full transition-all duration-300 text-sm md:text-base font-medium w-full relative overflow-hidden group`}
               >
                 {/* Transmission Room Style Hover Effect */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full"
+                  className={`absolute inset-0 bg-gradient-to-r ${
+                    isEmerald
+                      ? "from-emerald-500/20 to-cyan-500/20"
+                      : "from-purple-500/20 to-blue-500/20"
+                  } rounded-full`}
                   initial={{ scale: 0, opacity: 0 }}
                   whileHover={{ scale: 1, opacity: 1 }}
                   transition={{ duration: 0.3 }}
@@ -118,7 +128,9 @@ function ProjectCard({ project }) {
               href={github_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-sm md:text-base flex-1 min-w-[8.5rem]"
+              className={`flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white rounded-full text-white hover:bg-white ${
+                isEmerald ? "hover:text-emerald-900" : "hover:text-blue-900"
+              } transition-colors duration-300 text-sm md:text-base flex-1 min-w-[8.5rem]`}
             >
               <FaGithub className="w-4 h-4 md:w-5 md:h-5" />
               <span className="font-ui">GitHub</span>
@@ -129,7 +141,9 @@ function ProjectCard({ project }) {
                 href={demoHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-all duration-300 text-sm md:text-base flex-1 min-w-[9rem]"
+                className={`flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 border-2 border-white rounded-full text-white hover:bg-white ${
+                  isEmerald ? "hover:text-emerald-900" : "hover:text-blue-900"
+                } transition-all duration-300 text-sm md:text-base flex-1 min-w-[9rem]`}
               >
                 <HiOutlineExternalLink className="w-4 h-4 md:w-5 md:h-5" />
                 <span className="font-ui">Live Demo</span>

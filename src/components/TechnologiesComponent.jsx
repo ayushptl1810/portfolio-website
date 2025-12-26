@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 
-function TechnologiesComponent({ technologies = [] }) {
+function TechnologiesComponent({ technologies = [], theme = "default" }) {
+  const isEmerald = theme === "emerald";
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -39,8 +41,12 @@ function TechnologiesComponent({ technologies = [] }) {
                 className="bg-zinc-950/70 backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20 relative group"
                 whileHover={{
                   scale: 1.03,
-                  borderColor: "rgba(147, 51, 234, 0.5)",
-                  boxShadow: "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
+                  borderColor: isEmerald
+                    ? "rgba(16, 185, 129, 0.5)"
+                    : "rgba(147, 51, 234, 0.5)",
+                  boxShadow: isEmerald
+                    ? "0 25px 50px -12px rgba(16, 185, 129, 0.25)"
+                    : "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
                 }}
               >
                 <div className="flex items-stretch space-x-2 sm:space-x-3 md:space-x-4">
@@ -74,7 +80,9 @@ function TechnologiesComponent({ technologies = [] }) {
                   {[...Array(3)].map((_, i) => (
                     <motion.div
                       key={i}
-                      className="absolute w-1 h-1 bg-purple-400/60 rounded-full"
+                      className={`absolute w-1 h-1 ${
+                        isEmerald ? "bg-emerald-400/60" : "bg-purple-400/60"
+                      } rounded-full`}
                       initial={{
                         x: Math.random() * 200,
                         y: Math.random() * 100,

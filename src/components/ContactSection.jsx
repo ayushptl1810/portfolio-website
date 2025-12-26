@@ -2,7 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaRocket, FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
 
-function ContactSection() {
+function ContactSection({ theme = "default" }) {
+  const isEmerald = theme === "emerald";
+
   const handleContactClick = () => {
     if (window.triggerPageTransition) {
       window.triggerPageTransition("/contact");
@@ -49,12 +51,26 @@ function ContactSection() {
           >
             <motion.button
               onClick={handleContactClick}
-              className="group relative px-8 py-4 md:px-12 md:py-6 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl text-white text-lg md:text-xl font-semibold overflow-hidden shadow-2xl hover:shadow-purple-500/25 transition-all duration-300 cursor-pointer"
+              className={`group relative px-8 py-4 md:px-12 md:py-6 bg-gradient-to-r ${
+                isEmerald
+                  ? "from-emerald-600 to-cyan-600"
+                  : "from-purple-600 to-blue-600"
+              } rounded-2xl text-white text-lg md:text-xl font-semibold overflow-hidden shadow-2xl ${
+                isEmerald
+                  ? "hover:shadow-emerald-500/25"
+                  : "hover:shadow-purple-500/25"
+              } transition-all duration-300 cursor-pointer`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
             >
               {/* Button background glow */}
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div
+                className={`absolute inset-0 bg-gradient-to-r ${
+                  isEmerald
+                    ? "from-emerald-600 to-cyan-600"
+                    : "from-purple-600 to-blue-600"
+                } rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
+              />
 
               {/* Button content */}
               <div className="relative flex items-center space-x-3">
@@ -63,7 +79,13 @@ function ContactSection() {
               </div>
 
               {/* Button border glow */}
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-400 to-blue-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl" />
+              <div
+                className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${
+                  isEmerald
+                    ? "from-emerald-400 to-cyan-400"
+                    : "from-purple-400 to-blue-400"
+                } opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl`}
+              />
             </motion.button>
           </motion.div>
 

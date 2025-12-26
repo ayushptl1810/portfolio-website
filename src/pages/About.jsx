@@ -6,8 +6,12 @@ import CurrentStatusPanel from "../components/CurrentStatusPanel";
 import QuickFactsPanel from "../components/QuickFactsPanel";
 import PersonalPassionsPanel from "../components/PersonalPassionsPanel";
 
+import { Link, useLocation } from "react-router-dom";
+
 const About = () => {
   const [activePanel, setActivePanel] = useState(null);
+  const location = useLocation();
+  const isAI = location.pathname.startsWith("/ai");
 
   const panels = [
     {
@@ -55,6 +59,7 @@ const About = () => {
           >
             <div className="flex-1 space-y-8">
               <PersonalIdentityPanel
+                role={isAI ? "AI Engineer" : "Full Stack Developer"}
                 links={{
                   spotify:
                     "https://open.spotify.com/user/31xc7fhc4lr4asucvkoopjpc3ete",

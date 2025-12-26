@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane, FaTimes, FaRobot, FaUser } from "react-icons/fa";
 
-export default function ChatWidget({ open, onClose }) {
+export default function ChatWidget({ open, onClose, theme = "default" }) {
+  const isEmerald = theme === "emerald";
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -116,10 +117,20 @@ export default function ChatWidget({ open, onClose }) {
           transition={{ duration: 0.3, ease: "easeOut" }}
         >
           {/* Header */}
-          <div className="px-6 py-4 border-b border-white/10 bg-gradient-to-r from-purple-500/10 to-blue-500/10 flex-shrink-0">
+          <div
+            className={`px-6 py-4 border-b border-white/10 bg-gradient-to-r ${
+              isEmerald
+                ? "from-emerald-500/10 to-cyan-500/10"
+                : "from-purple-500/10 to-blue-500/10"
+            } flex-shrink-0`}
+          >
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse" />
+                <div
+                  className={`w-3 h-3 ${
+                    isEmerald ? "bg-emerald-400" : "bg-green-400"
+                  } rounded-full animate-pulse`}
+                />
                 <span className="text-white font-semibold font-ui text-lg">
                   AI Assistant
                 </span>
@@ -158,8 +169,16 @@ export default function ChatWidget({ open, onClose }) {
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                       message.from === "user"
-                        ? "bg-gradient-to-r from-purple-500 to-blue-500"
-                        : "bg-gradient-to-r from-blue-500 to-purple-500"
+                        ? `bg-gradient-to-r ${
+                            isEmerald
+                              ? "from-emerald-500 to-cyan-500"
+                              : "from-purple-500 to-blue-500"
+                          }`
+                        : `bg-gradient-to-r ${
+                            isEmerald
+                              ? "from-cyan-500 to-emerald-500"
+                              : "from-blue-500 to-purple-500"
+                          }`
                     }`}
                   >
                     {message.from === "user" ? (
@@ -173,7 +192,11 @@ export default function ChatWidget({ open, onClose }) {
                   <div
                     className={`px-4 py-3 rounded-2xl max-w-[80%] overflow-hidden [overflow-wrap:anywhere] break-words ${
                       message.from === "user"
-                        ? "bg-gradient-to-r from-purple-600/80 to-blue-600/80 text-white"
+                        ? `bg-gradient-to-r ${
+                            isEmerald
+                              ? "from-emerald-600/80 to-cyan-600/80"
+                              : "from-purple-600/80 to-blue-600/80"
+                          } text-white`
                         : "bg-white/10 border border-white/15 text-gray-200"
                     }`}
                   >
@@ -183,7 +206,9 @@ export default function ChatWidget({ open, onClose }) {
                     <div
                       className={`text-xs mt-2 ${
                         message.from === "user"
-                          ? "text-purple-200"
+                          ? isEmerald
+                            ? "text-emerald-200"
+                            : "text-purple-200"
                           : "text-gray-400"
                       }`}
                     >
@@ -202,21 +227,33 @@ export default function ChatWidget({ open, onClose }) {
                 animate={{ opacity: 1, y: 0 }}
               >
                 <div className="flex items-start space-x-2">
-                  <div className="w-8 h-8 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                  <div
+                    className={`w-8 h-8 rounded-full bg-gradient-to-r ${
+                      isEmerald
+                        ? "from-cyan-500 to-emerald-500"
+                        : "from-blue-500 to-purple-500"
+                    } flex items-center justify-center`}
+                  >
                     <FaRobot className="w-4 h-4 text-white" />
                   </div>
                   <div className="px-4 py-3 rounded-2xl bg-white/10 border border-white/15">
                     <div className="flex space-x-1">
                       <div
-                        className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                        className={`w-2 h-2 ${
+                          isEmerald ? "bg-cyan-400" : "bg-blue-400"
+                        } rounded-full animate-bounce`}
                         style={{ animationDelay: "0ms" }}
                       ></div>
                       <div
-                        className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"
+                        className={`w-2 h-2 ${
+                          isEmerald ? "bg-emerald-400" : "bg-purple-400"
+                        } rounded-full animate-bounce`}
                         style={{ animationDelay: "150ms" }}
                       ></div>
                       <div
-                        className="w-2 h-2 bg-blue-400 rounded-full animate-bounce"
+                        className={`w-2 h-2 ${
+                          isEmerald ? "bg-cyan-400" : "bg-blue-400"
+                        } rounded-full animate-bounce`}
                         style={{ animationDelay: "300ms" }}
                       ></div>
                     </div>
@@ -229,11 +266,21 @@ export default function ChatWidget({ open, onClose }) {
           </div>
 
           {/* Input */}
-          <div className="px-6 py-4 border-t border-white/10 bg-gradient-to-r from-purple-500/5 to-blue-500/5 flex-shrink-0">
+          <div
+            className={`px-6 py-4 border-t border-white/10 bg-gradient-to-r ${
+              isEmerald
+                ? "from-emerald-500/5 to-cyan-500/5"
+                : "from-purple-500/5 to-blue-500/5"
+            } flex-shrink-0`}
+          >
             <div className="flex items-center space-x-3">
               <input
                 ref={inputRef}
-                className="flex-1 px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none font-body text-sm transition-all duration-200 focus:border-purple-400/50 focus:ring-2 focus:ring-purple-400/20"
+                className={`flex-1 px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none font-body text-sm transition-all duration-200 focus:border-${
+                  isEmerald ? "emerald" : "purple"
+                }-400/50 focus:ring-2 focus:ring-${
+                  isEmerald ? "emerald" : "purple"
+                }-400/20`}
                 placeholder="Ask me anything..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
@@ -244,7 +291,9 @@ export default function ChatWidget({ open, onClose }) {
                 type="button"
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
-                className="px-4 py-3 rounded-xl border-2 border-white/20 text-white hover:bg-white hover:text-blue-900 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer"
+                className={`px-4 py-3 rounded-xl border-2 border-white/20 text-white hover:bg-white ${
+                  isEmerald ? "hover:text-emerald-900" : "hover:text-blue-900"
+                } transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >

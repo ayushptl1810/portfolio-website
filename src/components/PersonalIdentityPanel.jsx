@@ -3,7 +3,11 @@ import { motion } from "framer-motion";
 import { FaSpotify, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import meImage from "../assets/Me.jpeg";
 
-const PersonalIdentityPanel = ({ isActive, links }) => {
+const PersonalIdentityPanel = ({
+  isActive,
+  links,
+  role = "Full Stack Developer",
+}) => {
   return (
     <motion.div
       className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-xl transition-all duration-300"
@@ -50,7 +54,7 @@ const PersonalIdentityPanel = ({ isActive, links }) => {
             Ayush Patel
           </h3>
           <div className="text-lg text-purple-400 mb-4 font-semibold font-display">
-            Full Stack Developer
+            {role}
           </div>
 
           {/* Location with icon */}

@@ -4,15 +4,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
 import IncomingTransition from "../transitions/IncomingTransition";
 
-function ProjectComponent({ ids, projectList = [] }) {
+function ProjectComponent({ ids, projectList = [], theme = "default" }) {
+  const isEmerald = theme === "emerald";
   const location = useLocation();
   const navigate = useNavigate();
   const onProjectsPage = location.pathname.includes("/projects");
+
+  /* Debug filtering */
+  // console.log("ProjectComponent Debug:", { ids, projectListCount: projectList?.length });
 
   const dataset =
     !Array.isArray(ids) || ids.length === 0
       ? projectList
       : projectList.filter((p) => ids.includes(p.id));
+
+  // console.log("Dataset length:", dataset.length);
 
   // Automatically scroll to top when component mounts (after page transition)
   // Only if we're coming from a transition (navigating TO projects)
@@ -136,7 +142,7 @@ function ProjectComponent({ ids, projectList = [] }) {
                 viewport={{ once: true, amount: 0 }}
                 className="w-full"
               >
-                <ProjectCard project={project} />
+                <ProjectCard project={project} theme={theme} />
               </motion.div>
             ))}
           </div>
@@ -150,14 +156,22 @@ function ProjectComponent({ ids, projectList = [] }) {
               className="inline-flex items-center justify-center gap-3 px-5 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white transition-all duration-300 text-base md:text-lg cursor-pointer relative overflow-hidden group"
               whileHover={{
                 scale: 1.03,
-                borderColor: "rgba(147, 51, 234, 0.7)",
-                boxShadow: "0 0 24px rgba(147, 51, 234, 0.25)",
+                borderColor: isEmerald
+                  ? "rgba(16, 185, 129, 0.7)"
+                  : "rgba(147, 51, 234, 0.7)",
+                boxShadow: isEmerald
+                  ? "0 0 24px rgba(16, 185, 129, 0.25)"
+                  : "0 0 24px rgba(147, 51, 234, 0.25)",
               }}
               whileTap={{ scale: 0.98 }}
             >
               {/* Hover Background Effect */}
               <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-full"
+                className={`absolute inset-0 bg-gradient-to-r ${
+                  isEmerald
+                    ? "from-emerald-500/20 to-cyan-500/20"
+                    : "from-purple-500/20 to-blue-500/20"
+                } rounded-full`}
                 initial={{ scale: 0, opacity: 0 }}
                 whileHover={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}

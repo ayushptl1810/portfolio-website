@@ -25,15 +25,27 @@ function AIHome() {
       {/* Note: These currently use the global styles/colors. 
           In a future iteration, we could wrap them in a ThemeProvider 
           to automatically swap purple for emerald. */}
-      <TechnologiesComponent technologies={AiTechStack} />
+      <TechnologiesComponent technologies={AiTechStack} theme="emerald" />
 
-      <ProjectComponent ids={featuredIds} projectList={AIProjectList} />
+      <ProjectComponent
+        ids={featuredIds}
+        projectList={AIProjectList}
+        theme="emerald"
+      />
 
-      <ContactSection />
+      <ContactSection theme="emerald" />
 
       {/* Chat Interface */}
-      <ChatWidget open={chatOpen} onClose={() => setChatOpen(false)} />
-      <ChatButton open={chatOpen} onToggle={() => setChatOpen((v) => !v)} />
+      <ChatWidget
+        open={chatOpen}
+        onClose={() => setChatOpen(false)}
+        theme="emerald"
+      />
+      <ChatButton
+        open={chatOpen}
+        onToggle={() => setChatOpen((v) => !v)}
+        theme="emerald"
+      />
     </>
   );
 }
