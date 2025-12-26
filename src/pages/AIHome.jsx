@@ -7,8 +7,11 @@ import IncomingTransition from "../transitions/IncomingTransition";
 import ChatButton from "../components/ChatButton";
 import ChatWidget from "../components/ChatWidget";
 
+import { AiTechStack } from "../utils/TechnologyList";
+import { AIProjectList } from "../utils/ProjectList";
+
 function AIHome() {
-  const featuredIds = [2, 3, 4, 5]; // reusing same featured projects for now
+  const featuredIds = ["ai-1", "ai-2"]; // AI Projects: Virtual Teaching Assistant, Data Analyst Agent
   const [chatOpen, setChatOpen] = useState(false);
 
   return (
@@ -22,9 +25,9 @@ function AIHome() {
       {/* Note: These currently use the global styles/colors. 
           In a future iteration, we could wrap them in a ThemeProvider 
           to automatically swap purple for emerald. */}
-      <TechnologiesComponent />
+      <TechnologiesComponent technologies={AiTechStack} />
 
-      <ProjectComponent ids={featuredIds} />
+      <ProjectComponent ids={featuredIds} projectList={AIProjectList} />
 
       <ContactSection />
 

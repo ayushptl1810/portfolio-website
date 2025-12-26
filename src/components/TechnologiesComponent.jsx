@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
-import technologies from "../utils/TechnologyList";
 
-function TechnologiesComponent() {
+function TechnologiesComponent({ technologies = [] }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 18 }}
@@ -35,7 +34,7 @@ function TechnologiesComponent() {
                 transition={{
                   duration: 0.2,
                   ease: "easeOut",
-                  delay: index * 0.03,
+                  delay: 0.03,
                 }}
                 className="bg-zinc-950/70 backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20 relative group"
                 whileHover={{

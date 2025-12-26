@@ -2,18 +2,17 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
-import ProjectList from "../utils/ProjectList";
 import IncomingTransition from "../transitions/IncomingTransition";
 
-function ProjectComponent({ ids }) {
+function ProjectComponent({ ids, projectList = [] }) {
   const location = useLocation();
   const navigate = useNavigate();
-  const onProjectsPage = location.pathname === "/projects";
+  const onProjectsPage = location.pathname.includes("/projects");
 
   const dataset =
     !Array.isArray(ids) || ids.length === 0
-      ? ProjectList
-      : ProjectList.filter((p) => ids.includes(p.id));
+      ? projectList
+      : projectList.filter((p) => ids.includes(p.id));
 
   // Automatically scroll to top when component mounts (after page transition)
   // Only if we're coming from a transition (navigating TO projects)
@@ -32,22 +31,25 @@ function ProjectComponent({ ids }) {
     }
   }, [location.state]);
 
+  // Determine base path (e.g. "/web" or "/ai")
+  const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
+
   const handleCta = () => {
     if (onProjectsPage) {
       // Navigate back to home with transition
       if (window.triggerPageTransition) {
-        window.triggerPageTransition("/");
+        window.triggerPageTransition(basePath === "/web" ? "/web" : "/ai"); // Handle home specifically if needed, likely just basePath
       } else {
         // Fallback: direct navigation
-        navigate("/");
+        navigate(basePath);
       }
     } else {
       // Navigate to projects with transition
       if (window.triggerPageTransition) {
-        window.triggerPageTransition("/projects");
+        window.triggerPageTransition(`${basePath}/projects`);
       } else {
         // Fallback: direct navigation
-        navigate("/projects", {
+        navigate(`${basePath}/projects`, {
           state: { fromTransition: true, label: "Projects" },
         });
       }
@@ -70,9 +72,9 @@ function ProjectComponent({ ids }) {
     } else {
       // Navigate to projects page
       if (window.triggerPageTransition) {
-        window.triggerPageTransition("/projects");
+        window.triggerPageTransition(`${basePath}/projects`);
       } else {
-        navigate("/projects", {
+        navigate(`${basePath}/projects`, {
           state: { fromTransition: true, label: "Projects" },
         });
       }
@@ -83,10 +85,10 @@ function ProjectComponent({ ids }) {
   const handleBackToHome = () => {
     // Use page transition but with a different state that won't trigger scroll
     if (window.triggerPageTransition) {
-      window.triggerPageTransition("/");
+      window.triggerPageTransition(basePath);
     } else {
       // Fallback: direct navigation
-      navigate("/");
+      navigate(basePath);
     }
   };
 
@@ -98,9 +100,10 @@ function ProjectComponent({ ids }) {
           <motion.div
             className="mb-6 md:mb-8 text-center"
             initial={{ opacity: 0, y: 18 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            animate={onProjectsPage ? { opacity: 1, y: 0 } : undefined}
+            whileInView={!onProjectsPage ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.4 }}
+            viewport={{ once: true, amount: 0.1 }}
           >
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
               My Projects
@@ -117,7 +120,12 @@ function ProjectComponent({ ids }) {
               <motion.div
                 key={project.id}
                 initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                animate={
+                  onProjectsPage && idx < 2 ? { opacity: 1, y: 0 } : undefined
+                }
+                whileInView={
+                  !onProjectsPage || idx >= 2 ? { opacity: 1, y: 0 } : undefined
+                }
                 transition={{
                   type: "spring",
                   stiffness: 120,
@@ -125,7 +133,7 @@ function ProjectComponent({ ids }) {
                   mass: 0.9,
                   delay: idx * 0.06,
                 }}
-                viewport={{ once: true, amount: 0.25 }}
+                viewport={{ once: true, amount: 0 }}
                 className="w-full"
               >
                 <ProjectCard project={project} />

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { useReadme } from "../hooks/useReadme";
-import ProjectList from "../utils/ProjectList";
+import { ProjectList } from "../utils/ProjectList";
 import ReactMarkdown from "react-markdown";
 
 const ProjectDetail = () => {
@@ -24,6 +24,10 @@ const ProjectDetail = () => {
   const { owner, repoName } = getGitHubInfo(project?.github_url);
   const { readme, loading, error } = useReadme(owner, repoName);
 
+  // Determine base path (e.g. "/web" or "/ai")
+  const location = useLocation();
+  const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
+
   useEffect(() => {
     // Find project by name from ProjectList
     const foundProject = ProjectList.find(
@@ -34,16 +38,16 @@ const ProjectDetail = () => {
       setProject(foundProject);
     } else {
       // Redirect to projects page if project not found
-      navigate("/projects");
+      navigate(`${basePath}/projects`);
     }
-  }, [projectName, navigate]);
+  }, [projectName, navigate, basePath]);
 
   if (!project) {
     return null; // Will redirect
   }
 
   const handleBack = () => {
-    navigate("/projects");
+    navigate(`${basePath}/projects`);
   };
 
   return (

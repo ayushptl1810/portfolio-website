@@ -5,10 +5,11 @@ import quizAppImage from "../assets/images/QuizApp.png";
 import zentryImage from "../assets/images/Zentry.png";
 import todoListImage from "../assets/images/TodoList.png";
 import virtualTeachingAssistantImage from "../assets/images/VirtualTeachingAssistant.png";
+import projectAegisImage from "../assets/images/ProjectAegis.png";
 
-const ProjectList = [
+const WebProjectList = [
   {
-    id: 1,
+    id: "web-1",
     name: "InfluenceNet",
     tags: ["Flask", "Flask-SQLAlchemy", "Flask-Restful"],
     github_url:
@@ -28,7 +29,7 @@ const ProjectList = [
     deployed_url: null,
   },
   {
-    id: 2,
+    id: "web-2",
     name: "Zoom Trip - 3D Globe Explorer",
     tags: ["React", "Cesium", "Gemini AI"],
     github_url: "https://github.com/ayushptl1810/codecircuit",
@@ -46,7 +47,7 @@ const ProjectList = [
     deployed_url: "https://codecircuit-one.vercel.app/",
   },
   {
-    id: 3,
+    id: "web-3",
     name: "Quiz Master App",
     tags: ["VueJs", "ChartJs", "Redux", "Celery", "Flask", "Flask-SQLAlchemy"],
     github_url: "https://github.com/23f2001281/Quiz-Master-App-V2",
@@ -65,7 +66,7 @@ const ProjectList = [
     deployed_url: null,
   },
   {
-    id: 4,
+    id: "web-4",
     name: "Itinary Generator",
     tags: [
       "NextJs",
@@ -91,7 +92,7 @@ const ProjectList = [
     deployed_url: null,
   },
   {
-    id: 5,
+    id: "web-5",
     name: "StackIt - Community Q&A Forum",
     tags: ["NextJs", "TailwindCSS", "SocketIO", "JWT", "Express"],
     github_url: "https://github.com/HarshilForWork/Odoo_JBBR",
@@ -110,7 +111,7 @@ const ProjectList = [
     deployed_url: null,
   },
   {
-    id: 6,
+    id: "web-6",
     name: "Zentry Clone",
     tags: ["HTML", "CSS", "JavaScript"],
     github_url: "https://github.com/ayushptl1810/zentryclone",
@@ -128,7 +129,7 @@ const ProjectList = [
     deployed_url: "https://zentryclone-one.vercel.app/",
   },
   {
-    id: 7,
+    id: "web-7",
     name: "ToDo App",
     tags: ["NextJs", "MongoDB", "TailwindCSS", "Express"],
     github_url: "https://github.com/ayushptl1810/ToDoList",
@@ -146,7 +147,37 @@ const ProjectList = [
     deployed_url: "https://todolist-w5aa.onrender.com/",
   },
   {
-    id: 8,
+    id: "web-8",
+    name: "Project Aegis",
+    tags: [
+      "FastAPI",
+      "MERN",
+      "Razorpay",
+      "WebSockets",
+      "Redis",
+      "Transformers",
+    ],
+    github_url: "https://github.com/ayushptl1810/MumbaiHacksJBBR",
+    owner: "ayushptl1810",
+    repo: "ProjectAegis",
+    description:
+      "An end-to-end fact-checking and media literacy platform that monitors rumours in real time, debunks them using AI, and offers curated educational modules.",
+    points: [
+      "Developed a real-time rumour monitoring system with AI-driven debunking and confidence scoring.",
+      "Built a personalized educational platform featuring interactive modules and domain-based content filtering.",
+      "Integrated a role-based subscription model (Free, Pro, Enterprise) using Razorpay for payment processing.",
+      "Implemented a multi-modal verification chatbot supporting text, image, audio and video analysis for misinformation detection.",
+      "Developed a Chrome extension for real-time browsing monitoring, automatically alerting users to potential misinformation and linking to verified debunks.",
+    ],
+    image: projectAegisImage,
+    video: null,
+    deployed_url: "https://mumbai-hacks-jbbr-u5g4.vercel.app/",
+  },
+];
+
+const AIProjectList = [
+  {
+    id: "ai-1",
     name: "Virtual Teaching Assistant",
     tags: ["FastAPI", "Pinecone", "BS4", "Playwright"],
     github_url: "https://github.com/ayushptl1810/TDS-PROJECT-1",
@@ -164,7 +195,7 @@ const ProjectList = [
     deployed_url: "https://tds-project-1-ujvv.onrender.com",
   },
   {
-    id: 9,
+    id: "ai-2",
     name: "Data Analyst Agent",
     tags: [
       "FastAPI",
@@ -193,6 +224,26 @@ const ProjectList = [
     video: null,
     deployed_url: null,
   },
+  {
+    id: "ai-3",
+    name: "Multi-Label Emotion Classification",
+    tags: ["FastAPI", "TensorFlow", "Transformers", "Docker", "WandB"],
+    github_url: "https://github.com/23f2001281/DL-GenAI-Project-Sept",
+    owner: "23f2001281",
+    repo: "DL-GenAI-Project-Sept",
+    description:
+      "A robust multi-label text classification system capable of detecting multiple emotions (Anger, Fear, Joy, Sadness, Surprise) simultaneously using fine-tuned RoBERTa transformers.",
+    points: [
+      "Architected State-of-the-Art NLP Models: Benchmarked and fine-tuned multiple Transformer architectures (RoBERTa, BERT, DeBERTa) against RNNs, achieving a superior Macro F1 score of 0.852 with the RoBERTa Base model.",
+      "Optimized Training for Imbalanced Data: Implemented weighted binary cross-entropy loss and custom per-label threshold tuning to address dataset imbalance, ensuring high sensitivity even for minority emotion classes.",
+      "Production-Ready API Deployment: Developed a containerized FastAPI service for real-time inference, featuring efficient tokenization strategies, input validation, and scalable deployment configurations for cloud environments.",
+    ],
+    image: null,
+    video: null,
+    deployed_url:
+      "https://huggingface.co/Meshyboi/Multi-Emotion-Classification",
+  },
 ];
 
-export default ProjectList;
+const ProjectList = [...WebProjectList, ...AIProjectList];
+export { WebProjectList, AIProjectList, ProjectList };

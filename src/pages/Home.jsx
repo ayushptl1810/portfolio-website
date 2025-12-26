@@ -7,16 +7,19 @@ import IncomingTransition from "../transitions/IncomingTransition";
 import ChatButton from "../components/ChatButton";
 import ChatWidget from "../components/ChatWidget";
 
+import { WebTechStack } from "../utils/TechnologyList";
+import { WebProjectList } from "../utils/ProjectList";
+
 function Home() {
-  const featuredIds = [2, 3, 4, 5];
+  const featuredIds = ["web-2", "web-3", "web-5", "web-8"]; // Web Projects: Zoom Trip, StackIt, Zentry, ToDo
   const [chatOpen, setChatOpen] = useState(false);
 
   return (
     <>
       <IncomingTransition />
       <HeroComponent />
-      <TechnologiesComponent />
-      <ProjectComponent ids={featuredIds} />
+      <TechnologiesComponent technologies={WebTechStack} />
+      <ProjectComponent ids={featuredIds} projectList={WebProjectList} />
       <ContactSection />
 
       {/* Chat Interface */}

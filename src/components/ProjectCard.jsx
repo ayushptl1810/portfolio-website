@@ -1,7 +1,7 @@
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
 /*
@@ -28,6 +28,9 @@ function ProjectCard({ project }) {
     deployed_url,
     image,
   } = project || {};
+
+  const location = useLocation();
+  const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
 
   const demoHref = demo_url || deployed_url;
   const hasDemo = Boolean(demoHref);
@@ -95,7 +98,9 @@ function ProjectCard({ project }) {
               transition={{ duration: 0.2 }}
             >
               <Link
-                to={`/projects/${name.toLowerCase().replace(/\s+/g, "-")}`}
+                to={`${basePath}/projects/${name
+                  .toLowerCase()
+                  .replace(/\s+/g, "-")}`}
                 className="flex items-center justify-center gap-2 px-4 py-2 md:px-5 md:py-2.5 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full transition-all duration-300 text-sm md:text-base font-medium w-full relative overflow-hidden group"
               >
                 {/* Transmission Room Style Hover Effect */}

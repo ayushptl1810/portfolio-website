@@ -13,6 +13,7 @@ import ProjectComponent from "./components/ProjectComponent";
 import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
 import AIHome from "./pages/AIHome";
+import { WebProjectList, AIProjectList } from "./utils/ProjectList";
 
 function App() {
   return (
@@ -26,7 +27,10 @@ function App() {
           <Route path="/web" element={<WebLayout />}>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />
-            <Route path="projects" element={<ProjectComponent />} />
+            <Route
+              path="projects"
+              element={<ProjectComponent projectList={WebProjectList} />}
+            />
             <Route path="projects/:projectName" element={<ProjectDetail />} />
             <Route path="contact" element={<Contact />} />
           </Route>
@@ -35,7 +39,10 @@ function App() {
           <Route path="/ai" element={<AILayout />}>
             <Route index element={<AIHome />} />
             {/* Reusing these for now, or creating specific AI versions later */}
-            <Route path="projects" element={<ProjectComponent />} />
+            <Route
+              path="projects"
+              element={<ProjectComponent projectList={AIProjectList} />}
+            />
             <Route path="projects/:projectName" element={<ProjectDetail />} />
             <Route path="about" element={<About />} />
             <Route path="contact" element={<Contact />} />
