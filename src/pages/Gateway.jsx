@@ -5,8 +5,8 @@ import "@fontsource/playfair-display";
 import "@fontsource/inter";
 
 // Web Background Components
-import DarkVeil from "../components/DarkVeil";
-import ParticleSystem from "../components/ParticleSystem";
+import DarkVeil from "../components/shared/DarkVeil";
+import ParticleSystem from "../components/shared/ParticleSystem";
 
 // AI Background Components
 import AINeural from "../components/gateway/AINeural";

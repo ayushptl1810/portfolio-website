@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import DarkVeil from "../components/DarkVeil";
+import DarkVeil from "../components/shared/DarkVeil";
 import Spline from "@splinetool/react-spline";
-import FluidMenu from "../components/FluidMenu";
-import ParticleSystem from "../components/ParticleSystem.jsx";
+import FluidMenu from "../components/shared/FluidMenu";
+import ParticleSystem from "../components/shared/ParticleSystem.jsx";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
 function WebLayout() {

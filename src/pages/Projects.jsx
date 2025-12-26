@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import ProjectComponent from "../components/ProjectComponent";
+import ProjectComponent from "../components/projects/ProjectComponent";
 
 function Projects() {
   const location = useLocation();

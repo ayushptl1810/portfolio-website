@@ -9,7 +9,7 @@ import AILayout from "./layouts/AILayout";
 // Pages
 import Home from "./pages/Home";
 import About from "./pages/About";
-import ProjectComponent from "./components/ProjectComponent";
+import ProjectComponent from "./components/projects/ProjectComponent";
 import ProjectDetail from "./pages/ProjectDetail";
 import Contact from "./pages/Contact";
 import AIHome from "./pages/AIHome";

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import PersonalIdentityPanel from "../components/PersonalIdentityPanel";
-import SoftSkillsPanel from "../components/SoftSkillsPanel";
-import CurrentStatusPanel from "../components/CurrentStatusPanel";
-import QuickFactsPanel from "../components/QuickFactsPanel";
-import PersonalPassionsPanel from "../components/PersonalPassionsPanel";
+import PersonalIdentityPanel from "../components/about/PersonalIdentityPanel";
+import SoftSkillsPanel from "../components/about/SoftSkillsPanel";
+import CurrentStatusPanel from "../components/about/CurrentStatusPanel";
+import QuickFactsPanel from "../components/about/QuickFactsPanel";
+import PersonalPassionsPanel from "../components/about/PersonalPassionsPanel";
 
 import { Link, useLocation } from "react-router-dom";
 

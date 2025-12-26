@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import HeroComponent from "../components/HeroComponent";
-import TechnologiesComponent from "../components/TechnologiesComponent";
-import ProjectComponent from "../components/ProjectComponent";
-import ContactSection from "../components/ContactSection";
+import HeroComponent from "../components/home/HeroComponent";
+import TechnologiesComponent from "../components/home/TechnologiesComponent";
+import ProjectComponent from "../components/projects/ProjectComponent";
+import ContactSection from "../components/contact/ContactSection";
 import IncomingTransition from "../transitions/IncomingTransition";
-import ChatButton from "../components/ChatButton";
-import ChatWidget from "../components/ChatWidget";
+import ChatButton from "../components/chat/ChatButton";
+import ChatWidget from "../components/chat/ChatWidget";
 
 import { WebTechStack } from "../utils/TechnologyList";
 import { WebProjectList } from "../utils/ProjectList";

@@ -148,12 +148,12 @@ app.get("/callback", async (req, res) => {
 
   if (error) {
     return res.redirect(
-      `${DEPLOYED_URL}/about?spotify_error=${encodeURIComponent(error)}`
+      `${DEPLOYED_URL}/web/about?spotify_error=${encodeURIComponent(error)}`
     );
   }
 
   if (!code) {
-    return res.redirect(`${DEPLOYED_URL}/about?spotify_error=no_code`);
+    return res.redirect(`${DEPLOYED_URL}/web/about?spotify_error=no_code`);
   }
 
   try {
@@ -165,13 +165,15 @@ app.get("/callback", async (req, res) => {
     });
 
     if (tokenResponse.ok) {
-      res.redirect(`${DEPLOYED_URL}/about?spotify_success=true`);
+      res.redirect(`${DEPLOYED_URL}/web/about?spotify_success=true`);
     } else {
-      res.redirect(`${DEPLOYED_URL}/about?spotify_error=token_exchange_failed`);
+      res.redirect(
+        `${DEPLOYED_URL}/web/about?spotify_error=token_exchange_failed`
+      );
     }
   } catch (error) {
     console.error("Callback error:", error);
-    res.redirect(`${DEPLOYED_URL}/about?spotify_error=callback_error`);
+    res.redirect(`${DEPLOYED_URL}/web/about?spotify_error=callback_error`);
   }
 });
 

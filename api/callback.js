@@ -3,7 +3,7 @@ export default async function handler(req, res) {
 
   if (error) {
     return res.redirect(
-      `${process.env.DEPLOYED_URL}/about?spotify_error=${encodeURIComponent(
+      `${process.env.DEPLOYED_URL}/web/about?spotify_error=${encodeURIComponent(
         error
       )}`
     );
@@ -11,7 +11,7 @@ export default async function handler(req, res) {
 
   if (!code) {
     return res.redirect(
-      `${process.env.DEPLOYED_URL}/about?spotify_error=no_code`
+      `${process.env.DEPLOYED_URL}/web/about?spotify_error=no_code`
     );
   }
 
@@ -27,16 +27,18 @@ export default async function handler(req, res) {
     );
 
     if (tokenResponse.ok) {
-      res.redirect(`${process.env.DEPLOYED_URL}/about?spotify_success=true`);
+      res.redirect(
+        `${process.env.DEPLOYED_URL}/web/about?spotify_success=true`
+      );
     } else {
       res.redirect(
-        `${process.env.DEPLOYED_URL}/about?spotify_error=token_exchange_failed`
+        `${process.env.DEPLOYED_URL}/web/about?spotify_error=token_exchange_failed`
       );
     }
   } catch (error) {
     console.error("Callback error:", error);
     res.redirect(
-      `${process.env.DEPLOYED_URL}/about?spotify_error=callback_error`
+      `${process.env.DEPLOYED_URL}/web/about?spotify_error=callback_error`
     );
   }
 }

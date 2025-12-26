@@ -2,7 +2,7 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import ProjectCard from "./ProjectCard";
-import IncomingTransition from "../transitions/IncomingTransition";
+import IncomingTransition from "../../transitions/IncomingTransition";
 
 function ProjectComponent({ ids, projectList = [], theme = "default" }) {
   const isEmerald = theme === "emerald";

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import AIHeroComponent from "../components/AIHeroComponent";
-import TechnologiesComponent from "../components/TechnologiesComponent";
-import ProjectComponent from "../components/ProjectComponent";
-import ContactSection from "../components/ContactSection";
+import AIHeroComponent from "../components/home/AIHeroComponent";
+import TechnologiesComponent from "../components/home/TechnologiesComponent";
+import ProjectComponent from "../components/projects/ProjectComponent";
+import ContactSection from "../components/contact/ContactSection";
 import IncomingTransition from "../transitions/IncomingTransition";
-import ChatButton from "../components/ChatButton";
-import ChatWidget from "../components/ChatWidget";
+import ChatButton from "../components/chat/ChatButton";
+import ChatWidget from "../components/chat/ChatWidget";
 
 import { AiTechStack } from "../utils/TechnologyList";
 import { AIProjectList } from "../utils/ProjectList";

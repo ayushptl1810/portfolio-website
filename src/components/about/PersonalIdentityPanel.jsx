@@ -1,7 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaSpotify, FaInstagram, FaWhatsapp } from "react-icons/fa";
-import meImage from "../assets/Me.jpeg";
+import meImage from "../../assets/Me.jpeg";
 
 const PersonalIdentityPanel = ({
   isActive,

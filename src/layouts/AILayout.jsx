@@ -1,6 +1,6 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import FluidMenu from "../components/FluidMenu";
+import FluidMenu from "../components/shared/FluidMenu";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import AINeural from "../components/gateway/AINeural";
 

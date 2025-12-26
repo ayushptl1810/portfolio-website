@@ -1,11 +1,11 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import IncomingTransition from "../transitions/IncomingTransition";
-import RoleChips from "../components/RoleChips";
-import TransmitButton from "../components/TransmitButton";
-import SegmentedToggle from "../components/SegmentedToggle";
+import RoleChips from "../components/contact/RoleChips";
+import TransmitButton from "../components/contact/TransmitButton";
+import SegmentedToggle from "../components/contact/SegmentedToggle";
 import { FaDownload } from "react-icons/fa";
-import TransmissionBlast from "../components/TransmissionBlast";
+import TransmissionBlast from "../components/contact/TransmissionBlast";
 import chainlessRocket from "../assets/chainless_rocket.riv";
 import resumePdf from "../assets/Resume.pdf";
 
