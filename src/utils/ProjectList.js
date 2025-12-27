@@ -191,8 +191,8 @@ const AIProjectList = [
       "Implemented Adaptive, TF-IDF-Driven Search Logic: Developed a hybrid search algorithm that dynamically learns keyword weights, chunks and ranks context intelligently, and fuses course and forum content to return rich, relevant results, which are then passed to Gemini AI for final answer generation.",
     ],
     image: virtualTeachingAssistantImage,
-    video: "https://virtual-teaching-assistant-iitm.streamlit.app/",
-    deployed_url: "https://tds-project-1-ujvv.onrender.com",
+    video: null,
+    deployed_url: "https://virtual-teaching-assistant-iitm.streamlit.app/",
   },
   {
     id: "ai-2",
@@ -242,6 +242,33 @@ const AIProjectList = [
     video: null,
     deployed_url:
       "https://huggingface.co/Meshyboi/Multi-Emotion-Classification",
+  },
+  {
+    id: "ai-4",
+    name: "Project Aegis",
+    tags: [
+      "FastAPI",
+      "MERN",
+      "Razorpay",
+      "WebSockets",
+      "Redis",
+      "Transformers",
+    ],
+    github_url: "https://github.com/ayushptl1810/MumbaiHacksJBBR",
+    owner: "ayushptl1810",
+    repo: "ProjectAegis",
+    description:
+      "An end-to-end fact-checking and media literacy platform that monitors rumours in real time, debunks them using AI, and offers curated educational modules.",
+    points: [
+      "Developed a real-time rumour monitoring system with AI-driven debunking and confidence scoring.",
+      "Built a personalized educational platform featuring interactive modules and domain-based content filtering.",
+      "Integrated a role-based subscription model (Free, Pro, Enterprise) using Razorpay for payment processing.",
+      "Implemented a multi-modal verification chatbot supporting text, image, audio and video analysis for misinformation detection.",
+      "Developed a Chrome extension for real-time browsing monitoring, automatically alerting users to potential misinformation and linking to verified debunks.",
+    ],
+    image: projectAegisImage,
+    video: null,
+    deployed_url: "https://mumbai-hacks-jbbr-u5g4.vercel.app/",
   },
 ];
 

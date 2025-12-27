@@ -5,6 +5,27 @@ import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { useReadme } from "../hooks/useReadme";
 import { ProjectList } from "../utils/ProjectList";
 import ReactMarkdown from "react-markdown";
+import DeviceFrame from "../components/shared/DeviceFrame";
+import TerminalWindow from "../components/shared/TerminalWindow";
+
+// Helper for smart fallback
+const isAIProject = (tags) => {
+  const aiKeywords = [
+    "python",
+    "ml",
+    "ai",
+    "tensorflow",
+    "pytorch",
+    "nlp",
+    "transformers",
+    "fastapi",
+    "pandas",
+    "scikit-learn",
+    "deep learning",
+    "computer vision",
+  ];
+  return tags?.some((tag) => aiKeywords.includes(tag.toLowerCase()));
+};
 
 const ProjectDetail = () => {
   const { projectName } = useParams();
@@ -71,24 +92,37 @@ const ProjectDetail = () => {
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
-          {/* Video Section (75% width) - No container, just video */}
+          {/* Smart Media Section (75% width) */}
           <motion.div
             className="lg:col-span-3"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="aspect-video bg-black/20 rounded-2xl border border-white/10 flex items-center justify-center">
-              <div className="text-center text-gray-400 font-body">
-                <div className="text-6xl mb-4">🎥</div>
-                <p className="font-body">
-                  Video placeholder for {project.name}
-                </p>
-                <p className="text-sm font-ui">
-                  Replace with actual video content
-                </p>
+            {project.video ? (
+              // If Video Exists -> Show Video
+              <div className="aspect-video bg-black/20 rounded-2xl border border-white/10 flex items-center justify-center overflow-hidden">
+                <iframe
+                  src={project.video}
+                  title={project.name}
+                  className="w-full h-full"
+                  frameBorder="0"
+                  allowFullScreen
+                />
               </div>
-            </div>
+            ) : // No Video -> Smart Fallback
+            isAIProject(project.tags) && !project.image ? (
+              // Fallback 1: Terminal for AI/ML projects without UI
+              <TerminalWindow
+                name={project.name}
+                description={project.description}
+                tags={project.tags}
+                steps={project.points || []}
+              />
+            ) : (
+              // Fallback 2: Laptop Frame for Web Apps or projects with Images
+              <DeviceFrame image={project.image} alt={project.name} />
+            )}
           </motion.div>
 
           {/* Project Sidebar (25% width) - Comprehensive design */}
