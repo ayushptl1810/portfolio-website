@@ -1,8 +1,8 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, lazy } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
 import resumePdf from "../../assets/Resume.pdf";
-import Spline from "@splinetool/react-spline";
+const Spline = lazy(() => import("@splinetool/react-spline"));
 
 function AIHeroComponent() {
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -138,16 +138,20 @@ function AIHeroComponent() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="w-full h-full relative flex items-center justify-center scale-[1.8] translate-x-[40%] translate-y-[-5%]">
-              <Spline
-                className="w-full h-full"
-                scene="https://prod.spline.design/AqJ4j3ogsligEDfj/scene.splinecode"
-                style={{ background: "transparent" }}
-                onLoad={(splineApp) => {
-                  if (splineApp.setBackgroundColor) {
-                    splineApp.setBackgroundColor("transparent");
-                  }
-                }}
-              />
+              <Suspense
+                fallback={<div className="text-white">Loading 3D Scene...</div>}
+              >
+                <Spline
+                  className="w-full h-full"
+                  scene="https://prod.spline.design/AqJ4j3ogsligEDfj/scene.splinecode"
+                  style={{ background: "transparent" }}
+                  onLoad={(splineApp) => {
+                    if (splineApp.setBackgroundColor) {
+                      splineApp.setBackgroundColor("transparent");
+                    }
+                  }}
+                />
+              </Suspense>
             </div>
           </motion.div>
         )}

@@ -1,28 +1,32 @@
-import { useRive, Layout, Fit, Alignment } from "@rive-app/react-canvas";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, lazy } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
 import birbRiv from "../../assets/birb.riv";
 import resumePdf from "../../assets/Resume.pdf";
+const Rive = lazy(async () => {
+  const riveModule = await import("@rive-app/react-canvas");
+  const { useRive, Layout, Fit, Alignment } = riveModule;
 
-function RiveAnimation() {
-  const { RiveComponent } = useRive({
-    src: birbRiv,
-    layout: new Layout({
-      fit: Fit.Cover,
-      alignment: Alignment.Center,
-    }),
-    autoplay: true,
-  });
-
-  return (
-    <div className="w-full h-full flex items-center justify-center">
-      <div className="w-96 h-96">
-        <RiveComponent className="w-full h-full" />
-      </div>
-    </div>
-  );
-}
+  return {
+    default: () => {
+      const { RiveComponent } = useRive({
+        src: birbRiv,
+        layout: new Layout({
+          fit: Fit.Cover,
+          alignment: Alignment.Center,
+        }),
+        autoplay: true,
+      });
+      return (
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="w-96 h-96">
+            <RiveComponent className="w-full h-full" />
+          </div>
+        </div>
+      );
+    },
+  };
+});
 
 function HeroComponent() {
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -170,7 +174,7 @@ function HeroComponent() {
                 }}
               >
                 <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
-                  <RiveAnimation />
+                  <Rive />
                 </div>
               </motion.div>
             </Suspense>
