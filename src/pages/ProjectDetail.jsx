@@ -110,18 +110,17 @@ const ProjectDetail = () => {
                   allowFullScreen
                 />
               </div>
-            ) : // No Video -> Smart Fallback
-            isAIProject(project.tags) && !project.image ? (
-              // Fallback 1: Terminal for AI/ML projects without UI
+            ) : project.image ? (
+              // If Image Exists -> Show Device Frame
+              <DeviceFrame image={project.image} alt={project.name} />
+            ) : (
+              // No Video & No Image -> Show Terminal (Dynamic content)
               <TerminalWindow
                 name={project.name}
                 description={project.description}
                 tags={project.tags}
                 steps={project.points || []}
               />
-            ) : (
-              // Fallback 2: Laptop Frame for Web Apps or projects with Images
-              <DeviceFrame image={project.image} alt={project.name} />
             )}
           </motion.div>
 

@@ -43,8 +43,15 @@ function ProjectCard({ project, theme = "default" }) {
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
       className="w-full max-w-[34rem] mx-auto bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-[36rem] md:h-[40rem] flex flex-col"
     >
-      {/* Media */}
-      <div className="w-full h-56 md:h-72 bg-gradient-to-tr from-zinc-900 to-zinc-800">
+      <div className="w-full h-56 md:h-72 bg-zinc-900 relative overflow-hidden group">
+        <div
+          className={`absolute inset-0 bg-gradient-to-br ${
+            isEmerald
+              ? "from-emerald-900/40 to-black"
+              : "from-purple-900/40 to-black"
+          } opacity-50`}
+        />
+
         {image ? (
           <img
             src={image}
@@ -53,8 +60,83 @@ function ProjectCard({ project, theme = "default" }) {
             loading="lazy"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-            No preview image
+          /* Smart Code Snapshot Fallback */
+          <div className="absolute inset-0 flex flex-col p-5 font-mono text-xs text-blue-300/90 leading-relaxed bg-[#0d1117]">
+            {/* Fake Terminal Header */}
+            <div className="flex space-x-1.5 mb-4 opacity-40">
+              <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-yellow-500"></div>
+              <div className="w-2.5 h-2.5 rounded-full bg-green-500"></div>
+            </div>
+
+            {/* Dynamic Code Content based on Tags */}
+            <div className="space-y-1.5 opacity-90">
+              {tags.some((t) =>
+                ["crewai", "langchain", "agent"].includes(t.toLowerCase())
+              ) ? (
+                // Agentic Code Snippet
+                <>
+                  <span className="block text-purple-400">
+                    from <span className="text-white">crewai</span> import{" "}
+                    <span className="text-yellow-300">Agent</span>
+                  </span>
+                  <span className="block text-purple-400">
+                    from <span className="text-white">tools</span> import{" "}
+                    <span className="text-yellow-300">SearchTool</span>
+                  </span>
+                  <span className="block text-gray-500 mt-2">
+                    # Initialize {name} agents
+                  </span>
+                  <span className="block text-blue-300">
+                    researcher = <span className="text-green-400">Agent</span>(
+                  </span>
+                  <span className="block pl-4 text-white">
+                    role='Senior Analyst',
+                  </span>
+                  <span className="block pl-4 text-white">
+                    goal='Analyze trends',
+                  </span>
+                  <span className="block text-blue-300">)</span>
+                  <span className="block text-gray-400 mt-2 animate-pulse">
+                    # Executing task...
+                  </span>
+                </>
+              ) : (
+                // ML/DL Code Snippet (Default)
+                <>
+                  <span className="block text-purple-400">
+                    import <span className="text-white">torch</span>
+                  </span>
+                  <span className="block text-purple-400">
+                    import <span className="text-white">torch.nn</span> as{" "}
+                    <span className="text-yellow-300">nn</span>
+                  </span>
+                  <span className="block text-gray-500 mt-2">
+                    # Configuring {name} model
+                  </span>
+                  <span className="block text-blue-300">
+                    class <span className="text-green-400">Transformer</span>
+                    (nn.Module):
+                  </span>
+                  <span className="block pl-4 text-blue-300">
+                    def <span className="text-yellow-300">__init__</span>(self):
+                  </span>
+                  <span className="block pl-8 text-white">
+                    super().__init__()
+                  </span>
+                  <span className="block pl-8 text-white">
+                    self.attn ={" "}
+                    <span className="text-green-400">MultiHeadAttn()</span>
+                  </span>
+                  <span className="block text-gray-400 mt-2 animate-pulse">
+                    # Training epoch 1/100...
+                  </span>
+                </>
+              )}
+            </div>
+
+            {/* Bottom Fade Gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent pointer-events-none"></div>
           </div>
         )}
       </div>

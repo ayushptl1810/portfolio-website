@@ -71,21 +71,90 @@ function FluidMenu({ basePath = "" }) {
         animate={{ x: isOpen ? "0%" : "100%" }}
         transition={{ duration: DURATION, ease: "easeInOut" }}
       >
-        <div className="w-full h-full flex items-center justify-center">
-          <div className="flex flex-col items-center gap-6">
-            {menuItems.map((item) => (
+        <div className="w-full h-full flex flex-col justify-between py-24 px-12 relative overflow-hidden">
+          {/* Main Navigation Links */}
+          <div className="flex-1 flex flex-col items-start justify-center gap-8">
+            {menuItems
+              .filter((i) => !i.isSpecial)
+              .map((item) => {
+                const isActive = location.pathname === item.path;
+                const activeColorClass =
+                  basePath === "/ai" ? "text-emerald-400" : "text-purple-400";
+
+                return (
+                  <motion.button
+                    key={item.label}
+                    onClick={() => handleSelect(item.path, item.label)}
+                    className={`text-4xl md:text-5xl font-bold transition-colors font-display text-left cursor-pointer 
+                            ${isActive ? activeColorClass : "text-white"} 
+                            ${
+                              basePath === "/ai"
+                                ? "hover:text-emerald-300"
+                                : "hover:text-purple-300"
+                            }
+                        `}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={isOpen ? { opacity: 1, x: 0 } : {}}
+                    transition={{ delay: 0.1 }}
+                    whileHover={{ x: 10 }}
+                  >
+                    {item.label}
+                  </motion.button>
+                );
+              })}
+          </div>
+
+          {/* Switch Persona - Distinct Bottom Action */}
+          {menuItems.find((i) => i.isSpecial) && (
+            <div className="border-t border-white/10 pt-8 mt-4 w-full">
               <motion.button
-                key={item.label}
-                onClick={() => handleSelect(item.path, item.label)}
-                className={`text-3xl font-semibold hover:opacity-80 font-ui cursor-pointer ${
-                  item.isSpecial ? "text-gray-400 mt-4 text-2xl" : "text-white"
-                }`}
-                whileHover={{ scale: 1.05 }}
+                onClick={() => handleSelect("/", "Gateway")}
+                className="group flex items-center gap-4 text-left w-full cursor-pointer"
+                whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span className="font-ui">{item.label}</span>
+                <div
+                  className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
+                    basePath === "/ai"
+                      ? "text-emerald-400 border-emerald-500/30 group-hover:bg-emerald-400 group-hover:text-black group-hover:border-emerald-400"
+                      : "text-purple-400 border-purple-500/30 group-hover:bg-purple-400 group-hover:text-black group-hover:border-purple-400"
+                  }`}
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={1.5}
+                      d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <span className="block text-sm text-gray-500 font-mono uppercase tracking-widest mb-1">
+                    Current Reality
+                  </span>
+                  <span
+                    className={`block text-xl text-white font-display transition-colors ${
+                      basePath === "/ai"
+                        ? "group-hover:text-emerald-300"
+                        : "group-hover:text-purple-300"
+                    }`}
+                  >
+                    Switch Dimension
+                  </span>
+                </div>
               </motion.button>
-            ))}
+            </div>
+          )}
+
+          {/* Background Decorative Text */}
+          <div className="absolute -bottom-10 -right-10 text-[15rem] font-bold text-white/5 pointer-events-none select-none font-display leading-none">
+            {basePath === "/ai" ? "AI" : "WEB"}
           </div>
         </div>
       </motion.div>

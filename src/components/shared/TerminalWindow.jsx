@@ -9,13 +9,116 @@ const TerminalWindow = ({
 }) => {
   const [lines, setLines] = useState([]);
 
-  // Combine all "commands" to run
-  const commandSequence = [
-    { cmd: "npm install", output: "Installing dependencies...", delay: 500 },
-    { cmd: "npm start", output: `Starting ${name}...`, delay: 800 },
-    { cmd: "init_system", output: "Initializing AI Core...", delay: 1200 },
-    { cmd: "status_check", output: "System Online. [OK]", delay: 400 },
-  ];
+  // Determine project type and commands
+  const getCommandSequence = () => {
+    const tagString = tags.map((t) => t.toLowerCase()).join(" ");
+
+    // agentic / llm
+    if (
+      ["langchain", "crewai", "openai", "llm", "agent"].some((k) =>
+        tagString.includes(k)
+      )
+    ) {
+      return [
+        {
+          cmd: "pip install -r requirements.txt",
+          output: "Installing agent dependencies...",
+          delay: 600,
+        },
+        {
+          cmd: "python main.py",
+          output: "Orchestrating agents...",
+          delay: 800,
+        },
+        {
+          cmd: "init_agents",
+          output: "Connecting to VectorDB & LLM...",
+          delay: 1200,
+        },
+        { cmd: "status_check", output: "Agents Ready. [OK]", delay: 400 },
+      ];
+    }
+    // deep learning / cv
+    else if (
+      [
+        "pytorch",
+        "tensorflow",
+        "keras",
+        "cv",
+        "computer vision",
+        "cnn",
+        "transformer",
+        "huggingface",
+      ].some((k) => tagString.includes(k))
+    ) {
+      return [
+        {
+          cmd: "pip install -r requirements.txt",
+          output: "Installing torch & cuda libs...",
+          delay: 600,
+        },
+        {
+          cmd: "python train.py --eval",
+          output: `Loading model weights for ${name}...`,
+          delay: 800,
+        },
+        {
+          cmd: "load_weights",
+          output: "Model loaded (2.3GB). [DONE]",
+          delay: 1500,
+        },
+        {
+          cmd: "inference_mode",
+          output: "Ready for inference. [OK]",
+          delay: 400,
+        },
+      ];
+    }
+    // web / other (fallback for when image is missing in web projects)
+    else if (
+      ["reactjs", "nextjs", "nodejs", "javascript", "html", "css", "vue"].some(
+        (k) => tagString.includes(k)
+      )
+    ) {
+      return [
+        {
+          cmd: "npm install",
+          output: "Installing dependencies...",
+          delay: 800,
+        },
+        {
+          cmd: "npm run dev",
+          output: `Starting development server...`,
+          delay: 800,
+        },
+        {
+          cmd: "build_client",
+          output: "Compiling modules... [Done in 1.2s]",
+          delay: 1000,
+        },
+        {
+          cmd: "health_check",
+          output: "Server running on :3000. [OK]",
+          delay: 400,
+        },
+      ];
+    }
+    // default python/general
+    else {
+      return [
+        {
+          cmd: "pip install -r requirements.txt",
+          output: "Installing dependencies...",
+          delay: 500,
+        },
+        { cmd: "uvicorn main:app", output: `Starting ${name}...`, delay: 800 },
+        { cmd: "init_system", output: "Initializing Service...", delay: 1200 },
+        { cmd: "status_check", output: "System Online. [OK]", delay: 400 },
+      ];
+    }
+  };
+
+  const commandSequence = getCommandSequence();
 
   // If no steps provided, use tags to generate fake analysis output
   const outputLines =

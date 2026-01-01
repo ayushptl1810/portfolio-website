@@ -6,6 +6,9 @@ import zentryImage from "../assets/images/Zentry.png";
 import todoListImage from "../assets/images/TodoList.png";
 import virtualTeachingAssistantImage from "../assets/images/VirtualTeachingAssistant.png";
 import projectAegisImage from "../assets/images/ProjectAegis.png";
+import itinaryGeneratorImage from "../assets/images/PujaTravels.png";
+import stackItImage from "../assets/images/StackIt.png";
+import PhoenixGCSImage from "../assets/images/PhoenixGCS.png";
 
 const WebProjectList = [
   {
@@ -87,7 +90,7 @@ const WebProjectList = [
       "Implemented the Scrapbook component, allowing users to post and share memorable events.",
       "Debugged critical issues on the home page, enhancing load speed and user experience.",
     ],
-    image: null,
+    image: itinaryGeneratorImage,
     video: null,
     deployed_url: null,
   },
@@ -106,7 +109,7 @@ const WebProjectList = [
       "Built an admin dashboard for user management, content moderation, analytics, and global announcements.",
       "Integrated search, filtering, and pagination workflows for efficient content discovery and seamless user experience.",
     ],
-    image: null,
+    image: stackItImage,
     video: null,
     deployed_url: null,
   },
@@ -127,24 +130,6 @@ const WebProjectList = [
     image: zentryImage,
     video: null,
     deployed_url: "https://zentryclone-one.vercel.app/",
-  },
-  {
-    id: "web-7",
-    name: "ToDo App",
-    tags: ["NextJs", "MongoDB", "TailwindCSS", "Express"],
-    github_url: "https://github.com/ayushptl1810/ToDoList",
-    owner: "ayushptl1810",
-    repo: "ToDoList",
-    description:
-      "A minimal full-stack To-Do application showcasing a clean CRUD API with a modern client UI. The project is split into a Next.js client and an Express + MongoDB server, designed for clarity, rapid iteration, and easy local replication.",
-    points: [
-      "Built a full-stack to-do application with Next.js (App Router), React, Express, and MongoDB (Mongoose), delivering clean RESTful CRUD endpoints and a schema-driven model for extensibility.",
-      "Implemented a responsive, accessible UI with Tailwind CSS and React hooks, using Axios for API communication and @react-spring/web for smooth, animated list interactions and state changes.",
-      "Engineered a configurable, deployment-ready setup using environment variables (e.g., MONGO_URI), CORS-enabled server, and a clear client/server monorepo for seamless local replication and cloud deployment.",
-    ],
-    image: todoListImage,
-    video: null,
-    deployed_url: "https://todolist-w5aa.onrender.com/",
   },
   {
     id: "web-8",
@@ -172,6 +157,33 @@ const WebProjectList = [
     image: projectAegisImage,
     video: null,
     deployed_url: "https://mumbai-hacks-jbbr-u5g4.vercel.app/",
+  },
+  {
+    id: "web-9",
+    name: "Phoenix Ground Control Station",
+    tags: [
+      "NextJs",
+      "TailwindCSS",
+      "FastAPI",
+      "Python",
+      "Google Gemini",
+      "YOLO",
+      "Mavlink",
+    ],
+    github_url: "https://github.com/DJSPhoenix/SAE-Aerothon-GCS-25",
+    owner: "DJSPhoenix",
+    repo: "SAE-Aerothon-GCS-25",
+    description:
+      "A high-performance Ground Control Station (GCS) system designed for autonomous drone fleet management, featuring advanced mission planning and a dual-engine AI architecture for versatile object detection.",
+    points: [
+      "Engineered a flexible AI pipeline supporting both Google Gemini for contextual analysis and YOLO for high-speed, real-time inference.",
+      "Developed a high-throughput FastAPI backend to manage concurrent telemetry streams and command execution for multiple drones.",
+      "Implemented complex waypoint mission planning and dynamic path optimization algorithms for autonomous navigation.",
+      "Architected a scalable communication layer using Mavlink to ensure reliable fleet synchronization and control.",
+    ],
+    image: PhoenixGCSImage,
+    video: null,
+    deployed_url: null,
   },
 ];
 
