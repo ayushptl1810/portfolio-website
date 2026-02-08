@@ -8,7 +8,7 @@ function FluidMenu({ basePath = "" }) {
   const location = useLocation();
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const panelWidth = "33vw";
+  // const panelWidth = "33vw"; // Removed to use CSS classes
   const DURATION = 0.4;
 
   const toggleButton = () => {
@@ -65,8 +65,7 @@ function FluidMenu({ basePath = "" }) {
 
       {/* Sidebar */}
       <motion.div
-        className="fixed top-0 right-0 h-full z-[60] bg-black"
-        style={{ width: panelWidth }}
+        className="fixed top-0 right-0 h-full z-[60] bg-black w-full md:w-[33vw]"
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? "0%" : "100%" }}
         transition={{ duration: DURATION, ease: "easeInOut" }}
@@ -85,12 +84,12 @@ function FluidMenu({ basePath = "" }) {
                   <motion.button
                     key={item.label}
                     onClick={() => handleSelect(item.path, item.label)}
-                    className={`text-4xl md:text-5xl font-bold transition-colors font-display text-left cursor-pointer 
+                    className={`text-3xl md:text-5xl font-bold transition-colors font-display text-left cursor-pointer 
                             ${isActive ? activeColorClass : "text-white"} 
                             ${
-                              basePath === "/ai"
-                                ? "hover:text-emerald-300"
-                                : "hover:text-purple-300"
+                              basePath === "/ai" ?
+                                "hover:text-emerald-300"
+                              : "hover:text-purple-300"
                             }
                         `}
                     initial={{ opacity: 0, x: 20 }}
@@ -115,9 +114,9 @@ function FluidMenu({ basePath = "" }) {
               >
                 <div
                   className={`w-12 h-12 rounded-full border flex items-center justify-center transition-all duration-300 ${
-                    basePath === "/ai"
-                      ? "text-emerald-400 border-emerald-500/30 group-hover:bg-emerald-400 group-hover:text-black group-hover:border-emerald-400"
-                      : "text-purple-400 border-purple-500/30 group-hover:bg-purple-400 group-hover:text-black group-hover:border-purple-400"
+                    basePath === "/ai" ?
+                      "text-emerald-400 border-emerald-500/30 group-hover:bg-emerald-400 group-hover:text-black group-hover:border-emerald-400"
+                    : "text-purple-400 border-purple-500/30 group-hover:bg-purple-400 group-hover:text-black group-hover:border-purple-400"
                   }`}
                 >
                   <svg
@@ -140,9 +139,9 @@ function FluidMenu({ basePath = "" }) {
                   </span>
                   <span
                     className={`block text-xl text-white font-display transition-colors ${
-                      basePath === "/ai"
-                        ? "group-hover:text-emerald-300"
-                        : "group-hover:text-purple-300"
+                      basePath === "/ai" ?
+                        "group-hover:text-emerald-300"
+                      : "group-hover:text-purple-300"
                     }`}
                   >
                     Switch Dimension

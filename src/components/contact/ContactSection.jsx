@@ -6,11 +6,13 @@ function ContactSection({ theme = "default" }) {
   const isEmerald = theme === "emerald";
 
   const handleContactClick = () => {
+    const isAiPage = window.location.pathname.startsWith("/ai");
+    const contactPath = isAiPage ? "/ai/contact" : "/web/contact";
+
     if (window.triggerPageTransition) {
-      window.triggerPageTransition("/contact");
+      window.triggerPageTransition(contactPath);
     } else {
-      // Fallback: direct navigation
-      window.location.href = "/contact";
+      window.location.href = contactPath;
     }
   };
 
@@ -52,13 +54,13 @@ function ContactSection({ theme = "default" }) {
             <motion.button
               onClick={handleContactClick}
               className={`group relative px-8 py-4 md:px-12 md:py-6 bg-gradient-to-r ${
-                isEmerald
-                  ? "from-emerald-600 to-cyan-600"
-                  : "from-purple-600 to-blue-600"
+                isEmerald ?
+                  "from-emerald-600 to-cyan-600"
+                : "from-purple-600 to-blue-600"
               } rounded-2xl text-white text-lg md:text-xl font-semibold overflow-hidden shadow-2xl ${
-                isEmerald
-                  ? "hover:shadow-emerald-500/25"
-                  : "hover:shadow-purple-500/25"
+                isEmerald ?
+                  "hover:shadow-emerald-500/25"
+                : "hover:shadow-purple-500/25"
               } transition-all duration-300 cursor-pointer`}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -66,9 +68,9 @@ function ContactSection({ theme = "default" }) {
               {/* Button background glow */}
               <div
                 className={`absolute inset-0 bg-gradient-to-r ${
-                  isEmerald
-                    ? "from-emerald-600 to-cyan-600"
-                    : "from-purple-600 to-blue-600"
+                  isEmerald ?
+                    "from-emerald-600 to-cyan-600"
+                  : "from-purple-600 to-blue-600"
                 } rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
               />
 
@@ -81,9 +83,9 @@ function ContactSection({ theme = "default" }) {
               {/* Button border glow */}
               <div
                 className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${
-                  isEmerald
-                    ? "from-emerald-400 to-cyan-400"
-                    : "from-purple-400 to-blue-400"
+                  isEmerald ?
+                    "from-emerald-400 to-cyan-400"
+                  : "from-purple-400 to-blue-400"
                 } opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-xl`}
               />
             </motion.button>

@@ -21,8 +21,9 @@ const AINeural = ({ isActive }) => {
     handleResize();
 
     let particles = [];
-    const particleCount = 80;
-    const connectionDistance = 150;
+    const isMobile = window.innerWidth < 768;
+    const particleCount = isMobile ? 25 : 80;
+    const connectionDistance = isMobile ? 80 : 150;
 
     class Particle {
       constructor() {
@@ -77,10 +78,15 @@ const AINeural = ({ isActive }) => {
 
           if (dist < connectionDistance) {
             const opacity = 1 - dist / connectionDistance;
-            ctx.strokeStyle = isActive
-              ? `rgba(52, 211, 153, ${opacity * 0.8})`
+            ctx.strokeStyle =
+              isActive ?
+                `rgba(52, 211, 153, ${opacity * 0.8})`
               : `rgba(16, 185, 129, ${opacity * 0.3})`;
-            ctx.lineWidth = isActive ? 1.5 : 0.5;
+            ctx.lineWidth =
+              isActive ?
+                isMobile ? 0.8
+                : 1.5
+              : 0.5;
 
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);

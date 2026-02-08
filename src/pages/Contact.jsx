@@ -50,9 +50,9 @@ function Contact() {
 
   const isEmailValid = replyVia === "Email" ? /.+@.+\..+/.test(email) : true;
   const isLinkedInValid =
-    replyVia === "LinkedIn"
-      ? /https?:\/\/(www\.)?linkedin\.com\//i.test(linkedinUrl)
-      : true;
+    replyVia === "LinkedIn" ?
+      /https?:\/\/(www\.)?linkedin\.com\//i.test(linkedinUrl)
+    : true;
   const isMessageValid = message.trim().length > 0;
   const formValid = isEmailValid && isLinkedInValid && isMessageValid;
 
@@ -196,9 +196,9 @@ function Contact() {
       >
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           {/* Left */}
-          <div>
+          <div className="text-center lg:text-left">
             <motion.h1
-              className="text-6xl md:text-7xl font-bold text-white mb-6 font-display"
+              className="text-4xl sm:text-6xl md:text-7xl font-bold text-white mb-6 font-display"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
@@ -206,13 +206,13 @@ function Contact() {
               Contact Me
             </motion.h1>
             <motion.div
-              className="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mb-6"
+              className="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mb-6 mx-auto lg:mx-0"
               initial={{ scaleX: 0, originX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.4, ease: "easeOut" }}
             />
             <motion.p
-              className="text-xl text-gray-300 mb-8 font-body"
+              className="text-lg sm:text-xl text-gray-300 mb-8 font-body max-w-2xl mx-auto lg:mx-0"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.05, ease: "easeOut" }}
@@ -221,14 +221,16 @@ function Contact() {
               technology.
             </motion.p>
 
-            <RoleChips
-              value={role}
-              onChange={setRole}
-              options={["General", "Freelance", "Engineer"]}
-            />
+            <div className="flex justify-center lg:justify-start">
+              <RoleChips
+                value={role}
+                onChange={setRole}
+                options={["General", "Freelance", "Engineer"]}
+              />
+            </div>
 
             {/* Preference toggle + resume */}
-            <div className="mt-6 flex items-center gap-4 flex-wrap">
+            <div className="mt-6 flex items-center justify-center lg:justify-start gap-4 flex-wrap">
               <SegmentedToggle
                 value={replyVia}
                 options={["Email", "LinkedIn"]}
@@ -266,7 +268,7 @@ function Contact() {
             </div>
 
             <motion.div
-              className="relative bg-zinc-950/80 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg overflow-hidden m-[2px]"
+              className="relative bg-zinc-950/80 backdrop-blur-md border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg overflow-hidden m-[2px]"
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, ease: "easeOut" }}
@@ -291,7 +293,7 @@ function Contact() {
                   />
                 </div>
 
-                {replyVia === "Email" ? (
+                {replyVia === "Email" ?
                   <div>
                     <label className="block text-sm text-gray-300 mb-1 font-ui">
                       Email
@@ -312,8 +314,7 @@ function Contact() {
                       transition={{ duration: 0.3 }}
                     />
                   </div>
-                ) : (
-                  <div>
+                : <div>
                     <label className="block text-sm text-gray-300 mb-1 font-ui">
                       LinkedIn URL
                     </label>
@@ -333,7 +334,7 @@ function Contact() {
                       transition={{ duration: 0.3 }}
                     />
                   </div>
-                )}
+                }
 
                 <div className="md:col-span-2">
                   <label className="block text-sm text-gray-300 mb-1 font-ui">

@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 
 function SegmentedToggle({ value, options = [], onChange }) {
   // Handle both string options and object options for backward compatibility
-  const normalizedOptions = options.map(opt => 
-    typeof opt === 'string' ? { value: opt, label: opt } : opt
+  const normalizedOptions = options.map((opt) =>
+    typeof opt === "string" ? { value: opt, label: opt } : opt,
   );
-  
+
   const index = Math.max(
     0,
-    normalizedOptions.findIndex((o) => o.value === value)
+    normalizedOptions.findIndex((o) => o.value === value),
   );
   const count = Math.max(1, normalizedOptions.length);
   const isAlt = index % 2 === 1; // for 2-option toggle, LinkedIn is right
@@ -57,7 +57,7 @@ function SegmentedToggle({ value, options = [], onChange }) {
           key={option.value}
           type="button"
           onClick={() => onChange?.(option.value)}
-          className={`relative z-[1] px-5 py-2 w-[8.25rem] text-sm font-semibold transition-colors text-white cursor-pointer`}
+          className={`relative z-[1] px-5 py-2 w-28 sm:w-[8.25rem] text-sm font-semibold transition-colors text-white cursor-pointer`}
         >
           <span className="font-ui">{option.label}</span>
         </button>

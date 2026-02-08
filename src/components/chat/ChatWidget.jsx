@@ -110,7 +110,7 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed bottom-[calc(max(env(safe-area-inset-bottom),1.25rem)+4rem)] right-[max(env(safe-area-inset-right),1.25rem)] z-[70] w-[24rem] max-w-[92vw] sm:max-w-[90vw] h-[26rem] sm:h-[28rem] max-h-[80vh] rounded-2xl border border-white/10 bg-zinc-950/90 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col overflow-x-hidden"
+          className="fixed bottom-[calc(max(env(safe-area-inset-bottom),1.25rem)+4rem)] right-[max(env(safe-area-inset-right),1.25rem)] z-[70] w-[20rem] sm:w-[24rem] max-w-[92vw] sm:max-w-[90vw] h-[22rem] sm:h-[26rem] max-h-[80vh] rounded-2xl border border-white/10 bg-zinc-950/90 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col overflow-x-hidden"
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -119,9 +119,9 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
           {/* Header */}
           <div
             className={`px-6 py-4 border-b border-white/10 bg-gradient-to-r ${
-              isEmerald
-                ? "from-emerald-500/10 to-cyan-500/10"
-                : "from-purple-500/10 to-blue-500/10"
+              isEmerald ?
+                "from-emerald-500/10 to-cyan-500/10"
+              : "from-purple-500/10 to-blue-500/10"
             } flex-shrink-0`}
           >
             <div className="flex items-center justify-between">
@@ -160,44 +160,42 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
               >
                 <div
                   className={`flex items-start space-x-2 w-full ${
-                    message.from === "user"
-                      ? "flex-row-reverse space-x-reverse"
-                      : ""
+                    message.from === "user" ?
+                      "flex-row-reverse space-x-reverse"
+                    : ""
                   }`}
                 >
                   {/* Avatar */}
                   <div
                     className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                      message.from === "user"
-                        ? `bg-gradient-to-r ${
-                            isEmerald
-                              ? "from-emerald-500 to-cyan-500"
-                              : "from-purple-500 to-blue-500"
-                          }`
-                        : `bg-gradient-to-r ${
-                            isEmerald
-                              ? "from-cyan-500 to-emerald-500"
-                              : "from-blue-500 to-purple-500"
-                          }`
+                      message.from === "user" ?
+                        `bg-gradient-to-r ${
+                          isEmerald ?
+                            "from-emerald-500 to-cyan-500"
+                          : "from-purple-500 to-blue-500"
+                        }`
+                      : `bg-gradient-to-r ${
+                          isEmerald ?
+                            "from-cyan-500 to-emerald-500"
+                          : "from-blue-500 to-purple-500"
+                        }`
                     }`}
                   >
-                    {message.from === "user" ? (
+                    {message.from === "user" ?
                       <FaUser className="w-4 h-4 text-white" />
-                    ) : (
-                      <FaRobot className="w-4 h-4 text-white" />
-                    )}
+                    : <FaRobot className="w-4 h-4 text-white" />}
                   </div>
 
                   {/* Message */}
                   <div
                     className={`px-4 py-3 rounded-2xl max-w-[80%] overflow-hidden [overflow-wrap:anywhere] break-words ${
-                      message.from === "user"
-                        ? `bg-gradient-to-r ${
-                            isEmerald
-                              ? "from-emerald-600/80 to-cyan-600/80"
-                              : "from-purple-600/80 to-blue-600/80"
-                          } text-white`
-                        : "bg-white/10 border border-white/15 text-gray-200"
+                      message.from === "user" ?
+                        `bg-gradient-to-r ${
+                          isEmerald ?
+                            "from-emerald-600/80 to-cyan-600/80"
+                          : "from-purple-600/80 to-blue-600/80"
+                        } text-white`
+                      : "bg-white/10 border border-white/15 text-gray-200"
                     }`}
                   >
                     <p className="font-body text-sm leading-relaxed whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
@@ -205,11 +203,10 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
                     </p>
                     <div
                       className={`text-xs mt-2 ${
-                        message.from === "user"
-                          ? isEmerald
-                            ? "text-emerald-200"
-                            : "text-purple-200"
-                          : "text-gray-400"
+                        message.from === "user" ?
+                          isEmerald ? "text-emerald-200"
+                          : "text-purple-200"
+                        : "text-gray-400"
                       }`}
                     >
                       {formatTime(message.timestamp)}
@@ -229,9 +226,9 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
                 <div className="flex items-start space-x-2">
                   <div
                     className={`w-8 h-8 rounded-full bg-gradient-to-r ${
-                      isEmerald
-                        ? "from-cyan-500 to-emerald-500"
-                        : "from-blue-500 to-purple-500"
+                      isEmerald ?
+                        "from-cyan-500 to-emerald-500"
+                      : "from-blue-500 to-purple-500"
                     } flex items-center justify-center`}
                   >
                     <FaRobot className="w-4 h-4 text-white" />
@@ -268,9 +265,9 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
           {/* Input */}
           <div
             className={`px-6 py-4 border-t border-white/10 bg-gradient-to-r ${
-              isEmerald
-                ? "from-emerald-500/5 to-cyan-500/5"
-                : "from-purple-500/5 to-blue-500/5"
+              isEmerald ?
+                "from-emerald-500/5 to-cyan-500/5"
+              : "from-purple-500/5 to-blue-500/5"
             } flex-shrink-0`}
           >
             <div className="flex items-center space-x-3">

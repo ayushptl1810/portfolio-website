@@ -1,4 +1,10 @@
-import { FaReact, FaVuejs, FaNodeJs, FaGithub, FaPython } from "react-icons/fa";
+import {
+  FaReact,
+  FaVuejs,
+  FaNodeJs,
+  FaGithub,
+  FaProjectDiagram,
+} from "react-icons/fa";
 import {
   SiMongodb,
   SiExpress,
@@ -8,9 +14,6 @@ import {
   SiRedis,
   SiCelery,
   SiFastapi,
-} from "react-icons/si";
-
-import {
   SiNumpy,
   SiPandas,
   SiScipy,
@@ -20,16 +23,15 @@ import {
   SiHuggingface,
   SiOpencv,
   SiWeightsandbiases,
-  SiMeta,
   SiLangchain,
+  SiJsonwebtokens,
+  SiVercel,
+  SiPostgresql,
 } from "react-icons/si";
 
+import { TbDatabaseSearch } from "react-icons/tb";
 import { CrewAI } from "@lobehub/icons";
-import {
-  SeabornIcon,
-  MatplotlibIcon,
-  PineconeIcon,
-} from "../components/icons/CustomIcons";
+import { SeabornIcon, MatplotlibIcon } from "../components/icons/CustomIcons";
 
 const WebTechStack = [
   {
@@ -40,46 +42,60 @@ const WebTechStack = [
     bgColor: "bg-green-900/30",
   },
   {
-    name: "React",
+    name: "PostgreSQL",
+    description: "Relational database",
+    icon: SiPostgresql,
+    iconColor: "text-blue-400",
+    bgColor: "bg-blue-900/30",
+  },
+  {
+    name: "React.js",
     description: "JavaScript Library",
     icon: FaReact,
     iconColor: "text-cyan-300",
     bgColor: "bg-cyan-900/30",
   },
   {
-    name: "Vue",
+    name: "Vue.js",
     description: "JavaScript framework",
     icon: FaVuejs,
     iconColor: "text-green-400",
     bgColor: "bg-green-900/30",
   },
   {
-    name: "Node",
+    name: "Next.js",
+    description: "React framework",
+    icon: SiNextdotjs,
+    iconColor: "text-white",
+    bgColor: "bg-white/10 backdrop-blur-sm",
+  },
+  {
+    name: "Node.js",
     description: "Backend runtime",
     icon: FaNodeJs,
     iconColor: "text-green-400",
     bgColor: "bg-green-900/30",
   },
   {
-    name: "Express",
+    name: "Express.js",
     description: "Node.js framework",
     icon: SiExpress,
     iconColor: "text-gray-200",
     bgColor: "bg-white/10 backdrop-blur-sm",
   },
   {
-    name: "Tailwind",
+    name: "Tailwind CSS",
     description: "CSS framework",
     icon: SiTailwindcss,
     iconColor: "text-blue-300",
     bgColor: "bg-blue-900/30",
   },
   {
-    name: "Git",
-    description: "Version control",
+    name: "Git/GitHub",
+    description: "Source Control Platform",
     icon: FaGithub,
-    iconColor: "text-orange-400",
-    bgColor: "bg-orange-900/30",
+    iconColor: "text-gray-200",
+    bgColor: "bg-white/10 backdrop-blur-sm",
   },
   {
     name: "Flask",
@@ -87,6 +103,13 @@ const WebTechStack = [
     icon: SiFlask,
     iconColor: "text-gray-200",
     bgColor: "bg-white/10 backdrop-blur-sm",
+  },
+  {
+    name: "FastAPI",
+    description: "Python API framework",
+    icon: SiFastapi,
+    iconColor: "text-green-400",
+    bgColor: "bg-green-900/30",
   },
   {
     name: "Redis",
@@ -103,18 +126,25 @@ const WebTechStack = [
     bgColor: "bg-green-900/30",
   },
   {
-    name: "Next",
-    description: "React framework",
-    icon: SiNextdotjs,
-    iconColor: "text-white",
-    bgColor: "bg-white/10 backdrop-blur-sm",
+    name: "WebSockets",
+    description: "Real-time communication",
+    icon: TbDatabaseSearch,
+    iconColor: "text-purple-300",
+    bgColor: "bg-purple-900/30",
   },
   {
-    name: "FastAPI",
-    description: "Python API framework",
-    icon: SiFastapi,
-    iconColor: "text-green-400",
-    bgColor: "bg-green-900/30",
+    name: "JWT",
+    description: "Authentication tokens",
+    icon: SiJsonwebtokens,
+    iconColor: "text-yellow-300",
+    bgColor: "bg-yellow-900/30",
+  },
+  {
+    name: "Vercel / Render",
+    description: "Deployment platforms",
+    icon: SiVercel,
+    iconColor: "text-white",
+    bgColor: "bg-white/10 backdrop-blur-sm",
   },
 ];
 
@@ -122,21 +152,21 @@ const AiTechStack = [
   // ===== Numerical & Data Processing =====
   {
     name: "NumPy",
-    description: "Numerical computing",
+    description: "Numerical Computing",
     icon: SiNumpy,
     iconColor: "text-blue-300",
     bgColor: "bg-blue-900/30",
   },
   {
     name: "Pandas",
-    description: "Data analysis",
+    description: "Data Analysis",
     icon: SiPandas,
     iconColor: "text-indigo-300",
     bgColor: "bg-indigo-900/30",
   },
   {
     name: "SciPy",
-    description: "Scientific computing",
+    description: "Scientific Computing",
     icon: SiScipy,
     iconColor: "text-blue-400",
     bgColor: "bg-blue-900/30",
@@ -145,14 +175,14 @@ const AiTechStack = [
   // ===== Data Visualization =====
   {
     name: "Matplotlib",
-    description: "Data visualization",
+    description: "Data Visualization",
     icon: MatplotlibIcon,
     iconColor: "text-emerald-300",
     bgColor: "bg-emerald-900/30",
   },
   {
     name: "Seaborn",
-    description: "Statistical visualization",
+    description: "Statistical Visualization",
     icon: SeabornIcon,
     iconColor: "text-teal-300",
     bgColor: "bg-teal-900/30",
@@ -161,30 +191,23 @@ const AiTechStack = [
   // ===== Classical Machine Learning =====
   {
     name: "scikit-learn",
-    description: "Machine learning",
+    description: "Machine Learning",
     icon: SiScikitlearn,
     iconColor: "text-orange-400",
-    bgColor: "bg-orange-900/30",
-  },
-  {
-    name: "XGBoost",
-    description: "Gradient boosting",
-    icon: FaPython,
-    iconColor: "text-orange-300",
     bgColor: "bg-orange-900/30",
   },
 
   // ===== Deep Learning =====
   {
     name: "TensorFlow",
-    description: "Deep learning framework",
+    description: "Deep Learning Framework",
     icon: SiTensorflow,
     iconColor: "text-orange-400",
     bgColor: "bg-orange-900/30",
   },
   {
     name: "PyTorch",
-    description: "Deep learning framework",
+    description: "Deep Learning Framework",
     icon: SiPytorch,
     iconColor: "text-red-400",
     bgColor: "bg-red-900/30",
@@ -193,38 +216,45 @@ const AiTechStack = [
   // ===== LLMs & Agent Frameworks =====
   {
     name: "Hugging Face",
-    description: "Models & datasets",
+    description: "Models & Datasets",
     icon: SiHuggingface,
     iconColor: "text-yellow-300",
     bgColor: "bg-yellow-900/30",
   },
   {
     name: "LangChain",
-    description: "LLM orchestration",
+    description: "LLM Orchestration",
     icon: SiLangchain,
     iconColor: "text-purple-300",
     bgColor: "bg-purple-900/30",
   },
   {
     name: "CrewAI",
-    description: "AI agent framework",
+    description: "AI Agent Framework",
     icon: CrewAI,
     iconColor: "text-violet-300",
     bgColor: "bg-violet-900/30",
   },
+  {
+    name: "LangGraph",
+    description: "Agent Execution Graph",
+    icon: SiLangchain,
+    iconColor: "text-purple-300",
+    bgColor: "bg-purple-900/30",
+  },
 
   // ===== Vector Search & Databases =====
   {
-    name: "FAISS",
-    description: "Vector similarity search",
-    icon: SiMeta,
+    name: "VectorDbs",
+    description: "Semantic Vector Storage",
+    icon: TbDatabaseSearch,
     iconColor: "text-cyan-300",
     bgColor: "bg-cyan-900/30",
   },
   {
-    name: "Pinecone",
-    description: "Vector database",
-    icon: PineconeIcon,
+    name: "GraphDbs",
+    description: "Relationship-Based Storage",
+    icon: FaProjectDiagram,
     iconColor: "text-green-400",
     bgColor: "bg-green-900/30",
   },
@@ -232,7 +262,7 @@ const AiTechStack = [
   // ===== Computer Vision =====
   {
     name: "OpenCV",
-    description: "Computer vision",
+    description: "Computer Vision",
     icon: SiOpencv,
     iconColor: "text-green-400",
     bgColor: "bg-green-900/30",
@@ -241,7 +271,7 @@ const AiTechStack = [
   // ===== MLOps & Experiment Tracking =====
   {
     name: "Weights & Biases",
-    description: "Experiment tracking",
+    description: "Experiment Tracking",
     icon: SiWeightsandbiases,
     iconColor: "text-yellow-400",
     bgColor: "bg-yellow-900/30",

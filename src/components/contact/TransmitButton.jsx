@@ -63,10 +63,10 @@ function TransmitButton({
       disabled={disabled}
       whileHover={!disabled ? { scale: 1.02 } : undefined}
       whileTap={!disabled ? { scale: 0.98 } : undefined}
-      className={`relative w-40 h-40 rounded-full border backdrop-blur-md text-white overflow-hidden cursor-pointer ${
-        disabled
-          ? "bg-white/5 border-white/10 opacity-50 cursor-not-allowed"
-          : "bg-white/5 border-white/15"
+      className={`relative w-32 h-32 sm:w-40 sm:h-40 rounded-full border backdrop-blur-md text-white overflow-hidden cursor-pointer ${
+        disabled ?
+          "bg-white/5 border-white/10 opacity-50 cursor-not-allowed"
+        : "bg-white/5 border-white/15"
       }`}
       aria-label="Hold to transmit"
       aria-disabled={disabled}

@@ -11,7 +11,7 @@ const iconFor = (opt) => {
 function RoleChips({ value, onChange, options = [] }) {
   return (
     <div
-      className="flex flex-wrap gap-4"
+      className="flex flex-wrap justify-center sm:justify-start gap-2 sm:gap-4"
       role="radiogroup"
       aria-label="Select role"
     >
@@ -26,14 +26,14 @@ function RoleChips({ value, onChange, options = [] }) {
             onClick={() => onChange(opt)}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
-            className={`flex items-center gap-2 px-5 py-2 rounded-full border-2 transition-colors cursor-pointer ${
-              selected
-                ? "bg-white text-blue-900 border-white"
-                : "text-white border-white hover:bg-white hover:text-blue-900"
+            className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-5 py-1.5 sm:py-2 rounded-full border-2 transition-colors cursor-pointer ${
+              selected ?
+                "bg-white text-blue-900 border-white"
+              : "text-white border-white hover:bg-white hover:text-blue-900"
             }`}
           >
-            <span className="font-ui">{iconFor(opt)}</span>
-            <span className="font-ui">{opt}</span>
+            <span className="font-ui text-xs sm:text-base">{iconFor(opt)}</span>
+            <span className="font-ui text-xs sm:text-base">{opt}</span>
           </motion.button>
         );
       })}
