@@ -44,13 +44,15 @@ function ProjectCard({ project, theme = "default" }) {
       className="w-full max-w-[34rem] mx-auto bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-[36rem] md:h-[40rem] flex flex-col"
     >
       <div className="w-full h-56 md:h-72 bg-zinc-900 relative overflow-hidden group">
-        <div
-          className={`absolute inset-0 bg-gradient-to-br ${
-            isEmerald
-              ? "from-emerald-900/40 to-black"
-              : "from-purple-900/40 to-black"
-          } opacity-50`}
-        />
+        {!image && (
+          <div
+            className={`absolute inset-0 bg-gradient-to-br ${
+              isEmerald
+                ? "from-emerald-900/40 to-black"
+                : "from-purple-900/40 to-black"
+            } opacity-50`}
+          />
+        )}
 
         {image ? (
           <img

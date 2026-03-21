@@ -11,7 +11,7 @@ import { WebTechStack } from "../utils/TechnologyList";
 import { WebProjectList } from "../utils/ProjectList";
 
 function Home() {
-  const featuredIds = ["web-2", "web-3", "web-5", "web-8"]; // Web Projects: Zoom Trip, StackIt, Zentry, ToDo
+  const featuredIds = ["web-2", "web-10", "web-11", "web-8"]; // Web Projects: Zoom Trip, StackIt, Zentry, ToDo
   const [chatOpen, setChatOpen] = useState(false);
 
   return (

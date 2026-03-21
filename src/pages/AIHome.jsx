@@ -11,7 +11,7 @@ import { AiTechStack } from "../utils/TechnologyList";
 import { AIProjectList } from "../utils/ProjectList";
 
 function AIHome() {
-  const featuredIds = ["ai-1", "ai-2"]; // AI Projects: Virtual Teaching Assistant, Data Analyst Agent
+  const featuredIds = ["ai-1", "ai-2", "ai-5", "ai-6"]; // AI Projects: Virtual Teaching Assistant, Data Analyst Agent
   const [chatOpen, setChatOpen] = useState(false);
 
   return (

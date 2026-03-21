@@ -3,12 +3,15 @@ import influenceNetImage from "../assets/images/InfluenceNet.png";
 import codecircuitImage from "../assets/images/Codecircuit.png";
 import quizAppImage from "../assets/images/QuizApp.png";
 import zentryImage from "../assets/images/Zentry.png";
-import todoListImage from "../assets/images/TodoList.png";
 import virtualTeachingAssistantImage from "../assets/images/VirtualTeachingAssistant.png";
 import projectAegisImage from "../assets/images/ProjectAegis.png";
 import itinaryGeneratorImage from "../assets/images/PujaTravels.png";
 import stackItImage from "../assets/images/StackIt.png";
 import PhoenixGCSImage from "../assets/images/PhoenixGCS.png";
+import CryptixImage from "../assets/images/Cryptix.png";
+import ARFLImage from "../assets/images/ARFL.jpeg";
+import AmbrosiaImage from "../assets/images/Ambrosia.jpeg";
+import ConstitutionImage from "../assets/images/ConstitutionAgent.png";
 
 const WebProjectList = [
   {
@@ -28,7 +31,6 @@ const WebProjectList = [
       "Created optimized RESTful API endpoints with secure authentication.",
     ],
     image: influenceNetImage,
-    video: null,
     deployed_url: null,
   },
   {
@@ -46,7 +48,6 @@ const WebProjectList = [
       "Developed dynamic filtering and search capabilities, allowing users to refine results with contextual filters per activity type.",
     ],
     image: codecircuitImage,
-    video: null,
     deployed_url: "https://codecircuit-one.vercel.app/",
   },
   {
@@ -65,7 +66,6 @@ const WebProjectList = [
       "Developed automated reporting and analytics with Celery background tasks and interactive Chart.js dashboards.",
     ],
     image: quizAppImage,
-    video: null,
     deployed_url: null,
   },
   {
@@ -91,7 +91,6 @@ const WebProjectList = [
       "Debugged critical issues on the home page, enhancing load speed and user experience.",
     ],
     image: itinaryGeneratorImage,
-    video: null,
     deployed_url: null,
   },
   {
@@ -110,7 +109,6 @@ const WebProjectList = [
       "Integrated search, filtering, and pagination workflows for efficient content discovery and seamless user experience.",
     ],
     image: stackItImage,
-    video: null,
     deployed_url: null,
   },
   {
@@ -128,7 +126,6 @@ const WebProjectList = [
       "A clean, dark-themed design with a focus on user experience.",
     ],
     image: zentryImage,
-    video: null,
     deployed_url: "https://zentryclone-one.vercel.app/",
   },
   {
@@ -155,7 +152,6 @@ const WebProjectList = [
       "Developed a Chrome extension for real-time browsing monitoring, automatically alerting users to potential misinformation and linking to verified debunks.",
     ],
     image: projectAegisImage,
-    video: null,
     deployed_url: "https://mumbai-hacks-jbbr-u5g4.vercel.app/",
   },
   {
@@ -182,8 +178,59 @@ const WebProjectList = [
       "Architected a scalable communication layer using Mavlink to ensure reliable fleet synchronization and control.",
     ],
     image: PhoenixGCSImage,
-    video: null,
     deployed_url: null,
+  },
+  {
+    id: "web-10",
+    name: "AMBROSIA - Global Flood Intelligence Platform",
+    tags: [
+      "React",
+      "Vite",
+      "CesiumJS",
+      "TailwindCSS",
+      "Zustand",
+      "Framer Motion",
+      "FastAPI",
+    ],
+    github_url: "https://github.com/JayGuri/LastStrawHackX",
+    owner: "JayGuri",
+    repo: "LastStrawHackX",
+    description:
+      "A full-stack flood intelligence platform fusing satellite SAR imagery, LSTM deep learning forecasting, road-network graph analysis, and an immersive 3D globe frontend for global flood detection and lifeline infrastructure assessment.",
+    points: [
+      "Built a cinematic scroll-driven landing page with 240 pre-rendered animation frames, LERP-based Apple-style scroll interpolation, and Framer Motion section transitions.",
+      "Developed a three-view CesiumJS 3D globe interface supporting flood detection, district-level risk scoring with population-scaled markers, and lifeline infrastructure point rendering with type-coded symbology.",
+      "Implemented a full JWT authentication flow with Google OAuth, token blacklisting, and a React SPA routing system with auth guards — all served via a Vercel serverless FastAPI backend.",
+      "Integrated a jsPDF report generator and Recharts analytics dashboard within a historical flood run explorer, enabling users to review SAR imagery, patch-level data, and AI-generated insights.",
+    ],
+    image: AmbrosiaImage,
+    deployed_url: "https://last-straw-ps-6.vercel.app",
+  },
+  {
+    id: "web-11",
+    name: "Cryptix - AI-Powered Cyber Defense Platform",
+    tags: [
+      "React",
+      "Vite",
+      "TailwindCSS",
+      "FastAPI",
+      "SHAP",
+      "Transformers",
+      "Twilio",
+    ],
+    github_url: "https://github.com/ayushptl1810/KES-Hack",
+    owner: "ayushptl1810",
+    repo: "KES-Hack",
+    description:
+      "A multi-layered cyber defense platform combining ML-based threat detection, explainable AI, and a Chrome extension to protect against phishing, deepfakes, voice scams, and prompt injection attacks.",
+    points: [
+      "Developed the React dashboard frontend covering nine threat monitoring pages — Phishing, Voice, Email, Deepfake, XAI, Prompt Guard, Mitigation, and Pricing — with a shared sidebar, metric cards, and a token-level SHAP heatmap visualization.",
+      "Built the PhishGuard Chrome extension (Manifest V3) with real-time URL interception, Gmail DOM parsing for automatic email threat banners, and live textarea monitoring for prompt injection pattern detection.",
+      "Implemented a multi-signal score fusion engine combining rule-based heuristics (40%) and DistilBERT ML scoring (60%), with user vulnerability profiling and false positive feedback collection for continuous learning.",
+      "Integrated real-time voice scam interception via Twilio webhooks with SSE-streamed live call updates to the dashboard and automated WhatsApp alerts on high-risk calls.",
+    ],
+    image: CryptixImage,
+    deployed_url: "https://wingineers.vercel.app",
   },
 ];
 
@@ -203,7 +250,6 @@ const AIProjectList = [
       "Implemented Adaptive, TF-IDF-Driven Search Logic: Developed a hybrid search algorithm that dynamically learns keyword weights, chunks and ranks context intelligently, and fuses course and forum content to return rich, relevant results, which are then passed to Gemini AI for final answer generation.",
     ],
     image: virtualTeachingAssistantImage,
-    video: null,
     deployed_url: "https://virtual-teaching-assistant-iitm.streamlit.app/",
   },
   {
@@ -233,7 +279,6 @@ const AIProjectList = [
       "Integrated web scraping, PDF parsing, and REST API endpoints, enabling seamless data ingestion, interaction, and integration with external applications.",
     ],
     image: null,
-    video: null,
     deployed_url: null,
   },
   {
@@ -251,7 +296,6 @@ const AIProjectList = [
       "Production-Ready API Deployment: Developed a containerized FastAPI service for real-time inference, featuring efficient tokenization strategies, input validation, and scalable deployment configurations for cloud environments.",
     ],
     image: null,
-    video: null,
     deployed_url:
       "https://huggingface.co/Meshyboi/Multi-Emotion-Classification",
   },
@@ -279,8 +323,59 @@ const AIProjectList = [
       "Developed a Chrome extension for real-time browsing monitoring, automatically alerting users to potential misinformation and linking to verified debunks.",
     ],
     image: projectAegisImage,
-    video: null,
     deployed_url: "https://mumbai-hacks-jbbr-u5g4.vercel.app/",
+  },
+  {
+    id: "ai-5",
+    name: "Samvidha - Constitutional Intelligence Agent",
+    tags: [
+      "React",
+      "FastAPI",
+      "LangGraph",
+      "Neo4j",
+      "Qdrant",
+      "Groq",
+      "Three.js",
+    ],
+    github_url: "https://github.com/ayushptl1810/ConstitutionAgent",
+    owner: "ayushptl1810",
+    repo: "ConstitutionAgent",
+    description:
+      "A GraphRAG-powered constitutional research platform that transforms the Indian Constitution into a queryable intelligence network, enabling users to trace the evolution of laws across decades of amendments.",
+    points: [
+      "Architected a multi-agent LangGraph orchestration pipeline combining Neo4j graph traversal and Qdrant vector search, fused via a BGE-Reranker model for high-precision hybrid retrieval.",
+      "Built a real-time streaming interface using Server-Sent Events (SSE) to broadcast live agent execution traces and legal reasoning steps to the frontend terminal.",
+      "Developed an interactive 3D constitutional knowledge graph using react-force-graph-3d (Three.js), with color-coded nodes, a scrubbable temporal timeline, and a mobile-responsive adaptive layout.",
+      "Implemented a zero-config lifecycle manager that auto-provisions Neo4j and Qdrant Docker containers locally and switches to Aura/Cloud connections in production without code changes.",
+    ],
+    image: ConstitutionImage,
+    deployed_url: "https://constitution-agent.vercel.app",
+  },
+  {
+    id: "ai-6",
+    name: "ARFL - Asynchronous Robust Federated Learning",
+    tags: [
+      "React",
+      "Vite",
+      "FastAPI",
+      "PyTorch",
+      "WebSockets",
+      "MongoDB",
+      "Terraform",
+    ],
+    github_url: "https://github.com/JayGuri/DevHacks",
+    owner: "JayGuri",
+    repo: "DevHacks",
+    description:
+      "A production-ready asynchronous federated learning framework with Byzantine fault tolerance, differential privacy, and a real-time React monitoring dashboard for distributed ML training.",
+    points: [
+      "Developed the real-time React + Vite monitoring dashboard that streams live training metrics, client trust scores, and aggregation events from the server via Server-Sent Events (SSE).",
+      "Built the FastAPI backend managing WebSocket-based client connections, asynchronous buffer aggregation, and JWT-secured node registration backed by MongoDB.",
+      "Implemented staleness-aware Byzantine defense combining an L2-Norm Gatekeeper with advanced aggregation strategies (Krum, Trimmed Mean, Coordinate Median) and dynamic client trust scoring.",
+      "Integrated client-side Differential Privacy via DP-SGD (Opacus) and a configurable network degradation simulator supporting packet loss, latency injection, and partition scenarios.",
+    ],
+    image: ARFLImage,
+    deployed_url: null,
   },
 ];
 

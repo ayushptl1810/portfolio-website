@@ -18,7 +18,7 @@ async function detectProjectByName(query) {
       process.cwd(),
       "src",
       "utils",
-      "ProjectList.js"
+      "ProjectList.js",
     );
     const { default: ProjectList } = await import(modulePath, {
       assert: { type: "javascript" },
@@ -48,11 +48,12 @@ export default async function llmHandler(req, res) {
       return res.status(400).json({ ok: false, error: "Query is required" });
     }
 
-    const apiKey = process.env.GEMINI_API_KEY;
-    if (!apiKey) {
+    const apiKey = process.env.GROQ_API_KEY;
+    const model = process.env.GROQ_API_MODEL;
+    if (!apiKey || !model) {
       return res.status(500).json({
         ok: false,
-        error: "LLM not configured (missing GEMINI_API_KEY)",
+        error: "LLM not configured (missing GROQ_API_KEY or GROQ_API_MODEL)",
       });
     }
 
@@ -60,13 +61,13 @@ export default async function llmHandler(req, res) {
       process.cwd(),
       "src",
       "assets",
-      "llm_info.md"
+      "llm_info.md",
     );
     const techPromptPath = path.join(
       process.cwd(),
       "src",
       "assets",
-      "llm_info_tech.md"
+      "llm_info_tech.md",
     );
     const basePrompt = await readTextFile(basePromptPath);
     const techPrompt = await readTextFile(techPromptPath);
@@ -87,35 +88,40 @@ export default async function llmHandler(req, res) {
     const composedSystem = [
       basePrompt?.trim(),
       techPrompt?.trim(),
-      project
-        ? `\nProject Focus: ${project.name}\nRepo: ${project.owner}/${project.repo}`
-        : "",
+      project ?
+        `\nProject Focus: ${project.name}\nRepo: ${project.owner}/${project.repo}`
+      : "",
     ]
       .filter(Boolean)
       .join("\n\n");
 
-    const contents = [];
+    const messages = [{ role: "system", content: composedSystem }];
+
     if (Array.isArray(history)) {
       const recent = history.slice(-8);
       for (const msg of recent) {
         if (!msg || typeof msg.text !== "string") continue;
-        const role = msg.from === "bot" ? "model" : "user";
-        contents.push({ role, parts: [{ text: msg.text }] });
+        const role = msg.from === "bot" ? "assistant" : "user";
+        messages.push({ role, content: msg.text });
       }
     }
-    contents.push({ role: "user", parts: [{ text: query }] });
+    messages.push({ role: "user", content: query });
 
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      "https://api.groq.com/openai/v1/chat/completions",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
         body: JSON.stringify({
-          systemInstruction: { parts: [{ text: composedSystem }] },
-          contents,
-          generationConfig: { temperature: 0.2, maxOutputTokens: 1000 },
+          model: model,
+          messages,
+          temperature: 0.2,
+          max_tokens: 1000,
         }),
-      }
+      },
     );
 
     if (!response.ok) {
@@ -126,7 +132,7 @@ export default async function llmHandler(req, res) {
     }
 
     const json = await response.json();
-    const content = json?.candidates?.[0]?.content?.parts?.[0]?.text || "";
+    const content = json?.choices?.[0]?.message?.content || "";
     return res.status(200).json({ ok: true, content });
   } catch (err) {
     return res.status(500).json({ ok: false, error: "Internal Server Error" });
