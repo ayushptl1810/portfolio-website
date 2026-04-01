@@ -5,10 +5,10 @@ function TechnologiesComponent({ technologies = [], theme = "default" }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 18 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      viewport={{ once: true, amount: 0.4 }}
+      viewport={{ once: true, amount: 0.1 }}
       className="w-full py-12 md:py-20 px-4 sm:px-6 md:px-8"
     >
       <div className="max-w-7xl mx-auto w-full">

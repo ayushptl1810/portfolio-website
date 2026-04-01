@@ -43,7 +43,7 @@ function Contact() {
   const roleToSubject = {
     General: "General Inquiry",
     Freelance: "Freelance Project",
-    Engineer: "Engineering Chat",
+    Internship: "Internship Inquiry",
   };
 
   const subject = roleToSubject[role] || "Message";
@@ -186,7 +186,7 @@ function Contact() {
         )}
       </AnimatePresence>
       <motion.div
-        className="w-full h-screen px-6 py-8"
+        className="w-full min-h-screen md:h-screen px-6 py-10 md:py-4 flex flex-col justify-start md:justify-center items-center overflow-auto md:overflow-hidden"
         key={blastActive ? "contact-out" : "contact-in"}
         initial={pageReturning ? { opacity: 0, y: 40 } : { opacity: 0, y: 80 }}
         animate={pageReturning ? { opacity: 1, y: 0 } : { opacity: 0, y: 80 }}
@@ -225,7 +225,7 @@ function Contact() {
               <RoleChips
                 value={role}
                 onChange={setRole}
-                options={["General", "Freelance", "Engineer"]}
+                options={["General", "Freelance", "Internship"]}
               />
             </div>
 
@@ -353,7 +353,7 @@ function Contact() {
                   <motion.textarea
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    rows={6}
+                    rows={5}
                     className="w-full px-4 py-3 rounded-xl bg-zinc-900/70 border border-white/10 text-white placeholder:text-gray-400 outline-none resize-none"
                     placeholder="Tell me about your idea..."
                     whileFocus={{
@@ -387,7 +387,7 @@ function Contact() {
         </div>
 
         {/* Back to Home Button */}
-        <div className="text-center mt-8 font-body">
+        <div className="text-center mt-10 font-body">
           <motion.button
             type="button"
             onClick={() => {

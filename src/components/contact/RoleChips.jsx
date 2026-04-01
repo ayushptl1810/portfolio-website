@@ -1,10 +1,10 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiSend, FiBriefcase, FiCpu } from "react-icons/fi";
+import { FiSend, FiBriefcase, FiUserPlus } from "react-icons/fi";
 
 const iconFor = (opt) => {
   if (/freelance/i.test(opt)) return <FiBriefcase className="w-4 h-4" />;
-  if (/engineer/i.test(opt)) return <FiCpu className="w-4 h-4" />;
+  if (/intern/i.test(opt)) return <FiUserPlus className="w-4 h-4" />;
   return <FiSend className="w-4 h-4" />;
 };
 

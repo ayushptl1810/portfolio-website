@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FaRocket, FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
+import { FaEnvelope, FaLinkedin, FaGithub, FaArrowRight } from "react-icons/fa";
 
 function ContactSection({ theme = "default" }) {
   const isEmerald = theme === "emerald";
@@ -76,8 +76,8 @@ function ContactSection({ theme = "default" }) {
 
               {/* Button content */}
               <div className="relative flex items-center space-x-3">
-                <FaRocket className="w-5 h-5 md:w-6 md:h-6" />
-                <span className="font-ui">Open Transmission Room</span>
+                <span className="font-ui">Start a Conversation</span>
+                <FaArrowRight className="w-4 h-4 md:w-5 md:h-5 transform group-hover:translate-x-1 transition-transform duration-300" />
               </div>
 
               {/* Button border glow */}
