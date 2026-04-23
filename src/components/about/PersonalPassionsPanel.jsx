@@ -1,8 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
-import eldenRingLogo from "../../assets/EldenRingLogo.jpg";
-import wukongLogo from "../../assets/WukongLogo.png";
-import clubLogo from "../../assets/clubLogo.jpg";
+import eldenRingLogo from "../../assets/EldenRingLogo.webp";
+import wukongLogo from "../../assets/WukongLogo.webp";
+import clubLogo from "../../assets/clubLogo.webp";
 
 const PersonalPassionsPanel = ({ isActive }) => {
   return (

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { usePageSEO } from "../hooks/usePageSEO";
 import { motion } from "framer-motion";
 import PersonalIdentityPanel from "../components/about/PersonalIdentityPanel";
 import SoftSkillsPanel from "../components/about/SoftSkillsPanel";
@@ -12,6 +13,11 @@ const About = () => {
   const [activePanel, setActivePanel] = useState(null);
   const location = useLocation();
   const isAI = location.pathname.startsWith("/ai");
+
+  usePageSEO(
+    "About Me",
+    "Learn more about Ayush Patel, a CS student at IIT Madras with expertise in Full Stack Development and AI."
+  );
 
   const panels = [
     {

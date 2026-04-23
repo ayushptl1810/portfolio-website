@@ -15,4 +15,15 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "animation-vendor": ["framer-motion", "@rive-app/react-canvas"],
+          "three-vendor": ["@splinetool/react-spline"],
+        },
+      },
+    },
+  },
 });

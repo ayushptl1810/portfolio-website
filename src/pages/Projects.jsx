@@ -1,9 +1,14 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePageSEO } from "../hooks/usePageSEO";
 import ProjectComponent from "../components/projects/ProjectComponent";
 
 function Projects() {
+  usePageSEO(
+    "Projects",
+    "Explore the portfolio of Ayush Patel, featuring high-performance web applications, 3D interactive sites, and AI-driven systems."
+  );
   const location = useLocation();
   const fromFab = location.state?.fromFab;
   const label = location.state?.label || "Projects";

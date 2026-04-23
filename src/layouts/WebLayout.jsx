@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Suspense, lazy } from "react";
 import { Outlet } from "react-router-dom";
 import DarkVeil from "../components/shared/DarkVeil";
-import Spline from "@splinetool/react-spline";
+
+const Spline = lazy(() => import("@splinetool/react-spline"));
 import FluidMenu from "../components/shared/FluidMenu";
 import ParticleSystem from "../components/shared/ParticleSystem.jsx";
 import { useScrollToTop } from "../hooks/useScrollToTop";
@@ -27,14 +28,16 @@ function WebLayout() {
         className="hidden lg:block fixed bottom-0 left-0 z-50 pointer-events-none translate-x-[-10rem] translate-y-[10rem] lg:translate-x-[-24.5rem] lg:translate-y-[40rem] overflow-visible"
       >
         <div className="w-[32rem] h-[48rem] origin-bottom-left scale-[1.35] lg:scale-[1.75]">
-          <Spline
-            scene="https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode"
-            className="w-full h-full"
-            style={{ background: "transparent" }}
-            onLoad={() => {
-              // Rely on CSS scale; setZoom is inconsistent across scenes
-            }}
-          />
+          <Suspense fallback={<div className="w-full h-full bg-transparent" />}>
+            <Spline
+              scene="https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode"
+              className="w-full h-full"
+              style={{ background: "transparent" }}
+              onLoad={() => {
+                // Rely on CSS scale; setZoom is inconsistent across scenes
+              }}
+            />
+          </Suspense>
         </div>
       </div>
 
