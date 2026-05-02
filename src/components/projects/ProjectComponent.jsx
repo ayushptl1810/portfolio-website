@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { usePageSEO } from "../../hooks/usePageSEO";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGSAP } from "@gsap/react";
@@ -19,6 +20,11 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
     !Array.isArray(ids) || ids.length === 0
       ? projectList
       : projectList.filter((p) => ids.includes(p.id));
+
+  usePageSEO(
+    onProjectsPage ? "My Projects" : null,
+    onProjectsPage ? "A comprehensive list of web and AI projects developed by Ayush Patel, featuring full-stack applications and intelligent systems." : null
+  );
 
   React.useEffect(() => {
     const fromTransition = location.state?.fromTransition;

@@ -3,6 +3,8 @@ import cors from "cors";
 import { fileURLToPath, pathToFileURL } from "url";
 import { dirname, join } from "path";
 import fs from "fs/promises";
+import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
 import contactHandler from "./src/server/contactHandler.js";
 import llmHandler from "./src/server/llmHandler.js";
 import spotifyHandler from "./src/server/spotifyHandler.js";
@@ -18,6 +20,35 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3001;
 const DEPLOYED_URL = process.env.DEPLOYED_URL || "https://ayush.info";
+
+// Security Headers
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'unsafe-eval'", "https://unpkg.com", "https://api.fontshare.com"],
+        styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://api.fontshare.com"],
+        imgSrc: ["'self'", "data:", "https:", "blob:"],
+        connectSrc: [
+          "'self'", 
+          "https://prod.spline.design", 
+          "https://api.github.com", 
+          "https://raw.githubusercontent.com",
+          "https://events.spline.design",
+          "https://*.google-analytics.com",
+          "https://*.analytics.google.com"
+        ],
+        fontSrc: ["'self'", "https://fonts.gstatic.com", "https://api.fontshare.com"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'self'"],
+        frameSrc: ["'self'", "https://www.youtube.com", "https://player.vimeo.com"],
+        workerSrc: ["'self'", "blob:"],
+      },
+    },
+    crossOriginEmbedderPolicy: false,
+  })
+);
 
 // Middleware
 app.use(cors());
@@ -135,12 +166,32 @@ const fetchProjectReadme = async (owner, repo) => {
   return "";
 };
 
+// --- Rate Limiters ---
+const apiLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+const llmLimiter = rateLimit({
+  windowMs: 1 * 60 * 1000,
+  max: 10,
+  message: { error: "Chat limit reached. Please wait a minute." },
+});
+
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  message: { error: "Message limit reached. Please try again in an hour." },
+});
+
 // API Routes
-app.post("/api/llm", (req, res) => llmHandler(req, res));
+app.post("/api/llm", llmLimiter, (req, res) => llmHandler(req, res));
 
-app.post("/api/contact", (req, res) => contactHandler(req, res));
+app.post("/api/contact", contactLimiter, (req, res) => contactHandler(req, res));
 
-app.post("/api/spotify", (req, res) => spotifyHandler(req, res));
+app.post("/api/spotify", apiLimiter, (req, res) => spotifyHandler(req, res));
 
 // Spotify OAuth callback route
 app.get("/callback", async (req, res) => {
@@ -178,7 +229,7 @@ app.get("/callback", async (req, res) => {
 });
 
 // Simple ping for connectivity diagnostics
-app.get("/api/ping", (req, res) => {
+app.get("/api/ping", apiLimiter, (req, res) => {
   console.log("PING hit");
   res.json({ ok: true, ts: Date.now() });
 });

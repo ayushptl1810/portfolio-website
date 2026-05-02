@@ -4,6 +4,7 @@ import FluidMenu from "../components/shared/FluidMenu";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import AINeural from "../components/gateway/AINeural";
 import Footer from "../components/shared/Footer";
+import StructuredData from "../components/shared/StructuredData";
 
 function AILayout() {
   useScrollToTop();
@@ -11,6 +12,7 @@ function AILayout() {
 
   return (
     <div className="w-full relative min-h-screen bg-black text-emerald-400 font-mono selection:bg-emerald-500/30">
+      <StructuredData />
       {/* Tech Background */}
       <div className="fixed inset-0 z-0 pointer-events-none bg-[#020d05]">
         <div className="absolute inset-0 opacity-30 md:opacity-60">

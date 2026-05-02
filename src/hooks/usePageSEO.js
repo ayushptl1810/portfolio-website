@@ -11,10 +11,13 @@ export const usePageSEO = (title, description) => {
     document.title = title ? `${title} | Ayush Patel` : defaultTitle;
     
     if (description) {
-      const metaDescription = document.querySelector('meta[name="description"]');
-      if (metaDescription) {
-        metaDescription.setAttribute('content', description);
+      let metaDescription = document.querySelector('meta[name="description"]');
+      if (!metaDescription) {
+        metaDescription = document.createElement('meta');
+        metaDescription.setAttribute('name', 'description');
+        document.head.appendChild(metaDescription);
       }
+      metaDescription.setAttribute('content', description);
     }
 
     return () => {

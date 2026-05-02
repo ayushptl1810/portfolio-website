@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { usePageSEO } from "../hooks/usePageSEO";
 import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { useReadme } from "../hooks/useReadme";
@@ -62,6 +63,11 @@ const ProjectDetail = () => {
       navigate(`${basePath}/projects`);
     }
   }, [projectName, navigate, basePath]);
+
+  usePageSEO(
+    project ? `${project.name}` : "Project Details",
+    project?.description || "Explore the technical details and architecture of this innovation by Ayush Patel."
+  );
 
   if (!project) {
     return null; // Will redirect

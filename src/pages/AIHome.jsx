@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { usePageSEO } from "../hooks/usePageSEO";
 import AIHeroComponent from "../components/home/AIHeroComponent";
 import TechnologiesComponent from "../components/home/TechnologiesComponent";
 import ProjectComponent from "../components/projects/ProjectComponent";
@@ -13,6 +14,11 @@ import { AIProjectList } from "../utils/ProjectList";
 function AIHome() {
   const featuredIds = ["ai-1", "ai-2", "ai-5", "ai-6"]; // AI Projects: Virtual Teaching Assistant, Data Analyst Agent
   const [chatOpen, setChatOpen] = useState(false);
+
+  usePageSEO(
+    "AI Persona",
+    "Explore the AI-focused portfolio of Ayush Patel, specializing in Large Language Models, Agentic Workflows, and Advanced Data Science."
+  );
 
   return (
     <>

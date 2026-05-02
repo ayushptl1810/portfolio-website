@@ -29,6 +29,8 @@ const Gateway = () => {
 
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden font-sans select-none">
+      {/* SEO H1 Fallback */}
+      <h1 className="sr-only">Ayush Patel | Web Architect & AI Engineer Portfolio</h1>
       
       {/* --- HERO SPLIT SECTION --- */}
       <div className="relative w-full h-full overflow-hidden">

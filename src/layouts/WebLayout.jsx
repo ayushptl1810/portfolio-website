@@ -6,6 +6,7 @@ const Spline = lazy(() => import("@splinetool/react-spline"));
 import FluidMenu from "../components/shared/FluidMenu";
 import ParticleSystem from "../components/shared/ParticleSystem.jsx";
 import Footer from "../components/shared/Footer";
+import StructuredData from "../components/shared/StructuredData";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
 function WebLayout() {
@@ -13,6 +14,7 @@ function WebLayout() {
 
   return (
     <div className="w-full relative min-h-screen">
+      <StructuredData />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-purple-900/20" />
         <DarkVeil />
