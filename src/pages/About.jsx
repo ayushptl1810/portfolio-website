@@ -43,9 +43,9 @@ const About = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6, ease: "easeOut" }}
         >
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 font-display">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6 font-display">
             About Me
-          </h2>
+          </h1>
           <div className="h-1 w-24 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full mx-auto mb-6" />
           <p className="text-base sm:text-lg text-gray-300 max-w-3xl mx-auto font-body">
             Exploring the frontiers of development, one innovation at a time

@@ -5,6 +5,7 @@ import DarkVeil from "../components/shared/DarkVeil";
 const Spline = lazy(() => import("@splinetool/react-spline"));
 import FluidMenu from "../components/shared/FluidMenu";
 import ParticleSystem from "../components/shared/ParticleSystem.jsx";
+import Footer from "../components/shared/Footer";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
 function WebLayout() {
@@ -20,6 +21,7 @@ function WebLayout() {
 
       <div className="relative z-10" id="app-content">
         <Outlet />
+        <Footer theme="purple" basePath="/web" />
       </div>
 
       {/* 3D Model - Web Persona Specific */}

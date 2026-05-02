@@ -32,16 +32,16 @@ function AIHeroComponent() {
         >
           {/* Greeting */}
           <div className="flex items-center mb-6">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display">
+            <span className="text-4xl sm:text-5xl md:text-6xl font-bold font-display">
               Hey! I'm Ayush
-            </h1>
+            </span>
           </div>
 
           {/* Professional Role with Gradient */}
           <div className="mb-8">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl leading-tight font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent font-display">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl leading-tight font-bold bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent font-display">
               AI Engineer
-            </h2>
+            </h1>
           </div>
 
           {/* Welcome Message */}

@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import FluidMenu from "../components/shared/FluidMenu";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 import AINeural from "../components/gateway/AINeural";
+import Footer from "../components/shared/Footer";
 
 function AILayout() {
   useScrollToTop();
@@ -19,6 +20,7 @@ function AILayout() {
 
       <div className="relative z-10 w-full">
         <Outlet />
+        <Footer theme="emerald" basePath="/ai" />
       </div>
 
       <div id="app-menu">

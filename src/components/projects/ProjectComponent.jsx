@@ -111,9 +111,15 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
             transition={{ duration: 0.6, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.1 }}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
-              My Projects
-            </h2>
+            {onProjectsPage ? (
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
+                My Projects
+              </h1>
+            ) : (
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
+                My Projects
+              </h2>
+            )}
 
             <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-8 md:mb-12 text-center max-w-3xl mx-auto font-body">
               Here are some of the projects I've built. Each one represents a
