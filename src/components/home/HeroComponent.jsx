@@ -1,8 +1,11 @@
-import { Suspense, useEffect, useState, lazy } from "react";
+import { Suspense, useEffect, useState, lazy, useRef } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
 import birbRiv from "../../assets/birb.riv";
 import resumePdf from "../../assets/Resume.pdf";
+
 const Rive = lazy(async () => {
   const riveModule = await import("@rive-app/react-canvas");
   const { useRive, Layout, Fit, Alignment } = riveModule;
@@ -30,6 +33,9 @@ const Rive = lazy(async () => {
 
 function HeroComponent() {
   const [reducedMotion, setReducedMotion] = useState(false);
+  const containerRef = useRef(null);
+  const leftContentRef = useRef(null);
+  const rightContentRef = useRef(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -39,15 +45,73 @@ function HeroComponent() {
     return () => mediaQuery.removeEventListener?.("change", update);
   }, []);
 
+  useGSAP(() => {
+    if (reducedMotion) return;
+
+    // 1. Initial Entry Animation (Staggered)
+    const tlIn = gsap.timeline({
+      delay: 0.5 // Wait for transition curtain
+    });
+    
+    tlIn.from(leftContentRef.current.children, {
+      y: 60,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 1,
+      ease: "power4.out",
+    });
+
+    tlIn.from(rightContentRef.current, {
+      x: 100,
+      opacity: 0,
+      duration: 1.2,
+      ease: "power3.out"
+    }, 0.2); // Start slightly after text begins
+
+    // 2. Floating Rive Animation
+    gsap.to(rightContentRef.current, {
+      y: 15,
+      duration: 3,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+
+    // 3. Scroll Exit Animation (Keep existing logic)
+    const tlScroll = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      }
+    });
+
+    tlScroll.to(leftContentRef.current, {
+      y: -100,
+      opacity: 0,
+      ease: "power1.inOut"
+    }, 0);
+
+    tlScroll.to(rightContentRef.current, {
+      y: -50,
+      scale: 0.8,
+      opacity: 0,
+      ease: "power1.inOut"
+    }, 0);
+
+  }, { scope: containerRef, dependencies: [reducedMotion] });
+
   return (
     <>
-      <div className="w-full py-14 md:min-h-screen flex flex-col md:flex-row overflow-hidden">
+      <div 
+        ref={containerRef}
+        className="w-full py-14 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative"
+      >
         {/* Text Content Left Side */}
         <motion.div
-          className="w-full md:w-1/2 flex flex-col items-start justify-center px-6 md:pl-20 text-white py-12 md:py-0"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          ref={leftContentRef}
+          className="w-full md:w-1/2 flex flex-col items-start justify-center px-6 md:pl-20 text-white py-12 md:py-0 relative z-10"
         >
           {/* Greeting */}
           <div className="flex items-center mb-6">
@@ -151,10 +215,8 @@ function HeroComponent() {
         {/* Rive Animation Right Side */}
         {!reducedMotion && (
           <motion.div
-            className="hidden md:flex md:w-1/2 h-[60vh] md:h-screen relative items-center justify-center"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            ref={rightContentRef}
+            className="hidden md:flex md:w-1/2 h-[60vh] md:h-screen relative items-center justify-center z-0"
           >
             <Suspense
               fallback={

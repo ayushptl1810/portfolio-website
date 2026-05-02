@@ -21,7 +21,10 @@ function WebLayout() {
 
       <div className="relative z-10" id="app-content">
         <Outlet />
-        <Footer theme="purple" basePath="/web" />
+        {/* Hide footer only on specific Contact pages per user request */}
+        {!location.pathname.includes("/contact") && (
+          <Footer theme="purple" basePath="/web" />
+        )}
       </div>
 
       {/* 3D Model - Web Persona Specific */}

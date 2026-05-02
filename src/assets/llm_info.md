@@ -31,6 +31,15 @@ My friends have dubbed me "chronically online," mainly because I'm very responsi
 
 ---
 
+### Live Quick Facts (The Absolute Truth)
+- Years Coding: 2+
+- Projects Built: 15+ (Web applications and AI systems)
+- Team Projects: 10+ (Collaborative work experience)
+- Hackathons Attended: 15+ (Competitive coding events)
+- CGPA: 8.06 (IIT Madras), 9.33 (DJ Sanghvi)
+
+---
+
 ## 4. Beyond the Screen: My Passions
 
 There are three things I love the most: Football, Gaming, and Music.

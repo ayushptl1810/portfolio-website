@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
 import ProjectCard from "./ProjectCard";
 import IncomingTransition from "../../transitions/IncomingTransition";
 
@@ -9,74 +11,71 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
   const location = useLocation();
   const navigate = useNavigate();
   const onProjectsPage = location.pathname.includes("/projects");
-
-  /* Debug filtering */
-  // console.log("ProjectComponent Debug:", { ids, projectListCount: projectList?.length });
+  const containerRef = useRef(null);
+  const gridRef = useRef(null);
+  const headerRef = useRef(null);
 
   const dataset =
     !Array.isArray(ids) || ids.length === 0
       ? projectList
       : projectList.filter((p) => ids.includes(p.id));
 
-  // console.log("Dataset length:", dataset.length);
-
-  // Automatically scroll to top when component mounts (after page transition)
-  // Only if we're coming from a transition (navigating TO projects)
   React.useEffect(() => {
     const fromTransition = location.state?.fromTransition;
-
     if (fromTransition) {
-      // Instant scroll to top (no smooth behavior) so it's ready when transition ends
-      window.scrollTo({
-        top: 0,
-        behavior: "auto",
-      });
-
-      // Clear the state to prevent re-triggering
+      window.scrollTo({ top: 0, behavior: "auto" });
       window.history.replaceState({}, document.title);
     }
   }, [location.state]);
 
-  // Determine base path (e.g. "/web" or "/ai")
+  useGSAP(() => {
+    // Optimized Header reveal - no scrub to prevent jitter
+    gsap.from(headerRef.current, {
+      scrollTrigger: {
+        trigger: headerRef.current,
+        start: "top 95%",
+        toggleActions: "play none none reverse",
+      },
+      y: 40,
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.8,
+      ease: "power2.out"
+    });
+
+    // Convergence reveal: Project cards fly in from sides
+    const cards = gridRef.current.querySelectorAll(".project-card-wrapper");
+    cards.forEach((card, index) => {
+      const isLeftColumn = index % 2 === 0;
+      
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 95%",
+          toggleActions: "play none none reverse",
+        },
+        x: isLeftColumn ? -120 : 120,
+        y: 80,
+        opacity: 0,
+        scale: 0.9,
+        rotateY: isLeftColumn ? 10 : -10,
+        duration: 0.8,
+        ease: "power2.out",
+        clearProps: "all"
+      });
+    });
+  }, { scope: containerRef });
+
   const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
 
-  const handleCta = () => {
-    if (onProjectsPage) {
-      // Navigate back to home with transition
-      if (window.triggerPageTransition) {
-        window.triggerPageTransition(basePath === "/web" ? "/web" : "/ai"); // Handle home specifically if needed, likely just basePath
-      } else {
-        // Fallback: direct navigation
-        navigate(basePath);
-      }
-    } else {
-      // Navigate to projects with transition
-      if (window.triggerPageTransition) {
-        window.triggerPageTransition(`${basePath}/projects`);
-      } else {
-        // Fallback: direct navigation
-        navigate(`${basePath}/projects`, {
-          state: { fromTransition: true, label: "Projects" },
-        });
-      }
-    }
-  };
-
-  // Function to scroll to top of projects list
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // Handle "View All Projects" click
   const handleViewAllProjects = () => {
     if (onProjectsPage) {
-      // If already on projects page, just scroll to top
       scrollToTop();
     } else {
-      // Navigate to projects page
       if (window.triggerPageTransition) {
         window.triggerPageTransition(`${basePath}/projects`);
       } else {
@@ -87,13 +86,10 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
     }
   };
 
-  // Handle "Back to Home" click - use transition but without scroll trigger
   const handleBackToHome = () => {
-    // Use page transition but with a different state that won't trigger scroll
     if (window.triggerPageTransition) {
       window.triggerPageTransition(basePath);
     } else {
-      // Fallback: direct navigation
       navigate(basePath);
     }
   };
@@ -101,15 +97,14 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
   return (
     <>
       <IncomingTransition />
-      <div className="w-full min-h-screen px-4 sm:px-5 md:px-6 py-8 md:py-10">
+      <div 
+        ref={containerRef}
+        className="w-full min-h-screen px-4 sm:px-5 md:px-6 py-8 md:py-10 perspective-1000 overflow-x-hidden"
+      >
         <div className="max-w-6xl mx-auto">
-          <motion.div
+          <div
+            ref={headerRef}
             className="mb-6 md:mb-8 text-center"
-            initial={{ opacity: 0, y: 18 }}
-            animate={onProjectsPage ? { opacity: 1, y: 0 } : undefined}
-            whileInView={!onProjectsPage ? { opacity: 1, y: 0 } : undefined}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            viewport={{ once: true, amount: 0.1 }}
           >
             {onProjectsPage ? (
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
@@ -125,31 +120,19 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
               Here are some of the projects I've built. Each one represents a
               unique challenge and learning experience.
             </p>
-          </motion.div>
+          </div>
 
-          <div className="grid gap-5 sm:gap-6 grid-cols-1 md:grid-cols-2 place-items-center">
+          <div 
+            ref={gridRef}
+            className="grid gap-5 sm:gap-6 grid-cols-1 md:grid-cols-2 place-items-center"
+          >
             {dataset.map((project, idx) => (
-              <motion.div
+              <div
                 key={project.id}
-                initial={{ opacity: 0, y: 24 }}
-                animate={
-                  onProjectsPage && idx < 2 ? { opacity: 1, y: 0 } : undefined
-                }
-                whileInView={
-                  !onProjectsPage || idx >= 2 ? { opacity: 1, y: 0 } : undefined
-                }
-                transition={{
-                  type: "spring",
-                  stiffness: 120,
-                  damping: 22,
-                  mass: 0.9,
-                  delay: idx * 0.06,
-                }}
-                viewport={{ once: true, amount: 0 }}
-                className="w-full"
+                className="project-card-wrapper w-full"
               >
                 <ProjectCard project={project} theme={theme} />
-              </motion.div>
+              </div>
             ))}
           </div>
 
@@ -161,17 +144,17 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
               }
               className="inline-flex items-center justify-center gap-3 px-5 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white transition-all duration-300 text-base md:text-lg cursor-pointer relative overflow-hidden group"
               whileHover={{
-                scale: 1.03,
+                scale: 1.05,
+                rotateZ: 0.5,
                 borderColor: isEmerald
                   ? "rgba(16, 185, 129, 0.7)"
                   : "rgba(147, 51, 234, 0.7)",
                 boxShadow: isEmerald
-                  ? "0 0 24px rgba(16, 185, 129, 0.25)"
-                  : "0 0 24px rgba(147, 51, 234, 0.25)",
+                  ? "0 0 30px rgba(16, 185, 129, 0.3)"
+                  : "0 0 30px rgba(147, 51, 234, 0.3)",
               }}
               whileTap={{ scale: 0.98 }}
             >
-              {/* Hover Background Effect */}
               <motion.div
                 className={`absolute inset-0 bg-gradient-to-r ${
                   isEmerald
@@ -183,7 +166,6 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
                 transition={{ duration: 0.35, ease: "easeOut" }}
               />
 
-              {/* Button Content */}
               <span className="relative z-10 font-ui whitespace-nowrap">
                 {onProjectsPage ? "Back to Home" : "View All Projects"}
               </span>

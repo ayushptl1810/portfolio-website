@@ -278,7 +278,7 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
                 }-400/50 focus:ring-2 focus:ring-${
                   isEmerald ? "emerald" : "purple"
                 }-400/20`}
-                placeholder="Ask me anything..."
+                placeholder="Ask about Ayush or his work..."
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}

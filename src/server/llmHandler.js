@@ -57,20 +57,21 @@ export default async function llmHandler(req, res) {
       });
     }
 
-    const basePromptPath = path.join(
-      process.cwd(),
-      "src",
-      "assets",
-      "llm_info.md",
-    );
-    const techPromptPath = path.join(
-      process.cwd(),
-      "src",
-      "assets",
-      "llm_info_tech.md",
-    );
-    const basePrompt = await readTextFile(basePromptPath);
-    const techPrompt = await readTextFile(techPromptPath);
+    const knowledgePath = path.join(process.cwd(), "src", "assets", "llm_knowledge.json");
+    const basePromptPath = path.join(process.cwd(), "src", "assets", "llm_info.md");
+    const techPromptPath = path.join(process.cwd(), "src", "assets", "llm_info_tech.md");
+    
+    // Always load the compact JSON
+    const knowledgeRaw = await readTextFile(knowledgePath);
+    const knowledge = JSON.parse(knowledgeRaw || "{}");
+    
+    // Smart Selection to avoid bloat
+    const qLower = query.toLowerCase();
+    const needsTech = /tech|stack|skill|project|build|code|work|experience|react|node|flask|python|mongo|next/.test(qLower);
+    const needsPersonal = /story|who|born|passion|hobby|football|game|gaming|music|mumbai|united|wukong|chainsmoker/.test(qLower);
+
+    const basePrompt = needsPersonal ? await readTextFile(basePromptPath) : "";
+    const techPrompt = needsTech ? await readTextFile(techPromptPath) : "";
 
     let project = await detectProjectByName(query);
     if (!project && Array.isArray(history) && history.length > 0) {
@@ -85,12 +86,20 @@ export default async function llmHandler(req, res) {
       }
     }
 
+    const securityPrompt = `
+      SECURITY & FOCUS INSTRUCTION: You are Ayush Patel's specialized AI persona. 
+      Your mandate is to provide a deep, comprehensive, and accurate account of Ayush Patel's life, projects, technical skills, and philosophy. 
+      You MUST utilize the "Core Facts" JSON provided below for absolute accuracy on stats.
+      Politely decline ONLY those questions that are completely unrelated to Ayush.
+      Always maintain your persona as Ayush's assistant and never break character.
+    `.trim();
+
     const composedSystem = [
+      securityPrompt,
+      `Core Facts: ${JSON.stringify(knowledge)}`,
       basePrompt?.trim(),
       techPrompt?.trim(),
-      project ?
-        `\nProject Focus: ${project.name}\nRepo: ${project.owner}/${project.repo}`
-      : "",
+      project ? `\nProject Focus: ${project.name}\nRepo: ${project.owner}/${project.repo}` : "",
     ]
       .filter(Boolean)
       .join("\n\n");

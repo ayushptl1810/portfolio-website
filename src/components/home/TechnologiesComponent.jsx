@@ -1,15 +1,42 @@
+import { useRef } from "react";
 import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
 
 function TechnologiesComponent({ technologies = [], theme = "default" }) {
   const isEmerald = theme === "emerald";
+  const containerRef = useRef(null);
+  const gridRef = useRef(null);
+
+  useGSAP(() => {
+    const cards = gridRef.current.querySelectorAll(".tech-card");
+    
+    // Convergence reveal: cards fly in from sides + bottom
+    cards.forEach((card, index) => {
+      const isLeft = (index % 4) < 2; // Split for staggered entry
+      
+      gsap.from(card, {
+        scrollTrigger: {
+          trigger: card,
+          start: "top 95%",
+          toggleActions: "play none none reverse", // One-time smooth trigger
+        },
+        x: isLeft ? -80 : 80,
+        y: 60,
+        rotateY: isLeft ? 15 : -15,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.8,
+        ease: "power2.out",
+        clearProps: "all"
+      });
+    });
+  }, { scope: containerRef });
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 10 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      viewport={{ once: true, amount: 0.1 }}
-      className="w-full py-12 md:py-20 px-4 sm:px-6 md:px-8"
+    <div
+      ref={containerRef}
+      className="w-full py-12 md:py-20 px-4 sm:px-6 md:px-8 perspective-1000 overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto w-full">
         {/* Header */}
@@ -25,34 +52,31 @@ function TechnologiesComponent({ technologies = [], theme = "default" }) {
         </div>
 
         {/* Technologies Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
+        <div 
+          ref={gridRef}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6"
+        >
           {technologies.map((tech, index) => {
             const IconComponent = tech.icon;
             return (
               <motion.div
                 key={index}
-                initial={{ opacity: 1, y: 0 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.2,
-                  ease: "easeOut",
-                  delay: 0.03,
-                }}
-                className="bg-zinc-950/70 backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20 relative group"
+                className="tech-card bg-zinc-950/70 backdrop-blur-md rounded-xl p-4 sm:p-5 md:p-6 border border-white/10 shadow-lg hover:shadow-xl hover:border-white/20 relative group overflow-hidden"
                 whileHover={{
-                  scale: 1.03,
+                  scale: 1.05,
+                  rotateZ: 1,
                   borderColor: isEmerald
                     ? "rgba(16, 185, 129, 0.5)"
                     : "rgba(147, 51, 234, 0.5)",
                   boxShadow: isEmerald
-                    ? "0 25px 50px -12px rgba(16, 185, 129, 0.25)"
-                    : "0 25px 50px -12px rgba(147, 51, 234, 0.25)",
+                    ? "0 25px 50px -12px rgba(16, 185, 129, 0.4)"
+                    : "0 25px 50px -12px rgba(147, 51, 234, 0.4)",
                 }}
               >
                 <div className="flex items-stretch space-x-2 sm:space-x-3 md:space-x-4">
                   <motion.div
                     className={`${tech.bgColor} p-1.5 sm:p-2 rounded-lg flex-shrink-0 flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14`}
-                    animate={{ y: [0, -4, 0] }}
+                    animate={{ y: [0, -3, 0], rotate: [0, 3, 0] }}
                     transition={{
                       duration: 4,
                       repeat: Infinity,
@@ -75,39 +99,14 @@ function TechnologiesComponent({ technologies = [], theme = "default" }) {
                   </div>
                 </div>
 
-                {/* Floating Particles on Hover (disabled on mobile) */}
-                <div className="absolute inset-0 rounded-xl overflow-hidden pointer-events-none hidden md:block">
-                  {[...Array(3)].map((_, i) => (
-                    <motion.div
-                      key={i}
-                      className={`absolute w-1 h-1 ${
-                        isEmerald ? "bg-emerald-400/60" : "bg-purple-400/60"
-                      } rounded-full`}
-                      initial={{
-                        x: Math.random() * 200,
-                        y: Math.random() * 100,
-                        opacity: 0,
-                      }}
-                      animate={{
-                        x: Math.random() * 200,
-                        y: Math.random() * 100,
-                        opacity: [0, 0.8, 0],
-                      }}
-                      transition={{
-                        duration: 3.4,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: 0.4,
-                      }}
-                    />
-                  ))}
-                </div>
+                {/* Animated Gradient Border on Hover */}
+                <div className={`absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-500 bg-gradient-to-r ${isEmerald ? 'from-emerald-500 to-cyan-500' : 'from-purple-500 to-blue-500'} pointer-events-none`} />
               </motion.div>
             );
           })}
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 

@@ -11,19 +11,19 @@ const QuickFactsPanel = ({ isActive }) => {
     },
     {
       label: "Projects Built",
-      value: "10+",
+      value: "15+",
       description: "Web applications",
       color: "from-blue-500 to-blue-600",
     },
     {
       label: "Team Projects",
-      value: "5+",
+      value: "10+",
       description: "Collaborative work experience",
       color: "from-purple-500 to-blue-600",
     },
     {
       label: "Hackathons Attended ",
-      value: "10+",
+      value: "15+",
       description: "Competitive coding events",
       color: "from-green-500 to-blue-600",
     },

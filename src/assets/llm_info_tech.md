@@ -1,92 +1,73 @@
 ## Technical Profile (For LLM Use)
 
-Use this context to answer technical questions about Ayush Patel’s skills, tools, preferences, and projects. Keep answers concise and implementation-aware. When a project is referenced by name, resolve it via the Project Index and, if helpful, include a short README excerpt.
+Use this context to answer technical questions about Ayush Patel’s skills, tools, preferences, and projects. Keep answers concise and implementation-aware.
 
-### Primary Web Stack
+### Primary Tech Stack & Expertise
 
-- React (SPA)
-- Tailwind CSS (utility-first styling, gradients, glass-morphism)
-- Framer Motion (animations, transitions)
-- Node/Express (custom API work when needed)
-- Flask (for projects involving python backends)
-- MongoDB
+- **Frontend**: React (SPA), Vite, Next.js, Vue.js, Tailwind CSS, Framer Motion, GSAP, Three.js/Spline (3D), CesiumJS (Geospatial).
+- **Backend**: Node.js, Express, FastAPI, Flask, Python.
+- **AI/ML**: LangChain, LangGraph (Multi-agent), CrewAI, Pinecone, Qdrant, Neo4j (GraphRAG), PyTorch, TensorFlow, Transformers, SHAP (XAI), Scikit-learn.
+- **Database/DevOps**: MongoDB, Redis, PostgreSQL (SQLAlchemy), Celery, Docker, Terraform.
 
-### Technologies (General)
+### Complete Project Index
 
-- MongoDB, React, Vue, Node, Express, Tailwind, Git, Flask, Redis, Celery, Next.js, FastAPI.
-- Also used across projects: Framer Motion, Cesium (3D globe), Socket.IO, JWT, LangChain, CrewAI, Pydantic, Pinecone, BS4, Playwright, Faiss, Sentence Transformers.
+#### 🌐 Web Development Projects
 
-### Project Index (resolve by name)
+1. **AMBROSIA - Global Flood Intelligence**
+   - Tags: React, Vite, CesiumJS, FastAPI, SAR Imagery, LSTM.
+   - Summary: A full-stack flood detection platform fusing satellite imagery and graph analysis with an immersive 3D globe interface.
+   
+2. **Cryptix - AI Cyber Defense**
+   - Tags: React, FastAPI, SHAP, Transformers, Twilio, Chrome Extension.
+   - Summary: Cyber defense platform with ML threat detection (phishing, deepfakes) and a Manifest V3 Chrome extension for real-time monitoring.
 
-If a user mentions a project by name, match case-insensitively here. Use README excerpts when explaining architecture or decisions.
+3. **Project Aegis - Fact-Checking Platform**
+   - Tags: FastAPI, MERN, WebSockets, Redis, Razorpay.
+   - Summary: Real-time rumour monitoring and AI-driven debunking with role-based subscriptions and multi-modal verification.
 
-1. InfluenceNet
+4. **Phoenix Ground Control Station**
+   - Tags: Next.js, FastAPI, YOLO, Mavlink, Gemini AI.
+   - Summary: High-performance GCS for autonomous drone fleet management with dual-engine AI (YOLO + Gemini) and Mavlink integration.
 
-- Tags: Flask, Flask-SQLAlchemy, Flask-RESTful
-- GitHub: owner `23f2001281`, repo `Influencer-Sponsorship-System-v1-MAD-1`
-- Summary: platform connecting sponsors and influencers; role-based dashboard; ad requests; search/filter/analytics; secured REST API.
+5. **Zoom Trip - 3D Globe Explorer**
+   - Tags: React, CesiumJS, Gemini AI.
+   - Summary: Interactive 3D globe for destination discovery with AI-powered personalized suggestions.
 
-2. Zoom Trip - 3D Globe Explorer (Codecircuit)
+6. **StackIt - Community Q&A Forum**
+   - Tags: Next.js, Socket.IO, JWT, Express.
+   - Summary: Real-time knowledge exchange platform with rich content editing and administrative dashboards.
 
-- Tags: React, Cesium, Gemini AI
-- GitHub: owner `ayushptl1810`, repo `codecircuit`
-- Deployed: https://codecircuit-one.vercel.app/
-- Summary: interactive 3D globe with smooth camera transitions, highlighting and filtering; AI suggestions with Gemini.
+7. **InfluenceNet**
+   - Tags: Flask, Flask-SQLAlchemy, REST API.
+   - Summary: Influencer sponsorship marketplace with role-based dashboards and dynamic negotiation systems.
 
-3. Quiz Master App
+8. **Zentry Clone**
+   - Tags: JavaScript, GSAP, CSS Animations.
+   - Summary: High-fidelity landing page clone focusing on complex UI interactions and smooth motion parity.
 
-- Tags: Vue, Chart.js, Redux, Celery, Flask, Flask-SQLAlchemy
-- GitHub: owner `23f2001281`, repo `Quiz-Master-App-V2`
-- Summary: real-time quizzing, JWT auth, content management, background analytics with Celery, dashboards with Chart.js.
+#### 🤖 Artificial Intelligence & Machine Learning Projects
 
-4. Itinary Generator (travel planning)
+1. **Samvidha - Constitutional Intelligence Agent**
+   - Tags: LangGraph (Multi-agent), Neo4j (GraphRAG), Qdrant, Three.js.
+   - Summary: A GraphRAG-powered platform that transforms the Indian Constitution into a queryable intelligence network with 3D graph visualization.
 
-- Tags: Next.js, TailwindCSS, Cesium, CrewAI, LangChain, Pydantic, FastAPI
-- GitHub: owner `JayGuri`, repo `Codeshastra_XI_PUJA`
-- Summary: AI itinerary generation with community & scrapbook features; performance improvements.
+2. **ARFL - Asynchronous Robust Federated Learning**
+   - Tags: PyTorch, WebSockets, MongoDB, Byzantine Defense.
+   - Summary: Production-ready FL framework with Byzantine fault tolerance, differential privacy, and real-time training monitoring.
 
-5. StackIt - Community Q&A Forum
+3. **Virtual Teaching Assistant (IIT Madras)**
+   - Tags: FastAPI, Pinecone, Gemini AI, Web Scraping.
+   - Summary: RAG-based assistant for the TDS course at IIT Madras, utilizing hybrid search over course content and forums.
 
-- Tags: Next.js, TailwindCSS, Socket.IO, JWT, Express
-- GitHub: owner `HarshilForWork`, repo `Odoo_JBBR`
-- Summary: modern Q&A with real-time updates/notifications, admin dashboard, moderation, search/pagination.
+4. **Data Analyst Agent**
+   - Tags: CrewAI, LangChain, Pydantic, Semantic Search.
+   - Summary: Multi-agent system that analyzes SQL databases, PDFs, and web data to deliver actionable insights.
 
-6. Zentry Clone
+5. **Multi-Label Emotion Classification**
+   - Tags: RoBERTa Transformers, FastAPI, Docker, WandB.
+   - Summary: High-precision NLP system (Macro F1: 0.852) capable of simultaneous multi-emotion detection in text.
 
-- Tags: HTML, CSS, JavaScript
-- GitHub: owner `ayushptl1810`, repo `zentryclone`
-- Deployed: https://zentryclone-one.vercel.app/
-- Summary: animated landing page clone focusing on UI/animation parity.
-
-7. ToDo App
-
-- Tags: Next.js, MongoDB, TailwindCSS, Express
-- GitHub: owner `ayushptl1810`, repo `ToDoList`
-- Deployed: https://todolist-w5aa.onrender.com/
-- Summary: full-stack CRUD with clean API, env-driven config, accessible UI, @react-spring animations.
-
-8. Virtual Teaching Assistant (TDS)
-
-- Tags: FastAPI, Pinecone, BS4, Playwright
-- GitHub: owner `ayushptl1810`, repo `TDS-PROJECT-1`
-- Deployed: https://tds-project-1-ujvv.onrender.com
-- Summary: vector search + Gemini QA over course/forum data; robust scraping and hybrid search.
-
-9. Data Analyst Agent
-
-- Tags: FastAPI, LangChain, CrewAI, Pydantic, Pinecone, Mammoth, PyMuPDF, PDFPlumber, BS4, Playwright
-- GitHub: owner `23f2001281`, repo `Data-Analyst-Agent`
-- Summary: agent that connects to diverse sources, performs semantic retrieval and analysis, returns insights and visualizations.
-
-### Answering Rules (Tech-Focused)
-
-- Preferred stack/tools: prioritize MERN Stack.
-- When a project is named: resolve here, include a README excerpt when explaining architecture/decisions.
-- For implementation specifics: mention concrete libraries/patterns.
-- If information is insufficient: ask one short clarifying question.
-
-### Constraints
-
-- Keep answers concise and factual by default; expand on request.
-- Do not invent tools or repos not listed.
-- Prefer concrete names of libraries and technologies reflected in the projects and stack above.
+### Answering Rules
+- **Stack Preference**: Prioritize MERN/Next.js for web and FastAPI/LangChain for AI.
+- **Specifics**: When asked about a project, mention its unique tech (e.g., "GraphRAG with Neo4j" for Samvidha).
+- **Conciseness**: Keep default answers under 4-5 sentences. Expand only if the user asks for "details" or "architecture".

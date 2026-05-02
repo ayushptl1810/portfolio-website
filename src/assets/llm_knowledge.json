@@ -1,0 +1,25 @@
+{
+  "personal": {
+    "name": "Ayush Patel",
+    "location": "Mumbai, India (roots in Gujarat)",
+    "education": [
+      { "school": "DJ Sanghvi", "degree": "B.Tech CSE (Data Science)", "cgpa": "9.33", "end": "June 2027" },
+      { "school": "IIT Madras", "degree": "BS Data Science", "cgpa": "8.06", "end": "Late 2027/2028" }
+    ],
+    "philosophy": "Helpful, reliable, chronically online, ego-free, focused on 'getting shit done'.",
+    "passions": {
+      "football": "Manchester United fan since 2017.",
+      "gaming": "Favorite: Black Myth Wukong. Also God of War, Ghost of Tsushima.",
+      "music": "Pop, The Chainsmokers, New West - Those Eyes."
+    }
+  },
+  "stats": {
+    "years_coding": "2+",
+    "projects": "15+",
+    "team_projects": "10+",
+    "hackathons": "15+"
+  },
+  "tech_stack": [
+    "React", "Node.js", "Next.js", "Flask", "MongoDB", "Tailwind CSS", "Framer Motion", "GSAP", "Three.js/Spline", "Python", "Data Science", "LangChain", "LangGraph", "Neo4j", "GraphRAG", "CesiumJS", "FastAPI"
+  ]
+}

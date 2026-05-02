@@ -396,10 +396,11 @@ function Contact() {
           <motion.button
             type="button"
             onClick={() => {
+              const target = window.location.pathname.startsWith("/ai") ? "/ai" : "/web";
               if (window.triggerPageTransition) {
-                window.triggerPageTransition("/");
+                window.triggerPageTransition(target);
               } else {
-                window.location.href = "/";
+                window.location.href = target;
               }
             }}
             className="inline-flex items-center space-x-3 px-8 py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-lg cursor-pointer"

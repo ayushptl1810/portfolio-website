@@ -1,11 +1,16 @@
-import { Suspense, useEffect, useState, lazy } from "react";
+import { Suspense, useEffect, useState, lazy, useRef } from "react";
 import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
+import { useGSAP } from "@gsap/react";
+import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
 import resumePdf from "../../assets/Resume.pdf";
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
 function AIHeroComponent() {
   const [reducedMotion, setReducedMotion] = useState(false);
+  const containerRef = useRef(null);
+  const leftContentRef = useRef(null);
+  const rightContentRef = useRef(null);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -15,20 +20,73 @@ function AIHeroComponent() {
     return () => mediaQuery.removeEventListener?.("change", update);
   }, []);
 
+  useGSAP(() => {
+    if (reducedMotion) return;
+
+    // 1. Initial Entry Animation (Staggered)
+    const tlIn = gsap.timeline({
+      delay: 0.5 // Synchronized with transition curtain
+    });
+    
+    tlIn.from(leftContentRef.current.children, {
+      y: 60,
+      opacity: 0,
+      stagger: 0.1,
+      duration: 1.2,
+      ease: "power4.out",
+    });
+
+    tlIn.from(rightContentRef.current, {
+      x: 150,
+      opacity: 0,
+      duration: 1.5,
+      ease: "power3.out"
+    }, 0.3); // Slide in as text is halfway through
+
+    // 2. Subtle Floating Effect for 3D Spline
+    gsap.to(rightContentRef.current, {
+      y: 20,
+      duration: 4,
+      repeat: -1,
+      yoyo: true,
+      ease: "sine.inOut"
+    });
+
+    // 3. Scroll Exit Animation (Keep existing logic)
+    const tlScroll = gsap.timeline({
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      }
+    });
+
+    tlScroll.to(leftContentRef.current, {
+      y: -120,
+      opacity: 0,
+      ease: "power2.inOut"
+    }, 0);
+
+    tlScroll.to(rightContentRef.current, {
+      y: -80,
+      scale: 0.7,
+      opacity: 0,
+      ease: "power2.inOut"
+    }, 0);
+
+  }, { scope: containerRef, dependencies: [reducedMotion] });
+
   return (
     <>
-      <div className="w-full py-14 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative">
-        {/* Background Matrix/Grid Effect (Local to Hero) - Removed to fix border issue */}
-        <div className="absolute inset-0 pointer-events-none z-0">
-          {/* Removed per user request */}
-        </div>
-
+      <div 
+        ref={containerRef}
+        className="w-full py-14 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative"
+      >
         {/* Text Content Left Side */}
         <motion.div
+          ref={leftContentRef}
           className="w-full md:w-1/2 flex flex-col items-start justify-center px-6 md:pl-20 text-white py-12 md:py-0 relative z-10"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
         >
           {/* Greeting */}
           <div className="flex items-center mb-6">
@@ -132,10 +190,8 @@ function AIHeroComponent() {
         {/* Spline 3D Animation Right Side - Matching Hero Structure */}
         {!reducedMotion && (
           <motion.div
+            ref={rightContentRef}
             className="hidden md:flex md:w-1/2 h-[60vh] md:h-screen relative items-center justify-center z-10"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <div className="w-full h-full relative flex items-center justify-center scale-[1.8] translate-x-[40%] translate-y-[-5%]">
               <Suspense
