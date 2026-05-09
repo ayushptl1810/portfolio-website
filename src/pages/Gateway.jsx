@@ -137,8 +137,8 @@ const Gateway = () => {
             <h1 className="text-white text-4xl md:text-6xl tracking-[0.1em] font-['Playfair_Display'] font-bold uppercase drop-shadow-[0_0_30px_rgba(255,255,255,0.3)]">
               Ayush Patel
             </h1>
-            <p className="text-white/60 text-[12px] font-mono uppercase tracking-[0.4em] pt-4">
-              B.TECH CSEDS @ DJ Sanghvi • Mumbai, India
+            <p className="text-white/60 text-[10px] md:text-[11px] font-mono uppercase tracking-[0.15em] md:tracking-[0.2em] pt-4">
+              BS Data Science @ IIT Madras <span className="text-white/40 mx-2 font-bold">|</span> B.Tech CSE (Data Science) @ DJ Sanghvi
             </p>
           </motion.div>
         </div>

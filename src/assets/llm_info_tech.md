@@ -7,7 +7,7 @@ Use this context to answer technical questions about Ayush Patel’s skills, too
 - **Frontend**: React (SPA), Vite, Next.js, Vue.js, Tailwind CSS, Framer Motion, GSAP, Three.js/Spline (3D), CesiumJS (Geospatial).
 - **Backend**: Node.js, Express, FastAPI, Flask, Python.
 - **AI/ML**: LangChain, LangGraph (Multi-agent), CrewAI, Pinecone, Qdrant, Neo4j (GraphRAG), PyTorch, TensorFlow, Transformers, SHAP (XAI), Scikit-learn.
-- **Database/DevOps**: MongoDB, Redis, PostgreSQL (SQLAlchemy), Celery, Docker, Terraform.
+- **Database/DevOps**: MongoDB, Redis, PostgreSQL (SQLAlchemy), Celery, Docker.
 
 ### Complete Project Index
 
