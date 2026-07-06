@@ -8,6 +8,7 @@ import "@fontsource/inter";
 import DarkVeil from "../components/shared/DarkVeil";
 import ParticleSystem from "../components/shared/ParticleSystem";
 import AINeural from "../components/gateway/AINeural";
+import StructuredData from "../components/shared/StructuredData";
 
 const Gateway = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ const Gateway = () => {
 
   return (
     <div className="relative w-full h-screen bg-black overflow-hidden font-sans select-none">
+      <StructuredData />
       {/* SEO H1 Fallback */}
       <h1 className="sr-only">Ayush Patel | Web Architect & AI Engineer Portfolio</h1>
       
@@ -67,15 +69,17 @@ const Gateway = () => {
                 <p className="text-purple-200 text-lg md:text-2xl tracking-[0.5em] font-light mt-2 ml-1">
                   ARCHITECT
                 </p>
-                {hoveredSide === "web" && (
-                  <motion.p
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="text-purple-400 text-[11px] font-mono mt-4 tracking-[0.2em] uppercase max-w-xs leading-relaxed italic"
-                  >
-                    Crafting immersive, high-performance digital experiences.
-                  </motion.p>
-                )}
+                <motion.p
+                  initial={false}
+                  animate={{
+                    opacity: hoveredSide === "web" ? 1 : 0,
+                    x: hoveredSide === "web" ? 0 : -10,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="text-purple-400 text-[11px] font-mono mt-4 tracking-[0.2em] uppercase max-w-xs leading-relaxed italic"
+                >
+                  Crafting immersive, high-performance digital experiences.
+                </motion.p>
               </motion.div>
             </div>
           </div>
@@ -112,15 +116,17 @@ const Gateway = () => {
                 <p className="text-emerald-200 text-lg md:text-2xl tracking-[0.5em] font-light mt-2 mr-1">
                   ENGINEER
                 </p>
-                {hoveredSide === "ai" && (
-                  <motion.p
-                    initial={{ opacity: 0, x: 10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="text-emerald-400 text-[11px] font-mono mt-4 tracking-[0.2em] uppercase max-w-xs leading-relaxed italic"
-                  >
-                    Engineering autonomous intelligence & agentic workflows.
-                  </motion.p>
-                )}
+                <motion.p
+                  initial={false}
+                  animate={{
+                    opacity: hoveredSide === "ai" ? 1 : 0,
+                    x: hoveredSide === "ai" ? 0 : 10,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="text-emerald-400 text-[11px] font-mono mt-4 tracking-[0.2em] uppercase max-w-xs leading-relaxed italic"
+                >
+                  Engineering autonomous intelligence & agentic workflows.
+                </motion.p>
               </motion.div>
             </div>
           </div>

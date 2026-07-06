@@ -16,6 +16,19 @@ export default defineConfig({
     },
   },
   build: {
+    // Spline's runtime (three-vendor + its internal physics/navmesh/boolean/
+    // gaussian-splat/opentype chunks) is dynamically imported and deferred
+    // until after first paint (see WebLayout.jsx) — don't let Vite eagerly
+    // <link rel="modulepreload"> it on every /web/* page load regardless.
+    modulePreload: {
+      resolveDependencies: (_filename, deps) =>
+        deps.filter(
+          (dep) =>
+            !/three-vendor|physics|navmesh|boolean|gaussian-splat|opentype/.test(
+              dep
+            )
+        ),
+    },
     rollupOptions: {
       output: {
         manualChunks: {

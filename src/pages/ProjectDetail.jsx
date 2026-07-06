@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { usePageSEO } from "../hooks/usePageSEO";
+import { usePageSEO, toAbsoluteAssetUrl } from "../hooks/usePageSEO";
 import { motion } from "framer-motion";
 import { FaGithub, FaExternalLinkAlt, FaArrowLeft } from "react-icons/fa";
 import { useReadme } from "../hooks/useReadme";
@@ -8,6 +8,7 @@ import { ProjectList } from "../utils/ProjectList";
 import ReactMarkdown from "react-markdown";
 import DeviceFrame from "../components/shared/DeviceFrame";
 import TerminalWindow from "../components/shared/TerminalWindow";
+import ProjectStructuredData from "../components/shared/ProjectStructuredData";
 
 // Helper for smart fallback
 const isAIProject = (tags) => {
@@ -66,7 +67,8 @@ const ProjectDetail = () => {
 
   usePageSEO(
     project ? `${project.name}` : "Project Details",
-    project?.description || "Explore the technical details and architecture of this innovation by Ayush Patel."
+    project?.description || "Explore the technical details and architecture of this innovation by Ayush Patel.",
+    { image: toAbsoluteAssetUrl(project?.image) }
   );
 
   if (!project) {
@@ -79,6 +81,7 @@ const ProjectDetail = () => {
 
   return (
     <section className="w-full min-h-screen py-24 relative">
+      <ProjectStructuredData project={project} path={location.pathname} />
       <div className="relative z-10 max-w-7xl mx-auto px-6">
         {/* Project Header */}
         <motion.div

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import DarkVeil from "../components/shared/DarkVeil";
 
@@ -7,10 +7,28 @@ import FluidMenu from "../components/shared/FluidMenu";
 import ParticleSystem from "../components/shared/ParticleSystem.jsx";
 import Footer from "../components/shared/Footer";
 import StructuredData from "../components/shared/StructuredData";
+import ErrorBoundary from "../components/shared/ErrorBoundary";
 import { useScrollToTop } from "../hooks/useScrollToTop";
 
 function WebLayout() {
   useScrollToTop();
+  // Defer the decorative 3D model until the browser is idle after first
+  // paint, so its ~2MB runtime never competes with critical-path rendering.
+  const [showSpline, setShowSpline] = useState(false);
+
+  useEffect(() => {
+    let idleId;
+    let timeoutId;
+    if (window.requestIdleCallback) {
+      idleId = window.requestIdleCallback(() => setShowSpline(true));
+    } else {
+      timeoutId = setTimeout(() => setShowSpline(true), 1500);
+    }
+    return () => {
+      if (idleId) window.cancelIdleCallback(idleId);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
 
   return (
     <div className="w-full relative min-h-screen">
@@ -35,16 +53,20 @@ function WebLayout() {
         className="hidden lg:block fixed bottom-0 left-0 z-50 pointer-events-none translate-x-[-10rem] translate-y-[10rem] lg:translate-x-[-24.5rem] lg:translate-y-[40rem] overflow-visible"
       >
         <div className="w-[32rem] h-[48rem] origin-bottom-left scale-[1.35] lg:scale-[1.75]">
-          <Suspense fallback={<div className="w-full h-full bg-transparent" />}>
-            <Spline
-              scene="https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode"
-              className="w-full h-full"
-              style={{ background: "transparent" }}
-              onLoad={() => {
-                // Rely on CSS scale; setZoom is inconsistent across scenes
-              }}
-            />
-          </Suspense>
+          {showSpline && (
+            <ErrorBoundary fallback={null}>
+              <Suspense fallback={<div className="w-full h-full bg-transparent" />}>
+                <Spline
+                  scene="https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode"
+                  className="w-full h-full"
+                  style={{ background: "transparent" }}
+                  onLoad={() => {
+                    // Rely on CSS scale; setZoom is inconsistent across scenes
+                  }}
+                />
+              </Suspense>
+            </ErrorBoundary>
+          )}
         </div>
       </div>
 
