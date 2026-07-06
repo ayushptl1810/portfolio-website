@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-
-const SITE_URL = "https://www.ayush.info";
-const DEFAULT_TITLE = "Ayush Patel | Full Stack Developer & AI Engineer";
-const DEFAULT_DESCRIPTION =
-  "Ayush Patel - Computer Science student at IIT Madras & DJ Sanghvi. Specialized in Full Stack Development, AI Agentic workflows, and GenAI.";
-const DEFAULT_IMAGE = `${SITE_URL}/og-image.webp`;
+import {
+  SITE_URL,
+  DEFAULT_TITLE,
+  DEFAULT_DESCRIPTION,
+  DEFAULT_IMAGE,
+} from "../utils/seoDefaults";
 
 /** Resolves a Vite-imported asset path (e.g. "/assets/foo-hash.webp") to an absolute URL. */
 export const toAbsoluteAssetUrl = (path) => {

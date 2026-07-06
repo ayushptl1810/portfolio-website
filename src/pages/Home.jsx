@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePageSEO } from "../hooks/usePageSEO";
+import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import HeroComponent from "../components/home/HeroComponent";
 import TechnologiesComponent from "../components/home/TechnologiesComponent";
 import ProjectComponent from "../components/projects/ProjectComponent";
@@ -15,10 +16,7 @@ function Home() {
   const featuredIds = ["web-2", "web-10", "web-11", "web-8"]; // Web Projects: Zoom Trip, StackIt, Zentry, ToDo
   const [chatOpen, setChatOpen] = useState(false);
 
-  usePageSEO(
-    "Home",
-    "Welcome to the portfolio of Ayush Patel, a Full Stack Developer specializing in premium web experiences and AI engineering."
-  );
+  usePageSEO(STATIC_PAGE_META.home.title, STATIC_PAGE_META.home.description);
 
   return (
     <>

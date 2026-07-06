@@ -50,9 +50,13 @@ ${urlEntries}
 </urlset>
 `;
 
-const outPath = path.join(rootDir, "public/sitemap.xml");
+// Renamed from sitemap.xml: Search Console was erroring on repeated
+// submissions of the old URL, so this ships as a fresh endpoint instead of
+// fighting whatever Google cached for the old one.
+const SITEMAP_FILENAME = "sitemap-v2.xml";
+const outPath = path.join(rootDir, "public", SITEMAP_FILENAME);
 fs.writeFileSync(outPath, sitemap);
 
 console.log(
-  `generate-sitemap: wrote ${allRoutes.length} URLs (${staticRoutes.length} static, ${webProjectRoutes.length} web projects, ${aiProjectRoutes.length} AI projects) to public/sitemap.xml`
+  `generate-sitemap: wrote ${allRoutes.length} URLs (${staticRoutes.length} static, ${webProjectRoutes.length} web projects, ${aiProjectRoutes.length} AI projects) to public/${SITEMAP_FILENAME}`
 );

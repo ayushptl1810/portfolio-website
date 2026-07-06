@@ -16,6 +16,10 @@ export default defineConfig({
     },
   },
   build: {
+    // Emitted to dist/.vite/manifest.json — lets the Node-only prerender
+    // script (no browser, no bundler) resolve project image imports to
+    // their final hashed asset URLs.
+    manifest: true,
     // Spline's runtime (three-vendor + its internal physics/navmesh/boolean/
     // gaussian-splat/opentype chunks) is dynamically imported and deferred
     // until after first paint (see WebLayout.jsx) — don't let Vite eagerly

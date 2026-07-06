@@ -1,6 +1,7 @@
 import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageSEO } from "../hooks/usePageSEO";
+import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import IncomingTransition from "../transitions/IncomingTransition";
 import RoleChips from "../components/contact/RoleChips";
 import TransmitButton from "../components/contact/TransmitButton";
@@ -12,8 +13,8 @@ import resumePdf from "../assets/Resume.pdf";
 
 function Contact() {
   usePageSEO(
-    "Contact",
-    "Get in touch with Ayush Patel for project collaborations, full-stack development, or AI engineering opportunities."
+    STATIC_PAGE_META.contact.title,
+    STATIC_PAGE_META.contact.description
   );
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");

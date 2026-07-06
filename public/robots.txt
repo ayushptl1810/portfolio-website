@@ -18,4 +18,4 @@ User-agent: YouBot
 Allow: /
 
 # Sitemaps
-Sitemap: https://www.ayush.info/sitemap.xml
+Sitemap: https://www.ayush.info/sitemap-v2.xml

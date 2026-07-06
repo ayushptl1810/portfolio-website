@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { usePageSEO } from "../hooks/usePageSEO";
+import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "../utils/gsapConfig";
@@ -18,10 +19,7 @@ const About = () => {
   const isAI = location.pathname.startsWith("/ai");
   const containerRef = useRef(null);
 
-  usePageSEO(
-    "About Me",
-    "Learn more about Ayush Patel, a CS student at IIT Madras with expertise in Full Stack Development and AI.",
-  );
+  usePageSEO(STATIC_PAGE_META.about.title, STATIC_PAGE_META.about.description);
 
   const panels = [
     {

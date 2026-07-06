@@ -2,12 +2,13 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePageSEO } from "../hooks/usePageSEO";
+import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import ProjectComponent from "../components/projects/ProjectComponent";
 
 function Projects() {
   usePageSEO(
-    "Projects",
-    "Explore the portfolio of Ayush Patel, featuring high-performance web applications, 3D interactive sites, and AI-driven systems."
+    STATIC_PAGE_META.projects.title,
+    STATIC_PAGE_META.projects.description
   );
   const location = useLocation();
   const fromFab = location.state?.fromFab;

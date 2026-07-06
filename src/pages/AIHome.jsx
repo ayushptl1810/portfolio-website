@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePageSEO } from "../hooks/usePageSEO";
+import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import AIHeroComponent from "../components/home/AIHeroComponent";
 import TechnologiesComponent from "../components/home/TechnologiesComponent";
 import ProjectComponent from "../components/projects/ProjectComponent";
@@ -16,8 +17,8 @@ function AIHome() {
   const [chatOpen, setChatOpen] = useState(false);
 
   usePageSEO(
-    "AI Persona",
-    "Explore the AI-focused portfolio of Ayush Patel, specializing in Large Language Models, Agentic Workflows, and Advanced Data Science."
+    STATIC_PAGE_META.aiHome.title,
+    STATIC_PAGE_META.aiHome.description
   );
 
   return (

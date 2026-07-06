@@ -9,6 +9,7 @@ import DarkVeil from "../components/shared/DarkVeil";
 import ParticleSystem from "../components/shared/ParticleSystem";
 import AINeural from "../components/gateway/AINeural";
 import StructuredData from "../components/shared/StructuredData";
+import { GATEWAY_H1 } from "../utils/seoDefaults";
 
 const Gateway = () => {
   const navigate = useNavigate();
@@ -32,7 +33,7 @@ const Gateway = () => {
     <div className="relative w-full h-screen bg-black overflow-hidden font-sans select-none">
       <StructuredData />
       {/* SEO H1 Fallback */}
-      <h1 className="sr-only">Ayush Patel | Web Architect & AI Engineer Portfolio</h1>
+      <h1 className="sr-only">{GATEWAY_H1}</h1>
       
       {/* --- HERO SPLIT SECTION --- */}
       <div className="relative w-full h-full overflow-hidden">

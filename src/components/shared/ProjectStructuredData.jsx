@@ -1,6 +1,5 @@
 import React from "react";
-
-const SITE_URL = "https://www.ayush.info";
+import { buildProjectSchema } from "../../utils/seoDefaults";
 
 /**
  * ProjectStructuredData - JSON-LD for an individual project page.
@@ -10,25 +9,7 @@ const SITE_URL = "https://www.ayush.info";
 const ProjectStructuredData = ({ project, path }) => {
   if (!project) return null;
 
-  // Static hosting may serve this page via a trailing-slash redirect
-  // (e.g. "/web/projects/x" -> "/web/projects/x/"); keep the schema URL
-  // matching the canonical, no-trailing-slash convention used elsewhere.
-  const normalizedPath = path.replace(/\/$/, "") || "/";
-
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareSourceCode",
-    name: project.name,
-    description: project.description,
-    url: `${SITE_URL}${normalizedPath}`,
-    codeRepository: project.github_url,
-    programmingLanguage: project.tags,
-    author: {
-      "@type": "Person",
-      name: "Ayush Patel",
-      url: SITE_URL,
-    },
-  };
+  const schema = buildProjectSchema(project, path);
 
   return <script type="application/ld+json">{JSON.stringify(schema)}</script>;
 };
