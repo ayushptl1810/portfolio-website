@@ -122,8 +122,8 @@ function HeroComponent() {
 
           {/* Professional Role with Gradient */}
           <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl leading-tight font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-display">
-              Full Stack Developer
+            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-display">
+              Full-Stack Developer &amp; AI Engineer
             </h1>
           </div>
 

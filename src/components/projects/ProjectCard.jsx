@@ -1,7 +1,7 @@
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { HiOutlineExternalLink } from "react-icons/hi";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 /*
@@ -30,9 +30,7 @@ function ProjectCard({ project, theme = "default" }) {
     image,
   } = project || {};
 
-  const location = useLocation();
-  // Determine base path based on location OR theme fallback
-  const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
+  const basePath = "";
 
   const demoHref = demo_url || deployed_url;
   const hasDemo = Boolean(demoHref);

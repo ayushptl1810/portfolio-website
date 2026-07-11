@@ -11,12 +11,8 @@ import QuickFactsPanel from "../components/about/QuickFactsPanel";
 import PersonalPassionsPanel from "../components/about/PersonalPassionsPanel";
 import IncomingTransition from "../transitions/IncomingTransition";
 
-import { Link, useLocation } from "react-router-dom";
-
 const About = () => {
   const [activePanel, setActivePanel] = useState(null);
-  const location = useLocation();
-  const isAI = location.pathname.startsWith("/ai");
   const containerRef = useRef(null);
 
   usePageSEO(STATIC_PAGE_META.about.title, STATIC_PAGE_META.about.description);
@@ -68,7 +64,7 @@ const About = () => {
             >
               <div className="flex-1 space-y-8">
                 <PersonalIdentityPanel
-                  role={isAI ? "AI Engineer" : "Full Stack Developer"}
+                  role="Full-Stack Developer & AI Engineer"
                   links={{
                     spotify:
                       "https://open.spotify.com/user/31xc7fhc4lr4asucvkoopjpc3ete",
@@ -270,11 +266,10 @@ const About = () => {
             <motion.button
               type="button"
               onClick={() => {
-                const target = isAI ? "/ai" : "/web";
                 if (window.triggerPageTransition) {
-                  window.triggerPageTransition(target);
+                  window.triggerPageTransition("/");
                 } else {
-                  window.location.href = target;
+                  window.location.href = "/";
                 }
               }}
               className="inline-flex items-center space-x-3 px-6 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base md:text-lg cursor-pointer"

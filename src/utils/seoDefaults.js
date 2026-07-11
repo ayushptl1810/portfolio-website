@@ -7,7 +7,7 @@ export const DEFAULT_TITLE = "Ayush Patel | Full Stack Developer & AI Engineer";
 export const DEFAULT_DESCRIPTION =
   "Ayush Patel - Computer Science student at IIT Madras & DJ Sanghvi. Specialized in Full Stack Development, AI Agentic workflows, and GenAI.";
 export const DEFAULT_IMAGE = `${SITE_URL}/og-image.webp`;
-export const GATEWAY_H1 = "Ayush Patel | Web Architect & AI Engineer Portfolio";
+export const HOME_H1 = "Ayush Patel | Full Stack Developer & AI Engineer";
 
 export const PERSON_SCHEMA = {
   "@context": "https://schema.org",
@@ -39,20 +39,10 @@ export const STATIC_PAGE_META = {
     description:
       "Welcome to the portfolio of Ayush Patel, a Full Stack Developer specializing in premium web experiences and AI engineering.",
   },
-  aiHome: {
-    title: "AI Persona",
-    description:
-      "Explore the AI-focused portfolio of Ayush Patel, specializing in Large Language Models, Agentic Workflows, and Advanced Data Science.",
-  },
   about: {
     title: "About Me",
     description:
       "Learn more about Ayush Patel, a CS student at IIT Madras with expertise in Full Stack Development and AI.",
-  },
-  contact: {
-    title: "Contact",
-    description:
-      "Get in touch with Ayush Patel for project collaborations, full-stack development, or AI engineering opportunities.",
   },
   projects: {
     title: "Projects",

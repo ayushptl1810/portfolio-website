@@ -72,7 +72,7 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
     });
   }, { scope: containerRef });
 
-  const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
+  const basePath = "";
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -4,19 +4,16 @@ import PageTransitionManager from "./transitions/PageTransitionManager";
 
 // Layouts
 const WebLayout = lazy(() => import("./layouts/WebLayout"));
-const AILayout = lazy(() => import("./layouts/AILayout"));
 
 // Pages
-const Gateway = lazy(() => import("./pages/Gateway"));
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
 const ProjectComponent = lazy(
   () => import("./components/projects/ProjectComponent"),
 );
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
-const AIHome = lazy(() => import("./pages/AIHome"));
 
-import { WebProjectList, AIProjectList } from "./utils/ProjectList";
+import { ProjectList } from "./utils/ProjectList";
 
 /**
  * BackgroundPrefetcher - Quietly imports other routes after initial load
@@ -31,11 +28,9 @@ const BackgroundPrefetcher = () => {
       import("./components/projects/ProjectComponent");
       import("./pages/ProjectDetail");
       import("./pages/Home");
-      import("./pages/AIHome");
 
       // Prefetch 3D Asset Files
       const assets = [
-        "https://prod.spline.design/AqJ4j3ogsligEDfj/scene.splinecode",
         "https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode",
         "/src/assets/birb.riv",
       ];
@@ -69,30 +64,14 @@ function App() {
         <Suspense fallback={<LoadingFallback />}>
           <BackgroundPrefetcher />
           <Routes>
-            {/* Entry Point */}
-            <Route path="/" element={<Gateway />} />
-
-            {/* Web Persona Routes */}
-            <Route path="/web" element={<WebLayout />}>
+            <Route path="/" element={<WebLayout />}>
               <Route index element={<Home />} />
               <Route path="about" element={<About />} />
               <Route
                 path="projects"
-                element={<ProjectComponent projectList={WebProjectList} />}
+                element={<ProjectComponent projectList={ProjectList} />}
               />
               <Route path="projects/:projectName" element={<ProjectDetail />} />
-            </Route>
-
-            {/* AI Persona Routes */}
-            <Route path="/ai" element={<AILayout />}>
-              <Route index element={<AIHome />} />
-              {/* Reusing these for now, or creating specific AI versions later */}
-              <Route
-                path="projects"
-                element={<ProjectComponent projectList={AIProjectList} />}
-              />
-              <Route path="projects/:projectName" element={<ProjectDetail />} />
-              <Route path="about" element={<About />} />
             </Route>
           </Routes>
         </Suspense>

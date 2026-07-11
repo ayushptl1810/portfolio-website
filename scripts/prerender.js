@@ -9,7 +9,7 @@ import {
   DEFAULT_TITLE,
   DEFAULT_DESCRIPTION,
   DEFAULT_IMAGE,
-  GATEWAY_H1,
+  HOME_H1,
   PERSON_SCHEMA,
   STATIC_PAGE_META,
   buildProjectSchema,
@@ -87,19 +87,13 @@ function renderFallbackContent({ h1, description, tags, links }) {
 
 function buildRouteData({ manifest, webProjects, aiProjects }) {
   const projectBySlugAndBase = new Map();
-  for (const project of webProjects) {
-    projectBySlugAndBase.set(`/web/projects/${project.slug}`, project);
-  }
-  for (const project of aiProjects) {
-    projectBySlugAndBase.set(`/ai/projects/${project.slug}`, project);
+  for (const project of [...webProjects, ...aiProjects]) {
+    projectBySlugAndBase.set(`/projects/${project.slug}`, project);
   }
 
   const staticMetaByRoute = {
-    "/web": STATIC_PAGE_META.home,
-    "/ai": STATIC_PAGE_META.aiHome,
-    "/web/about": STATIC_PAGE_META.about,
-    "/ai/about": STATIC_PAGE_META.about,
-    "/web/projects": STATIC_PAGE_META.projects,
+    "/about": STATIC_PAGE_META.about,
+    "/projects": STATIC_PAGE_META.projects,
   };
 
   return function getRouteData(route) {
@@ -110,7 +104,7 @@ function buildRouteData({ manifest, webProjects, aiProjects }) {
         image: DEFAULT_IMAGE,
         jsonLd: [PERSON_SCHEMA],
         fallback: renderFallbackContent({
-          h1: GATEWAY_H1,
+          h1: HOME_H1,
           description: DEFAULT_DESCRIPTION,
         }),
       };

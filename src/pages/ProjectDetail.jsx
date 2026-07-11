@@ -47,9 +47,8 @@ const ProjectDetail = () => {
   const { owner, repoName } = getGitHubInfo(project?.github_url);
   const { readme, loading, error } = useReadme(owner, repoName);
 
-  // Determine base path (e.g. "/web" or "/ai")
   const location = useLocation();
-  const basePath = location.pathname.startsWith("/ai") ? "/ai" : "/web";
+  const basePath = "";
 
   useEffect(() => {
     // Find project by name from ProjectList

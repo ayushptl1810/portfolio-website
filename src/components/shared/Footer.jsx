@@ -2,7 +2,7 @@ import React from "react";
 import { FaGithub, FaLinkedin, FaEnvelope } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 
-const Footer = ({ theme = "purple", basePath = "/web" }) => {
+const Footer = ({ theme = "purple", basePath = "" }) => {
   const isEmerald = theme === "emerald";
   const accentColor = isEmerald ? "text-emerald-400" : "text-purple-400";
   // Increased opacity from /10 to /20 for better visibility
@@ -12,7 +12,7 @@ const Footer = ({ theme = "purple", basePath = "/web" }) => {
   const location = useLocation();
 
   const handleContactClick = () => {
-    const homePath = basePath || "/web";
+    const homePath = basePath || "/";
     const isHome =
       location.pathname === homePath || location.pathname === `${homePath}/`;
 

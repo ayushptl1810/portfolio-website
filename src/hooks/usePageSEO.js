@@ -42,9 +42,9 @@ export const usePageSEO = (title, description, options = {}) => {
     const resolvedTitle = title ? `${title} | Ayush Patel` : DEFAULT_TITLE;
     const resolvedDescription = description || DEFAULT_DESCRIPTION;
     const resolvedImage = options.image || DEFAULT_IMAGE;
-    // Static hosting redirects "/web" -> "/web/" (trailing slash) to serve
-    // the prerendered directory index, but the sitemap/canonical convention
-    // is no trailing slash — normalize so both agree on one canonical URL.
+    // Static hosting redirects "/about" -> "/about/" (trailing slash) to
+    // serve the prerendered directory index, but the sitemap/canonical
+    // convention is no trailing slash — normalize so both agree.
     const normalizedPath = window.location.pathname.replace(/\/$/, "") || "/";
     const resolvedUrl = `${SITE_URL}${normalizedPath}`;
 

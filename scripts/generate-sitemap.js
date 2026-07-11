@@ -12,24 +12,21 @@ const SITE_URL = "https://www.ayush.info";
 // which is a valid path character but must be escaped inside XML text.
 const escapeXml = (value) => value.replace(/&/g, "&amp;");
 
-const { web: webProjectRoutes, ai: aiProjectRoutes } = getProjectRoutes();
+const projectRoutesFlat = getProjectRoutes();
 
 const today = new Date().toISOString().split("T")[0];
 
 const staticRoutes = [
   { loc: "/", changefreq: "monthly", priority: "1.0" },
-  { loc: "/web", changefreq: "weekly", priority: "0.9" },
-  { loc: "/ai", changefreq: "weekly", priority: "0.9" },
-  { loc: "/web/about", changefreq: "monthly", priority: "0.8" },
-  { loc: "/ai/about", changefreq: "monthly", priority: "0.8" },
-  { loc: "/web/projects", changefreq: "weekly", priority: "0.8" },
-  { loc: "/web/contact", changefreq: "monthly", priority: "0.7" },
-  { loc: "/ai/contact", changefreq: "monthly", priority: "0.7" },
+  { loc: "/about", changefreq: "monthly", priority: "0.8" },
+  { loc: "/projects", changefreq: "weekly", priority: "0.8" },
 ];
 
-const projectRoutes = [...webProjectRoutes, ...aiProjectRoutes].map(
-  (loc) => ({ loc, changefreq: "monthly", priority: "0.8" })
-);
+const projectRoutes = projectRoutesFlat.map((loc) => ({
+  loc,
+  changefreq: "monthly",
+  priority: "0.8",
+}));
 
 const allRoutes = [...staticRoutes, ...projectRoutes];
 
@@ -58,5 +55,5 @@ const outPath = path.join(rootDir, "public", SITEMAP_FILENAME);
 fs.writeFileSync(outPath, sitemap);
 
 console.log(
-  `generate-sitemap: wrote ${allRoutes.length} URLs (${staticRoutes.length} static, ${webProjectRoutes.length} web projects, ${aiProjectRoutes.length} AI projects) to public/${SITEMAP_FILENAME}`
+  `generate-sitemap: wrote ${allRoutes.length} URLs (${staticRoutes.length} static, ${projectRoutes.length} projects) to public/${SITEMAP_FILENAME}`
 );
