@@ -17,6 +17,12 @@ export function useScrollToTop() {
       return;
     }
 
+    // Don't fight a pending scroll-to-contact request (see useScrollToContact)
+    if (sessionStorage.getItem("scrollToContact")) {
+      sessionStorage.setItem("previousPath", currentPath);
+      return;
+    }
+
     // Scroll to top for all other route changes
     window.scrollTo({
       top: 0,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { usePageSEO } from "../hooks/usePageSEO";
+import { useScrollToContact } from "../hooks/useScrollToContact";
 import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import AIHeroComponent from "../components/home/AIHeroComponent";
 import TechnologiesComponent from "../components/home/TechnologiesComponent";
@@ -20,6 +21,7 @@ function AIHome() {
     STATIC_PAGE_META.aiHome.title,
     STATIC_PAGE_META.aiHome.description
   );
+  useScrollToContact();
 
   return (
     <>

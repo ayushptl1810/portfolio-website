@@ -9,8 +9,6 @@ export const STATIC_ROUTES = [
   "/web/about",
   "/ai/about",
   "/web/projects",
-  "/web/contact",
-  "/ai/contact",
 ];
 
 export function getProjectRoutes() {

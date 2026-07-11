@@ -14,7 +14,6 @@ const ProjectComponent = lazy(
   () => import("./components/projects/ProjectComponent"),
 );
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
-const Contact = lazy(() => import("./pages/Contact"));
 const AIHome = lazy(() => import("./pages/AIHome"));
 
 import { WebProjectList, AIProjectList } from "./utils/ProjectList";
@@ -29,7 +28,6 @@ const BackgroundPrefetcher = () => {
     const timer = setTimeout(() => {
       // Prefetch Page Chunks
       import("./pages/About");
-      import("./pages/Contact");
       import("./components/projects/ProjectComponent");
       import("./pages/ProjectDetail");
       import("./pages/Home");
@@ -40,7 +38,6 @@ const BackgroundPrefetcher = () => {
         "https://prod.spline.design/AqJ4j3ogsligEDfj/scene.splinecode",
         "https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode",
         "/src/assets/birb.riv",
-        "/src/assets/chainless_rocket.riv",
       ];
 
       assets.forEach((url) => {
@@ -84,7 +81,6 @@ function App() {
                 element={<ProjectComponent projectList={WebProjectList} />}
               />
               <Route path="projects/:projectName" element={<ProjectDetail />} />
-              <Route path="contact" element={<Contact />} />
             </Route>
 
             {/* AI Persona Routes */}
@@ -97,7 +93,6 @@ function App() {
               />
               <Route path="projects/:projectName" element={<ProjectDetail />} />
               <Route path="about" element={<About />} />
-              <Route path="contact" element={<Contact />} />
             </Route>
           </Routes>
         </Suspense>

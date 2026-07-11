@@ -27,11 +27,17 @@ import {
   SiJsonwebtokens,
   SiVercel,
   SiPostgresql,
+  SiDocker,
+  SiNeo4J,
 } from "react-icons/si";
 
-import { TbDatabaseSearch } from "react-icons/tb";
+import { TbDatabaseSearch, TbVector } from "react-icons/tb";
 import { CrewAI } from "@lobehub/icons";
-import { SeabornIcon, MatplotlibIcon } from "../components/icons/CustomIcons";
+import {
+  SeabornIcon,
+  MatplotlibIcon,
+  QdrantIcon,
+} from "../components/icons/CustomIcons";
 
 const WebTechStack = [
   {
@@ -146,6 +152,13 @@ const WebTechStack = [
     iconColor: "text-white",
     bgColor: "bg-white/10 backdrop-blur-sm",
   },
+  {
+    name: "Docker",
+    description: "Containerization",
+    icon: SiDocker,
+    iconColor: "text-blue-400",
+    bgColor: "bg-blue-900/30",
+  },
 ];
 
 const AiTechStack = [
@@ -245,15 +258,36 @@ const AiTechStack = [
 
   // ===== Vector Search & Databases =====
   {
-    name: "VectorDbs",
-    description: "Semantic Vector Storage",
+    name: "Qdrant",
+    description: "Vector Database",
+    icon: QdrantIcon,
+    iconColor: "text-red-400",
+    bgColor: "bg-red-900/30",
+  },
+  {
+    name: "Pinecone",
+    description: "Vector Database",
     icon: TbDatabaseSearch,
     iconColor: "text-cyan-300",
     bgColor: "bg-cyan-900/30",
   },
   {
-    name: "GraphDbs",
-    description: "Relationship-Based Storage",
+    name: "Faiss",
+    description: "Similarity Search Library",
+    icon: TbVector,
+    iconColor: "text-blue-300",
+    bgColor: "bg-blue-900/30",
+  },
+  {
+    name: "Neo4j",
+    description: "Graph Database",
+    icon: SiNeo4J,
+    iconColor: "text-blue-400",
+    bgColor: "bg-blue-900/30",
+  },
+  {
+    name: "TigerGraph",
+    description: "Graph Database",
     icon: FaProjectDiagram,
     iconColor: "text-green-400",
     bgColor: "bg-green-900/30",

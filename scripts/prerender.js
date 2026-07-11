@@ -99,8 +99,6 @@ function buildRouteData({ manifest, webProjects, aiProjects }) {
     "/ai": STATIC_PAGE_META.aiHome,
     "/web/about": STATIC_PAGE_META.about,
     "/ai/about": STATIC_PAGE_META.about,
-    "/web/contact": STATIC_PAGE_META.contact,
-    "/ai/contact": STATIC_PAGE_META.contact,
     "/web/projects": STATIC_PAGE_META.projects,
   };
 
