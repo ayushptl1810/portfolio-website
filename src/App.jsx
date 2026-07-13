@@ -13,7 +13,7 @@ const ProjectComponent = lazy(
 );
 const ProjectDetail = lazy(() => import("./pages/ProjectDetail"));
 
-import { ProjectList } from "./utils/ProjectList";
+import { MixedProjectList } from "./utils/ProjectList";
 
 /**
  * BackgroundPrefetcher - Quietly imports other routes after initial load
@@ -69,7 +69,7 @@ function App() {
               <Route path="about" element={<About />} />
               <Route
                 path="projects"
-                element={<ProjectComponent projectList={ProjectList} />}
+                element={<ProjectComponent projectList={MixedProjectList} />}
               />
               <Route path="projects/:projectName" element={<ProjectDetail />} />
             </Route>

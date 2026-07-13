@@ -18,6 +18,7 @@ const WebProjectList = [
     id: "web-1",
     name: "InfluenceNet",
     tags: ["Flask", "Flask-SQLAlchemy", "Flask-Restful"],
+    categories: ["web"],
     github_url:
       "https://github.com/23f2001281/Influencer-Sponsorship-System-v1-MAD-1",
     owner: "23f2001281",
@@ -37,6 +38,7 @@ const WebProjectList = [
     id: "web-2",
     name: "Zoom Trip - 3D Globe Explorer",
     tags: ["React", "Cesium", "Gemini AI"],
+    categories: ["web"],
     github_url: "https://github.com/ayushptl1810/codecircuit",
     owner: "ayushptl1810",
     repo: "codecircuit",
@@ -54,6 +56,7 @@ const WebProjectList = [
     id: "web-3",
     name: "Quiz Master App",
     tags: ["VueJs", "ChartJs", "Redux", "Celery", "Flask", "Flask-SQLAlchemy"],
+    categories: ["web"],
     github_url: "https://github.com/23f2001281/Quiz-Master-App-V2",
     owner: "23f2001281",
     repo: "Quiz-Master-App-V2",
@@ -80,6 +83,7 @@ const WebProjectList = [
       "Pydantic",
       "FastAPI",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/JayGuri/Codeshastra_XI_PUJA",
     owner: "JayGuri",
     repo: "Codeshastra_XI_PUJA",
@@ -97,6 +101,7 @@ const WebProjectList = [
     id: "web-5",
     name: "StackIt - Community Q&A Forum",
     tags: ["NextJs", "TailwindCSS", "SocketIO", "JWT", "Express"],
+    categories: ["web"],
     github_url: "https://github.com/HarshilForWork/Odoo_JBBR",
     owner: "HarshilForWork",
     repo: "Odoo_JBBR",
@@ -115,6 +120,7 @@ const WebProjectList = [
     id: "web-6",
     name: "Zentry Clone",
     tags: ["HTML", "CSS", "JavaScript"],
+    categories: ["web"],
     github_url: "https://github.com/ayushptl1810/zentryclone",
     owner: "ayushptl1810",
     repo: "zentryclone",
@@ -139,6 +145,7 @@ const WebProjectList = [
       "Redis",
       "Transformers",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/ayushptl1810/MumbaiHacksJBBR",
     owner: "ayushptl1810",
     repo: "ProjectAegis",
@@ -166,6 +173,7 @@ const WebProjectList = [
       "YOLO",
       "Mavlink",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/DJSPhoenix/SAE-Aerothon-GCS-25",
     owner: "DJSPhoenix",
     repo: "SAE-Aerothon-GCS-25",
@@ -192,6 +200,7 @@ const WebProjectList = [
       "Framer Motion",
       "FastAPI",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/JayGuri/LastStrawHackX",
     owner: "JayGuri",
     repo: "LastStrawHackX",
@@ -218,6 +227,7 @@ const WebProjectList = [
       "Transformers",
       "Twilio",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/ayushptl1810/KES-Hack",
     owner: "ayushptl1810",
     repo: "KES-Hack",
@@ -239,6 +249,7 @@ const AIProjectList = [
     id: "ai-1",
     name: "Virtual Teaching Assistant",
     tags: ["FastAPI", "Pinecone", "BS4", "Playwright"],
+    categories: ["ai"],
     github_url: "https://github.com/ayushptl1810/TDS-PROJECT-1",
     owner: "ayushptl1810",
     repo: "TDS-PROJECT-1",
@@ -267,6 +278,7 @@ const AIProjectList = [
       "BS4",
       "Playwright",
     ],
+    categories: ["ai"],
     github_url: "https://github.com/23f2001281/Data-Analyst-Agent",
     owner: "23f2001281",
     repo: "Data-Analyst-Agent",
@@ -285,6 +297,7 @@ const AIProjectList = [
     id: "ai-3",
     name: "Multi-Label Emotion Classification",
     tags: ["FastAPI", "TensorFlow", "Transformers", "Docker", "WandB"],
+    categories: ["ai"],
     github_url: "https://github.com/23f2001281/DL-GenAI-Project-Sept",
     owner: "23f2001281",
     repo: "DL-GenAI-Project-Sept",
@@ -300,32 +313,6 @@ const AIProjectList = [
       "https://huggingface.co/Meshyboi/Multi-Emotion-Classification",
   },
   {
-    id: "ai-4",
-    name: "Project Aegis",
-    tags: [
-      "FastAPI",
-      "MERN",
-      "Razorpay",
-      "WebSockets",
-      "Redis",
-      "Transformers",
-    ],
-    github_url: "https://github.com/ayushptl1810/MumbaiHacksJBBR",
-    owner: "ayushptl1810",
-    repo: "ProjectAegis",
-    description:
-      "An end-to-end fact-checking and media literacy platform that monitors rumours in real time, debunks them using AI, and offers curated educational modules.",
-    points: [
-      "Developed a real-time rumour monitoring system with AI-driven debunking and confidence scoring.",
-      "Built a personalized educational platform featuring interactive modules and domain-based content filtering.",
-      "Integrated a role-based subscription model (Free, Pro, Enterprise) using Razorpay for payment processing.",
-      "Implemented a multi-modal verification chatbot supporting text, image, audio and video analysis for misinformation detection.",
-      "Developed a Chrome extension for real-time browsing monitoring, automatically alerting users to potential misinformation and linking to verified debunks.",
-    ],
-    image: projectAegisImage,
-    deployed_url: "https://mumbai-hacks-jbbr-u5g4.vercel.app/",
-  },
-  {
     id: "ai-5",
     name: "Samvidha - Constitutional Intelligence Agent",
     tags: [
@@ -337,6 +324,7 @@ const AIProjectList = [
       "Groq",
       "Three.js",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/ayushptl1810/ConstitutionAgent",
     owner: "ayushptl1810",
     repo: "ConstitutionAgent",
@@ -363,6 +351,7 @@ const AIProjectList = [
       "MongoDB",
       "Terraform",
     ],
+    categories: ["web", "ai"],
     github_url: "https://github.com/JayGuri/DevHacks",
     owner: "JayGuri",
     repo: "DevHacks",
@@ -380,4 +369,19 @@ const AIProjectList = [
 ];
 
 const ProjectList = [...WebProjectList, ...AIProjectList];
-export { WebProjectList, AIProjectList, ProjectList };
+
+// Alternates Web/AI projects instead of showing one whole group after the
+// other, so the /projects listing reads as mixed rather than grouped.
+function interleave(a, b) {
+  const merged = [];
+  const max = Math.max(a.length, b.length);
+  for (let i = 0; i < max; i++) {
+    if (i < a.length) merged.push(a[i]);
+    if (i < b.length) merged.push(b[i]);
+  }
+  return merged;
+}
+
+const MixedProjectList = interleave(WebProjectList, AIProjectList);
+
+export { WebProjectList, AIProjectList, ProjectList, MixedProjectList };
