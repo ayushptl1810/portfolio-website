@@ -33,29 +33,10 @@ function FluidMenu({ basePath = "" }) {
     setIsOpen(false);
   };
 
-  const handleContactSelect = () => {
-    const homePath = basePath || "/";
-    const isHome =
-      location.pathname === homePath || location.pathname === `${homePath}/`;
-
-    if (isHome) {
-      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-    } else {
-      sessionStorage.setItem("scrollToContact", "1");
-      if (window.triggerPageTransition) {
-        window.triggerPageTransition(homePath);
-      } else {
-        navigate(homePath);
-      }
-    }
-    setIsOpen(false);
-  };
-
   const menuItems = [
     { label: "Home", path: basePath ? basePath : "/" },
     { label: "Projects", path: `${basePath}/projects` },
     { label: "About Me", path: `${basePath}/about` },
-    { label: "Contact Me", path: `${basePath}/contact`, isContact: true },
   ];
 
   return (
@@ -92,11 +73,7 @@ function FluidMenu({ basePath = "" }) {
               return (
                 <motion.button
                   key={item.label}
-                  onClick={() =>
-                    item.isContact
-                      ? handleContactSelect()
-                      : handleSelect(item.path, item.label)
-                  }
+                  onClick={() => handleSelect(item.path, item.label)}
                   className={`text-3xl md:text-5xl font-bold transition-colors font-display text-left cursor-pointer
                           ${isActive ? "text-purple-400" : "text-white"}
                           hover:text-purple-300
@@ -112,10 +89,6 @@ function FluidMenu({ basePath = "" }) {
             })}
           </div>
 
-          {/* Background Decorative Text */}
-          <div className="absolute -bottom-10 -right-10 text-[15rem] font-bold text-white/5 pointer-events-none select-none font-display leading-none">
-            AP
-          </div>
         </div>
       </motion.div>
 

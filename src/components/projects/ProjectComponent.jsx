@@ -191,7 +191,7 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
 
           <div
             ref={gridRef}
-            className="relative grid gap-5 sm:gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-items-center"
+            className={`relative grid gap-5 sm:gap-6 grid-cols-1 md:grid-cols-2 ${onProjectsPage ? "lg:grid-cols-3" : ""} place-items-center`}
           >
             <AnimatePresence mode="popLayout" initial={false}>
               {dataset.map((project) => (
