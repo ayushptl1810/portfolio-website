@@ -139,10 +139,10 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
 
       <div
         ref={containerRef}
-        className="w-full min-h-screen px-4 sm:px-5 md:px-6 py-8 md:py-10 perspective-1000 overflow-x-hidden"
+        className="w-full min-h-screen px-4 sm:px-5 md:px-6 py-20 md:py-28 perspective-1000 overflow-x-hidden"
       >
         <div className="max-w-7xl mx-auto">
-          <div ref={headerRef} className="mb-10 md:mb-14 text-center">
+          <div ref={headerRef} className="mb-12 md:mb-16 text-center">
             {onProjectsPage ?
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-6 md:mb-8 text-center font-display">
                 My Projects

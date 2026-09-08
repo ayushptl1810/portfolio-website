@@ -134,7 +134,7 @@ function HeroComponent() {
     <>
       <div
         ref={containerRef}
-        className="w-full py-14 md:py-0 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative"
+        className="w-full py-20 md:py-0 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative"
       >
         {/* Text Content Left Side */}
         <motion.div

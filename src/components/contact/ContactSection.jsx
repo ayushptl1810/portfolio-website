@@ -73,7 +73,7 @@ function ContactSection({ theme = "default" }) {
     <section
       id="contact"
       ref={containerRef}
-      className="py-16 md:py-24 relative overflow-hidden"
+      className="py-20 md:py-28 relative overflow-hidden"
     >
       <div className="relative z-10 max-w-3xl mx-auto px-4 sm:px-6">
         <div ref={contentRef} className="text-center">
@@ -81,7 +81,7 @@ function ContactSection({ theme = "default" }) {
             Get In Touch
           </h2>
 
-          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-10 md:mb-12 max-w-2xl mx-auto font-body">
+          <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-12 md:mb-16 max-w-2xl mx-auto font-body">
             Open to full-time roles and select freelance work — the fastest
             way to reach me is directly below.
           </p>

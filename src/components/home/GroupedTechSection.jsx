@@ -75,10 +75,10 @@ function GroupedTechSection({ groups = [], title, description }) {
   return (
     <div
       ref={containerRef}
-      className="w-full pt-6 pb-12 md:pt-10 md:pb-20 px-4 sm:px-6 md:px-8 overflow-x-hidden"
+      className="w-full py-20 md:py-28 px-4 sm:px-6 md:px-8 overflow-x-hidden"
     >
       <div className="max-w-7xl mx-auto w-full">
-        <div className="text-center mb-10 md:mb-14">
+        <div className="text-center mb-12 md:mb-16">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6 font-display">
             {title}
           </h2>

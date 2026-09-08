@@ -29,7 +29,7 @@ const Footer = ({ theme = "purple", basePath = "" }) => {
   };
 
   return (
-    <footer className={`w-full py-8 px-6 md:px-20 border-t ${borderColor} bg-transparent mt-20`}>
+    <footer className={`w-full py-8 px-6 md:px-20 border-t ${borderColor} bg-transparent mt-24 md:mt-32`}>
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
         
         {/* Branding & Status */}

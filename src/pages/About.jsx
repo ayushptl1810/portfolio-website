@@ -32,12 +32,12 @@ const About = () => {
       <IncomingTransition />
       <section
         ref={containerRef}
-        className="w-full min-h-screen py-16 md:py-24 relative overflow-hidden"
+        className="w-full min-h-screen py-20 md:py-28 relative overflow-hidden"
       >
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           {/* Section Header */}
           <motion.div
-            className="text-center mb-12"
+            className="text-center mb-12 md:mb-16"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -251,7 +251,7 @@ const About = () => {
 
           {/* Bottom Row */}
           <motion.div
-            className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
+            className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -262,7 +262,7 @@ const About = () => {
           </motion.div>
 
           {/* Back to Home Button */}
-          <div className="text-center mt-10 md:mt-12">
+          <div className="text-center mt-12 md:mt-16">
             <motion.button
               type="button"
               onClick={() => {
