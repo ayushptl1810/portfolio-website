@@ -1,5 +1,5 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import DarkVeil from "../components/shared/DarkVeil";
 
 const Spline = lazy(() => import("@splinetool/react-spline"));
@@ -12,6 +12,19 @@ import { useScrollToTop } from "../hooks/useScrollToTop";
 
 function WebLayout() {
   useScrollToTop();
+  const { pathname } = useLocation();
+
+  // On client-side route change, move focus to the main landmark so screen
+  // readers announce the new page and keyboard users land at its start.
+  // Delayed so the page-transition curtain finishes first.
+  useEffect(() => {
+    const id = setTimeout(() => {
+      document
+        .getElementById("app-content")
+        ?.focus({ preventScroll: true });
+    }, 900);
+    return () => clearTimeout(id);
+  }, [pathname]);
   // Defer the decorative 3D model until the browser is idle after first
   // paint, so its ~2MB runtime never competes with critical-path rendering.
   const [showSpline, setShowSpline] = useState(false);
@@ -32,6 +45,12 @@ function WebLayout() {
 
   return (
     <div className="w-full relative min-h-screen">
+      <a
+        href="#app-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:rounded focus:bg-white focus:text-black focus:font-ui"
+      >
+        Skip to main content
+      </a>
       <StructuredData />
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/20 to-purple-900/20" />
@@ -39,8 +58,14 @@ function WebLayout() {
         <ParticleSystem />
       </div>
 
-      <div className="relative z-10" id="app-content">
+      <main
+        id="app-content"
+        tabIndex={-1}
+        className="relative z-10 outline-none"
+      >
         <Outlet />
+      </main>
+      <div className="relative z-10">
         <Footer theme="purple" basePath="" />
       </div>
 

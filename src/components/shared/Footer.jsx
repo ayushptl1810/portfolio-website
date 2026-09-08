@@ -37,7 +37,7 @@ const Footer = ({ theme = "purple", basePath = "" }) => {
           <span className={`text-sm font-display font-bold tracking-tight text-white`}>
             Ayush Patel
           </span>
-          <span className="h-1 w-1 bg-gray-500 rounded-full" />
+          <span aria-hidden="true" className="h-1 w-1 bg-gray-500 rounded-full" />
           <span className="text-xs font-mono text-gray-400 uppercase tracking-widest">
             {isEmerald ? "AI Engineering" : "Full Stack Dev"}
           </span>
@@ -48,19 +48,19 @@ const Footer = ({ theme = "purple", basePath = "" }) => {
           <button
             type="button"
             onClick={handleContactClick}
-            className={`text-xs font-ui uppercase tracking-widest text-gray-300 ${hoverColor} transition-colors cursor-pointer`}
+            className={`text-xs font-ui uppercase tracking-widest text-gray-300 ${hoverColor} transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black`}
           >
             Contact
           </button>
           <div className="flex items-center space-x-5">
-            <a href="https://github.com/ayushptl1810" target="_blank" rel="noopener noreferrer" className={`text-gray-400 ${hoverColor} transition-all`}>
-              <FaGithub size={18} />
+            <a href="https://github.com/ayushptl1810" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" className={`text-gray-400 ${hoverColor} transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded`}>
+              <FaGithub aria-hidden="true" size={18} />
             </a>
-            <a href="https://linkedin.com/in/ayushptl1810" target="_blank" rel="noopener noreferrer" className={`text-gray-400 ${hoverColor} transition-all`}>
-              <FaLinkedin size={18} />
+            <a href="https://linkedin.com/in/ayushptl1810" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" className={`text-gray-400 ${hoverColor} transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded`}>
+              <FaLinkedin aria-hidden="true" size={18} />
             </a>
-            <a href="mailto:ayushptl1810@gmail.com" className={`text-gray-400 ${hoverColor} transition-all`}>
-              <FaEnvelope size={18} />
+            <a href="mailto:ayushptl1810@gmail.com" aria-label="Email Ayush" className={`text-gray-400 ${hoverColor} transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black rounded`}>
+              <FaEnvelope aria-hidden="true" size={18} />
             </a>
           </div>
         </div>

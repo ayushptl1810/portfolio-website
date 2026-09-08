@@ -39,14 +39,11 @@ function OutgoingTransition({ isActive, label, onComplete }) {
             exit={{ opacity: 0 }}
             transition={{
               duration: ANIMATION_TIMING.LABEL_FADE_DURATION,
-              delay: 0.15, // Delay text appearance by 0.5 seconds
+              delay: 0.15,
               ease: "easeOut",
             }}
           >
-            <span
-              className="text-white text-9xl font-bold font-display"
-              style={{ fontSize: "4rem" }}
-            >
+            <span className="text-white text-[4rem] font-bold font-display">
               {label}
             </span>
           </motion.div>

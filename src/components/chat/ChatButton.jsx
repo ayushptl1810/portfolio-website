@@ -11,7 +11,7 @@ export default function ChatButton({ open, onToggle, theme = "default" }) {
       onClick={onToggle}
       className={`fixed bottom-[max(env(safe-area-inset-bottom),1.25rem)] right-[max(env(safe-area-inset-right),1.25rem)] z-[70] w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/20 text-white bg-zinc-950/70 backdrop-blur-md shadow-2xl flex items-center justify-center hover:bg-white ${
         isEmerald ? "hover:text-emerald-900" : "hover:text-blue-900"
-      } transition-all duration-300 group cursor-pointer`}
+      } transition-all duration-300 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black`}
       whileHover={{
         scale: 1.06,
         rotate: 10,
@@ -40,7 +40,7 @@ export default function ChatButton({ open, onToggle, theme = "default" }) {
         animate={{ rotate: open ? 180 : 0 }}
         transition={{ duration: 0.25, ease: "easeInOut" }}
       >
-        <FaComments className="w-5 h-5 md:w-6 md:h-6" />
+        <FaComments aria-hidden="true" className="w-5 h-5 md:w-6 md:h-6" />
       </motion.span>
 
       {/* Pulse ring */}

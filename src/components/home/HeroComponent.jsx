@@ -45,66 +45,94 @@ function HeroComponent() {
     return () => mediaQuery.removeEventListener?.("change", update);
   }, []);
 
-  useGSAP(() => {
-    if (reducedMotion) return;
+  useGSAP(
+    () => {
+      if (reducedMotion) return;
 
-    // 1. Initial Entry Animation (Staggered)
-    const tlIn = gsap.timeline({
-      delay: 0.5 // Wait for transition curtain
-    });
-    
-    tlIn.from(leftContentRef.current.children, {
-      y: 60,
-      opacity: 0,
-      stagger: 0.1,
-      duration: 1,
-      ease: "power4.out",
-    });
+      // 1. Initial Entry Animation (Staggered)
+      const tlIn = gsap.timeline({
+        delay: 0.5, // Wait for transition curtain
+      });
 
-    tlIn.from(rightContentRef.current, {
-      x: 100,
-      opacity: 0,
-      duration: 1.2,
-      ease: "power3.out"
-    }, 0.2); // Start slightly after text begins
+      tlIn.from(leftContentRef.current.children, {
+        y: 60,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 1,
+        ease: "power4.out",
+      });
 
-    // 2. Floating Rive Animation
-    gsap.to(rightContentRef.current, {
-      y: 15,
-      duration: 3,
-      repeat: -1,
-      yoyo: true,
-      ease: "sine.inOut"
-    });
+      tlIn.from(
+        rightContentRef.current,
+        {
+          x: 100,
+          opacity: 0,
+          duration: 1.2,
+          ease: "power3.out",
+        },
+        0.2,
+      ); // Start slightly after text begins
 
-    // 3. Scroll Exit Animation (Keep existing logic)
-    const tlScroll = gsap.timeline({
-      scrollTrigger: {
-        trigger: containerRef.current,
-        start: "top top",
-        end: "bottom top",
-        scrub: 1,
-      }
-    });
+      // If the user scrolls before the entry finishes, snap it to the end so
+      // it doesn't fight the scrub timeline for the same props.
+      const finishEntryOnScroll = () => {
+        if (tlIn.isActive()) tlIn.progress(1);
+      };
+      window.addEventListener("scroll", finishEntryOnScroll, {
+        once: true,
+        passive: true,
+      });
 
-    tlScroll.to(leftContentRef.current, {
-      y: -100,
-      opacity: 0,
-      ease: "power1.inOut"
-    }, 0);
+      // 2. Floating Rive Animation
+      gsap.to(rightContentRef.current, {
+        y: 15,
+        duration: 3,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
 
-    tlScroll.to(rightContentRef.current, {
-      y: -50,
-      scale: 0.8,
-      opacity: 0,
-      ease: "power1.inOut"
-    }, 0);
+      // 3. Scroll Exit Animation (Keep existing logic)
+      const tlScroll = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+        },
+      });
 
-  }, { scope: containerRef, dependencies: [reducedMotion] });
+      tlScroll.to(
+        leftContentRef.current,
+        {
+          y: -100,
+          opacity: 0,
+          ease: "power1.inOut",
+        },
+        0,
+      );
+
+      tlScroll.to(
+        rightContentRef.current,
+        {
+          y: -50,
+          scale: 0.8,
+          opacity: 0,
+          ease: "power1.inOut",
+        },
+        0,
+      );
+
+      return () => {
+        window.removeEventListener("scroll", finishEntryOnScroll);
+      };
+    },
+    { scope: containerRef, dependencies: [reducedMotion] },
+  );
 
   return (
     <>
-      <div 
+      <div
         ref={containerRef}
         className="w-full py-14 md:py-0 md:min-h-screen flex flex-col md:flex-row overflow-hidden relative"
       >
@@ -115,21 +143,21 @@ function HeroComponent() {
         >
           {/* Greeting */}
           <div className="flex items-center mb-6">
-            <span className="text-4xl sm:text-5xl md:text-6xl font-bold font-display">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold font-display">
               Hey! I'm Ayush
-            </span>
+            </h1>
           </div>
 
           {/* Professional Role with Gradient */}
           <div className="mb-8">
-            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-display">
+            <p className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl leading-tight font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent font-display">
               Full-Stack Developer &amp; AI Engineer
-            </h1>
+            </p>
           </div>
 
           {/* Welcome Message */}
           <p className="text-xl sm:text-2xl text-gray-300 mb-3 font-body">
-            Welcome to my sanctuary!
+            Welcome to My Sanctuary!
           </p>
           <p className="text-base sm:text-xl text-gray-400 mb-10 font-body">
             Based in Mumbai, India.
@@ -142,9 +170,10 @@ function HeroComponent() {
               whileTap={{ scale: 0.98 }}
               href={resumePdf}
               download="Ayush_Patel_Resume.pdf"
-              className="flex items-center space-x-3 px-6 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base md:text-lg cursor-pointer"
+              aria-label="Download résumé (PDF)"
+              className="flex items-center space-x-3 px-6 py-3 md:px-8 md:py-4 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-900 transition-colors duration-300 text-base md:text-lg cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             >
-              <FaDownload className="w-6 h-6 md:w-7 md:h-7" />
+              <FaDownload aria-hidden="true" className="w-6 h-6 md:w-7 md:h-7" />
               <span className="font-ui">Download Resume</span>
             </motion.a>
 
@@ -166,9 +195,10 @@ function HeroComponent() {
                 href="https://github.com/ayushptl1810"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 md:w-16 md:h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
+                aria-label="GitHub profile"
+                className="w-12 h-12 md:w-16 md:h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                <FaGithub className="w-6 h-6 md:w-8 md:h-8" />
+                <FaGithub aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8" />
               </motion.a>
               <motion.a
                 whileHover={{
@@ -186,9 +216,10 @@ function HeroComponent() {
                 href="https://www.linkedin.com/in/ayushptl1810/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 md:w-16 md:h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
+                aria-label="LinkedIn profile"
+                className="w-12 h-12 md:w-16 md:h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                <FaLinkedin className="w-6 h-6 md:w-8 md:h-8" />
+                <FaLinkedin aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8" />
               </motion.a>
               <motion.a
                 whileHover={{
@@ -204,9 +235,10 @@ function HeroComponent() {
                   rotate: { duration: 0.6, ease: "easeInOut" },
                 }}
                 href="mailto:ayushptl1810@gmail.com"
-                className="w-12 h-12 md:w-16 md:h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
+                aria-label="Email Ayush"
+                className="w-12 h-12 md:w-16 md:h-16 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
-                <FaEnvelope className="w-6 h-6 md:w-8 md:h-8" />
+                <FaEnvelope aria-hidden="true" className="w-6 h-6 md:w-8 md:h-8" />
               </motion.a>
             </div>
           </div>
@@ -225,20 +257,13 @@ function HeroComponent() {
                 </div>
               }
             >
-              <motion.div
-                animate={{
-                  scale: [1.25, 1.28, 1.25],
-                }}
-                transition={{
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              >
+              {/* Static scale-up. The gentle float is owned solely by the
+                  GSAP `y` yoyo above so transforms don't compound. */}
+              <div style={{ transform: "scale(1.25)" }}>
                 <div className="w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
                   <Rive />
                 </div>
-              </motion.div>
+              </div>
             </Suspense>
           </motion.div>
         )}

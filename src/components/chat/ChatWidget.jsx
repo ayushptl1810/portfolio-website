@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaPaperPlane, FaTimes, FaRobot, FaUser } from "react-icons/fa";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 export default function ChatWidget({ open, onClose, theme = "default" }) {
   const isEmerald = theme === "emerald";
@@ -16,6 +17,9 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const panelRef = useRef(null);
+
+  useFocusTrap(panelRef, open, onClose);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -110,6 +114,10 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
     <AnimatePresence>
       {open && (
         <motion.div
+          ref={panelRef}
+          role="dialog"
+          aria-modal="true"
+          aria-label="AI Assistant chat"
           className="fixed bottom-[calc(max(env(safe-area-inset-bottom),1.25rem)+4rem)] right-[max(env(safe-area-inset-right),1.25rem)] z-[70] w-[20rem] sm:w-[24rem] max-w-[92vw] sm:max-w-[90vw] h-[22rem] sm:h-[26rem] max-h-[80vh] rounded-2xl border border-white/10 bg-zinc-950/90 backdrop-blur-xl shadow-2xl overflow-hidden flex flex-col overflow-x-hidden"
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -138,10 +146,10 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
               <button
                 type="button"
                 onClick={onClose}
-                className="text-gray-300 hover:text-white transition-colors duration-200 p-1 rounded-lg hover:bg-white/10 cursor-pointer"
+                className="text-gray-300 hover:text-white transition-colors duration-200 p-1 rounded-lg hover:bg-white/10 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                 aria-label="Close chat"
               >
-                <FaTimes className="w-4 h-4" />
+                <FaTimes aria-hidden="true" className="w-4 h-4" />
               </button>
             </div>
           </div>
@@ -279,6 +287,7 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
                   isEmerald ? "emerald" : "purple"
                 }-400/20`}
                 placeholder="Ask about Ayush or his work..."
+                aria-label="Message"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
@@ -288,13 +297,14 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
                 type="button"
                 onClick={sendMessage}
                 disabled={!input.trim() || isLoading}
+                aria-label="Send message"
                 className={`px-4 py-3 rounded-xl border-2 border-white/20 text-white hover:bg-white ${
                   isEmerald ? "hover:text-emerald-900" : "hover:text-blue-900"
-                } transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer`}
+                } transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
-                <FaPaperPlane className="w-4 h-4" />
+                <FaPaperPlane aria-hidden="true" className="w-4 h-4" />
               </motion.button>
             </div>
           </div>

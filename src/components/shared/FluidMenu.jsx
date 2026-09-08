@@ -2,11 +2,15 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiBars3BottomLeft } from "react-icons/hi2";
+import { useFocusTrap } from "../../hooks/useFocusTrap";
 
 function FluidMenu({ basePath = "" }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = React.useState(false);
+  const panelRef = React.useRef(null);
+  const closeMenu = React.useCallback(() => setIsOpen(false), []);
+  useFocusTrap(panelRef, isOpen, closeMenu);
 
   // const panelWidth = "33vw"; // Removed to use CSS classes
   const DURATION = 0.4;
@@ -46,19 +50,27 @@ function FluidMenu({ basePath = "" }) {
         type="button"
         onClick={toggleButton}
         aria-expanded={isOpen}
-        className="fixed top-6 right-6 z-[80] h-12 w-12 rounded-full border-2 border-white text-white flex items-center justify-center hover:bg-white hover:text-blue-900 transition-colors cursor-pointer"
+        aria-haspopup="true"
+        aria-controls="site-menu"
+        aria-label="Menu"
+        className="fixed top-6 right-6 z-[80] h-12 w-12 rounded-full border-2 border-white text-white flex items-center justify-center hover:bg-white hover:text-blue-900 transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
       >
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ duration: 0.25, ease: "easeInOut" }}
           className="inline-flex"
         >
-          <HiBars3BottomLeft className="h-6 w-6" />
+          <HiBars3BottomLeft aria-hidden="true" className="h-6 w-6" />
         </motion.span>
       </button>
 
       {/* Sidebar */}
       <motion.div
+        ref={panelRef}
+        id="site-menu"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
         className="fixed top-0 right-0 h-full z-[60] bg-black w-full md:w-[33vw]"
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? "0%" : "100%" }}
@@ -66,7 +78,10 @@ function FluidMenu({ basePath = "" }) {
       >
         <div className="w-full h-full flex flex-col justify-between py-24 px-12 relative overflow-hidden">
           {/* Main Navigation Links */}
-          <div className="flex-1 flex flex-col items-start justify-center gap-8">
+          <nav
+            aria-label="Primary"
+            className="flex-1 flex flex-col items-start justify-center gap-8"
+          >
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
 
@@ -74,7 +89,9 @@ function FluidMenu({ basePath = "" }) {
                 <motion.button
                   key={item.label}
                   onClick={() => handleSelect(item.path, item.label)}
-                  className={`text-3xl md:text-5xl font-bold transition-colors font-display text-left cursor-pointer
+                  aria-current={isActive ? "page" : undefined}
+                  tabIndex={isOpen ? 0 : -1}
+                  className={`text-3xl md:text-5xl font-bold transition-colors font-display text-left cursor-pointer rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-400 focus-visible:ring-offset-2 focus-visible:ring-offset-black
                           ${isActive ? "text-purple-400" : "text-white"}
                           hover:text-purple-300
                       `}
@@ -87,7 +104,7 @@ function FluidMenu({ basePath = "" }) {
                 </motion.button>
               );
             })}
-          </div>
+          </nav>
 
         </div>
       </motion.div>
