@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
+import { GSAP_EASE_OUT, EASE_OUT } from "../../utils/motion";
 import ProjectCard from "./ProjectCard";
 import IncomingTransition from "../../transitions/IncomingTransition";
 
@@ -70,7 +71,7 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
         opacity: 0,
         scale: 0.95,
         duration: 0.8,
-        ease: "power2.out",
+        ease: GSAP_EASE_OUT,
       });
     },
     { scope: containerRef },
@@ -94,7 +95,7 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
         opacity: 0,
         duration: 0.5,
         stagger: 0.04,
-        ease: "power2.out",
+        ease: GSAP_EASE_OUT,
         clearProps: "all",
       });
     },
@@ -239,7 +240,7 @@ function ProjectComponent({ ids, projectList = [], theme = "default" }) {
                 } rounded-full`}
                 initial={{ scale: 0, opacity: 0 }}
                 whileHover={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
+                transition={{ duration: 0.35, ease: EASE_OUT }}
               />
 
               <span className="relative z-10 font-ui whitespace-nowrap">

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FaComments } from "react-icons/fa";
+import { EASE_INOUT } from "../../utils/motion";
 
 export default function ChatButton({ open, onToggle, theme = "default" }) {
   const isEmerald = theme === "emerald";
@@ -38,7 +39,7 @@ export default function ChatButton({ open, onToggle, theme = "default" }) {
       <motion.span
         className="relative z-10"
         animate={{ rotate: open ? 180 : 0 }}
-        transition={{ duration: 0.25, ease: "easeInOut" }}
+        transition={{ duration: 0.25, ease: EASE_INOUT }}
       >
         <FaComments aria-hidden="true" className="w-5 h-5 md:w-6 md:h-6" />
       </motion.span>

@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
+import { GSAP_EASE_OUT, EASE_OUT, EASE_INOUT } from "../../utils/motion";
 import { FaEnvelope, FaLinkedin, FaGithub, FaDownload } from "react-icons/fa";
 import resumePdf from "../../assets/Resume.pdf";
 
@@ -58,7 +59,7 @@ function ContactSection({ theme = "default" }) {
         opacity: 0,
         stagger: 0.08,
         duration: 0.6,
-        ease: "power2.out",
+        ease: GSAP_EASE_OUT,
       });
     },
     { scope: containerRef }
@@ -111,7 +112,7 @@ function ContactSection({ theme = "default" }) {
                     ? "0 0 20px rgba(16, 185, 129, 0.4)"
                     : "0 0 20px rgba(147, 51, 234, 0.4)",
                 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
+                transition={{ duration: 0.6, ease: EASE_INOUT }}
                 href="mailto:ayushptl1810@gmail.com"
                 className="w-12 h-12 md:w-14 md:h-14 border-2 border-white rounded-full flex items-center justify-center text-white hover:bg-white hover:text-blue-900 cursor-pointer"
                 aria-label="Email"
@@ -129,7 +130,7 @@ function ContactSection({ theme = "default" }) {
                     ? "0 0 20px rgba(16, 185, 129, 0.4)"
                     : "0 0 20px rgba(147, 51, 234, 0.4)",
                 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
+                transition={{ duration: 0.6, ease: EASE_INOUT }}
                 href="https://www.linkedin.com/in/ayushptl1810/"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -149,7 +150,7 @@ function ContactSection({ theme = "default" }) {
                     ? "0 0 20px rgba(16, 185, 129, 0.4)"
                     : "0 0 20px rgba(147, 51, 234, 0.4)",
                 }}
-                transition={{ duration: 0.6, ease: "easeInOut" }}
+                transition={{ duration: 0.6, ease: EASE_INOUT }}
                 href="https://github.com/ayushptl1810"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -177,7 +178,7 @@ function ContactSection({ theme = "default" }) {
                   initial={{ opacity: 0, height: 0 }}
                   animate={{ opacity: 1, height: "auto" }}
                   exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  transition={{ duration: 0.3, ease: EASE_OUT }}
                   onSubmit={handleSubmit}
                   className="mt-6 max-w-md mx-auto text-left overflow-hidden"
                 >

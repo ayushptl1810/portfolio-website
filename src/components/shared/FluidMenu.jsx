@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { HiBars3BottomLeft } from "react-icons/hi2";
 import { useFocusTrap } from "../../hooks/useFocusTrap";
+import { EASE_INOUT } from "../../utils/motion";
 
 function FluidMenu({ basePath = "" }) {
   const navigate = useNavigate();
@@ -57,7 +58,7 @@ function FluidMenu({ basePath = "" }) {
       >
         <motion.span
           animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
+          transition={{ duration: 0.25, ease: EASE_INOUT }}
           className="inline-flex"
         >
           <HiBars3BottomLeft aria-hidden="true" className="h-6 w-6" />
@@ -74,7 +75,7 @@ function FluidMenu({ basePath = "" }) {
         className="fixed top-0 right-0 h-full z-[60] bg-black w-full md:w-[33vw]"
         initial={{ x: "100%" }}
         animate={{ x: isOpen ? "0%" : "100%" }}
-        transition={{ duration: DURATION, ease: "easeInOut" }}
+        transition={{ duration: DURATION, ease: EASE_INOUT }}
       >
         <div className="w-full h-full flex flex-col justify-between py-24 px-12 relative overflow-hidden">
           {/* Main Navigation Links */}
@@ -117,7 +118,7 @@ function FluidMenu({ basePath = "" }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25, ease: "easeOut" }}
+            transition={{ duration: 0.25, ease: EASE_INOUT }}
           />
         )}
       </AnimatePresence>

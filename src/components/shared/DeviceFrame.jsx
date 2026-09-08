@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { EASE_OUT } from "../../utils/motion";
 
 const DeviceFrame = ({ image, alt = "Project screenshot" }) => {
   return (
@@ -8,7 +9,7 @@ const DeviceFrame = ({ image, alt = "Project screenshot" }) => {
       <motion.div
         initial={{ rotateX: 10, y: 50, opacity: 0 }}
         animate={{ rotateX: 0, y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 0.8, ease: EASE_OUT }}
         className="relative z-10"
       >
         {/* Screen Bezel */}

@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
+import { GSAP_EASE_OUT } from "../../utils/motion";
 
 function TechItem({ tech }) {
   return (
@@ -55,7 +56,7 @@ function GroupedTechSection({ groups = [], title, description }) {
           opacity: 0,
           x: -16,
           duration: 0.45,
-          ease: "power2.out",
+          ease: GSAP_EASE_OUT,
         }).from(
           block.querySelectorAll(".tech-item"),
           {
@@ -63,7 +64,7 @@ function GroupedTechSection({ groups = [], title, description }) {
             y: 10,
             duration: 0.35,
             stagger: 0.03,
-            ease: "power2.out",
+            ease: GSAP_EASE_OUT,
           },
           "-=0.2"
         );

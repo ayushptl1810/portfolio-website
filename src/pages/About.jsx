@@ -4,6 +4,7 @@ import { STATIC_PAGE_META } from "../utils/seoDefaults";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "../utils/gsapConfig";
+import { EASE_OUT } from "../utils/motion";
 import PersonalIdentityPanel from "../components/about/PersonalIdentityPanel";
 import SoftSkillsPanel from "../components/about/SoftSkillsPanel";
 import CurrentStatusPanel from "../components/about/CurrentStatusPanel";
@@ -60,7 +61,7 @@ const About = () => {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: EASE_OUT }}
             >
               <div className="flex-1 space-y-8">
                 <PersonalIdentityPanel
@@ -152,7 +153,7 @@ const About = () => {
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: EASE_OUT }}
             >
               <motion.div
                 className="relative bg-zinc-950/70 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-xl transition-all duration-300 w-full flex flex-col justify-center"
@@ -235,7 +236,7 @@ const About = () => {
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.1 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
+              transition={{ duration: 0.8, ease: EASE_OUT }}
             >
               {panels.slice(1).map((panel) => (
                 <div
@@ -255,7 +256,7 @@ const About = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: EASE_OUT }}
           >
             <QuickFactsPanel isActive={activePanel === "facts"} />
             <PersonalPassionsPanel isActive={activePanel === "passions"} />

@@ -2,6 +2,7 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { ANIMATION_TIMING } from "./transitionTypes";
+import { EASE_OUT } from "../utils/motion";
 
 function IncomingTransition() {
   const location = useLocation();
@@ -57,7 +58,7 @@ function IncomingTransition() {
             transition={{
               duration: ANIMATION_TIMING.LABEL_FADE_DURATION,
               delay: 0.15,
-              ease: "easeOut",
+              ease: EASE_OUT,
             }}
           >
             <span className="text-white text-[4rem] font-bold font-display">

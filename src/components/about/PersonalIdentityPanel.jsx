@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FaSpotify, FaInstagram, FaWhatsapp } from "react-icons/fa";
 import meImage from "../../assets/Me.webp";
+import { EASE_INOUT } from "../../utils/motion";
 
 const PersonalIdentityPanel = ({
   isActive,
@@ -106,8 +107,8 @@ const PersonalIdentityPanel = ({
               animate={{ rotate: 0 }}
               transition={{
                 duration: 0.6,
-                ease: "easeInOut",
-                rotate: { duration: 0.6, ease: "easeInOut" },
+                ease: EASE_INOUT,
+                rotate: { duration: 0.6, ease: EASE_INOUT },
               }}
               href={href || undefined}
               target={href ? "_blank" : undefined}

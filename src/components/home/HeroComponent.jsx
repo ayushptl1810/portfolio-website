@@ -3,6 +3,7 @@ import { FaGithub, FaLinkedin, FaEnvelope, FaDownload } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { useGSAP } from "@gsap/react";
 import { gsap, ScrollTrigger } from "../../utils/gsapConfig";
+import { GSAP_EASE_OUT, GSAP_EASE_INOUT, EASE_INOUT } from "../../utils/motion";
 import birbRiv from "../../assets/birb.riv";
 import resumePdf from "../../assets/Resume.pdf";
 
@@ -59,7 +60,7 @@ function HeroComponent() {
         opacity: 0,
         stagger: 0.1,
         duration: 1,
-        ease: "power4.out",
+        ease: GSAP_EASE_OUT,
       });
 
       tlIn.from(
@@ -68,7 +69,7 @@ function HeroComponent() {
           x: 100,
           opacity: 0,
           duration: 1.2,
-          ease: "power3.out",
+          ease: GSAP_EASE_OUT,
         },
         0.2,
       ); // Start slightly after text begins
@@ -107,7 +108,7 @@ function HeroComponent() {
         {
           y: -100,
           opacity: 0,
-          ease: "power1.inOut",
+          ease: GSAP_EASE_INOUT,
         },
         0,
       );
@@ -118,7 +119,7 @@ function HeroComponent() {
           y: -50,
           scale: 0.8,
           opacity: 0,
-          ease: "power1.inOut",
+          ease: GSAP_EASE_INOUT,
         },
         0,
       );
@@ -189,8 +190,8 @@ function HeroComponent() {
                 animate={{ rotate: 0 }}
                 transition={{
                   duration: 0.6,
-                  ease: "easeInOut",
-                  rotate: { duration: 0.6, ease: "easeInOut" },
+                  ease: EASE_INOUT,
+                  rotate: { duration: 0.6, ease: EASE_INOUT },
                 }}
                 href="https://github.com/ayushptl1810"
                 target="_blank"
@@ -210,8 +211,8 @@ function HeroComponent() {
                 animate={{ rotate: 0 }}
                 transition={{
                   duration: 0.6,
-                  ease: "easeInOut",
-                  rotate: { duration: 0.6, ease: "easeInOut" },
+                  ease: EASE_INOUT,
+                  rotate: { duration: 0.6, ease: EASE_INOUT },
                 }}
                 href="https://www.linkedin.com/in/ayushptl1810/"
                 target="_blank"
@@ -231,8 +232,8 @@ function HeroComponent() {
                 animate={{ rotate: 0 }}
                 transition={{
                   duration: 0.6,
-                  ease: "easeInOut",
-                  rotate: { duration: 0.6, ease: "easeInOut" },
+                  ease: EASE_INOUT,
+                  rotate: { duration: 0.6, ease: EASE_INOUT },
                 }}
                 href="mailto:ayushptl1810@gmail.com"
                 aria-label="Email Ayush"

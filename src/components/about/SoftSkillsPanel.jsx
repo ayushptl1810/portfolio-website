@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { EASE_OUT } from "../../utils/motion";
 
 const SoftSkillsPanel = ({ isActive }) => {
   const skills = [
@@ -115,7 +116,7 @@ const SoftSkillsPanel = ({ isActive }) => {
                 transition={{
                   duration: 1.5,
                   delay: i * 0.2,
-                  ease: "easeOut",
+                  ease: EASE_OUT,
                 }}
               />
             ))}
