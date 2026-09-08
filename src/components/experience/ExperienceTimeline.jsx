@@ -49,8 +49,8 @@ function linePoint(i) {
   const x = t * LINE_WIDTH;
   const y =
     LINE_Y0 +
-    55 * Math.sin(t * Math.PI * 2.3) +
-    20 * Math.sin(t * Math.PI * 5.1 + 1.2);
+    34 * Math.sin(t * Math.PI * 2.3) +
+    12 * Math.sin(t * Math.PI * 5.1 + 1.2);
   return { x, y };
 }
 
@@ -91,10 +91,29 @@ const SPIRAL_ITEM_POSITIONS = EXPERIENCE_TIMELINE_DATA.map((item, i) => {
 function wobbledLinePoints(tSec) {
   return LINE_POINTS.map((p, i) => {
     const wob =
-      26 * Math.sin(tSec * 0.5 + i * 0.05) +
-      13 * Math.sin(tSec * 0.85 + i * 0.11 + 1.7);
+      16 * Math.sin(tSec * 0.5 + i * 0.05) +
+      8 * Math.sin(tSec * 0.85 + i * 0.11 + 1.7);
     return { x: p.x, y: p.y + wob };
   });
+}
+
+// Internships render as a thickened stretch of the SAME wobble curve. Slice
+// the per-frame point array to just the span so the overlay rides exactly on
+// top of the base road instead of cutting a straight chord across it.
+const INTERNSHIPS = EXPERIENCE_TIMELINE_DATA.map((item, idx) => ({ item, idx }))
+  .filter(({ item }) => item.kind === "internship")
+  .map(({ item, idx }) => ({
+    idx,
+    ongoing: !!item.ongoing,
+    t0: item.spanStart / TRACK_UNITS, // span start as a fraction of the unwound line
+    t1: item.spanEnd / TRACK_UNITS,
+  }));
+
+function segmentPath(points, t0, t1) {
+  const n = points.length - 1;
+  const i0 = Math.max(0, Math.floor(t0 * n));
+  const i1 = Math.min(n, Math.ceil(t1 * n));
+  return pathFrom(points.slice(i0, i1 + 1));
 }
 
 function ExperienceTimeline() {
@@ -113,6 +132,7 @@ function ExperienceTimeline() {
   const yrLabelRefs = useRef([]);
   const itemRefs = useRef([]);
   const storyRefs = useRef([]);
+  const segRefs = useRef([]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
@@ -136,6 +156,16 @@ function ExperienceTimeline() {
     const spiralLen = pathEl.getTotalLength();
     pathEl.setAttribute("d", linePathD);
     const lineLen = pathEl.getTotalLength();
+    pathEl.setAttribute("d", spiralPathD);
+
+    // Segment lengths are effectively constant (only the tiny per-frame
+    // wobble changes them) — measure once here, never inside render().
+    // getTotalLength() forces synchronous layout; calling it per frame per
+    // segment stalls the whole rAF loop and text reveals stop firing.
+    const segLens = INTERNSHIPS.map((seg) => {
+      pathEl.setAttribute("d", segmentPath(LINE_POINTS, seg.t0, seg.t1));
+      return pathEl.getTotalLength();
+    });
     pathEl.setAttribute("d", spiralPathD);
 
     let currentShape = "spiral";
@@ -230,6 +260,7 @@ function ExperienceTimeline() {
         pathEl.style.strokeDashoffset = 0;
         yearGroupEl.style.opacity = 1 - morphT;
         dotEl.style.opacity = 0;
+        segRefs.current.forEach((el) => el && (el.style.opacity = 0));
         progressNoteEl.classList.toggle("show", morphT > 0.6);
         trackEl.classList.toggle("show", morphT > 0.75);
         captionEl.style.opacity = Math.max(0, 0.7 - morphT);
@@ -258,6 +289,36 @@ function ExperienceTimeline() {
           1,
           Math.max(0, (progress - MORPH_END) / (PAN_END - MORPH_END)),
         );
+
+        // Internship segments: same wobble curve, thicker. Rather than
+        // tracking raw scroll (which reads as "already there"), each segment
+        // self-animates once the pan crosses its span start — a real draw-in
+        // with the section's easing, matching how the cards reveal. The
+        // per-frame work here is just keeping `d` on the wobble; the fill is
+        // a CSS transition on stroke-dashoffset (see .et-stage-seg).
+        INTERNSHIPS.forEach((seg, si) => {
+          const el = segRefs.current[si];
+          if (!el) return;
+          el.setAttribute("d", segmentPath(pts, seg.t0, seg.t1));
+          const entered = panProgress >= seg.t0;
+          if (entered && !el.dataset.armed) {
+            const segLen = segLens[si];
+            el.dataset.armed = "1";
+            el.style.strokeDasharray = segLen;
+            el.style.strokeDashoffset = segLen; // start hidden
+            requestAnimationFrame(() => {
+              el.style.opacity = 1;
+              // ongoing spans stop short of the tip — still in progress
+              el.style.strokeDashoffset = seg.ongoing ? segLen * 0.18 : 0;
+            });
+          } else if (!entered && el.dataset.armed) {
+            const segLen = segLens[si];
+            delete el.dataset.armed;
+            el.style.opacity = 0;
+            el.style.strokeDashoffset = segLen;
+          }
+        });
+
         const dotLen = lineLen * panProgress;
         glowEl.setAttribute("d", dLine);
         glowEl.style.strokeDasharray = lineLen;
@@ -335,6 +396,14 @@ function ExperienceTimeline() {
               cy={ORIGIN_POINT.y}
             />
             <path className="et-stage-line" ref={pathRef} d="" />
+            {INTERNSHIPS.map((seg, si) => (
+              <path
+                key={`seg-${seg.idx}`}
+                ref={(el) => (segRefs.current[si] = el)}
+                className={`et-stage-seg${seg.ongoing ? " ongoing" : ""}`}
+                d=""
+              />
+            ))}
             <path className="et-stage-glow" ref={glowRef} d="" />
             <circle className="et-stage-dot" ref={dotRef} r="5" />
             <g ref={yearGroupRef}>
@@ -382,7 +451,9 @@ function ExperienceTimeline() {
               <div
                 key={item.title}
                 ref={(el) => (itemRefs.current[i] = el)}
-                className={`et-item${item.kind === "win" ? " win" : ""}`}
+                className={`et-item${item.kind === "win" ? " win" : ""}${
+                  item.kind === "internship" ? " internship" : ""
+                }`}
                 style={{
                   left: `${(item.x / TRACK_UNITS) * 100}%`,
                   top: `${(item.y / 900) * 100}%`,
@@ -393,7 +464,10 @@ function ExperienceTimeline() {
                   <div className="et-marker-line" />
                 </div>
                 <div className="et-item-body">
-                  <p className="et-item-tag">{item.tag}</p>
+                  <p className="et-item-tag">
+                    {item.tag}
+                    {item.ongoing && <span className="et-live">ongoing</span>}
+                  </p>
                   <h3 className="et-item-title">{item.title}</h3>
                   <p className="et-item-desc">{item.desc}</p>
                 </div>
@@ -416,8 +490,8 @@ function ExperienceTimeline() {
           --et-accent: #f0e2bf;
           --et-accent-warm: #e8b563;
           --et-ink: #f3f1ec;
-          --et-ink-dim: #a09db0;
-          --et-ink-faint: #4d4a58;
+          --et-ink-dim: #b9b6c6;
+          --et-ink-faint: #8a8697;
           position: relative;
           /* No background here on purpose — this sits directly on top of
              WebLayout's shared fixed background (gradient wash + DarkVeil +
@@ -434,7 +508,7 @@ function ExperienceTimeline() {
 
         .et-stage-header {
           position: absolute; top: 0; left: 0; right: 0; z-index: 4;
-          max-width: 74rem; margin: 0 auto; padding: clamp(3rem, 8vh, 5rem) clamp(1.5rem, 5vw, 3rem) 0;
+          max-width: 74rem; margin: 0 auto; padding: clamp(1.5rem, 4vh, 2.75rem) clamp(1.5rem, 5vw, 3rem) 0;
           will-change: opacity, transform;
         }
         .et-stage-header-inner {
@@ -481,6 +555,31 @@ function ExperienceTimeline() {
           filter: drop-shadow(0 0 8px rgba(240,226,191,0.8));
         }
         .et-stage-dot { fill: var(--et-ink-dim); opacity: 0; }
+
+        /* Internship = a stretch of time, drawn as a thicker warmer run of
+           the road. Sits on top of the dim base line and under the bright
+           glow. */
+        .et-stage-seg {
+          fill: none;
+          stroke: var(--et-accent-warm);
+          stroke-width: 4;
+          stroke-linecap: round;
+          opacity: 0;
+          filter: drop-shadow(0 0 5px rgba(232, 181, 99, 0.5));
+          transition:
+            opacity 0.5s ease,
+            stroke-dashoffset 0.9s cubic-bezier(.16, 1, .3, 1);
+        }
+        /* Ongoing: the JS parks strokeDashoffset short of the end so the
+           span never visually "closes", and the whole run breathes to say
+           it's still active. */
+        .et-stage-seg.ongoing {
+          animation: etSegBreathe 2.8s ease-in-out infinite;
+        }
+        @keyframes etSegBreathe {
+          0%, 100% { filter: drop-shadow(0 0 4px rgba(232, 181, 99, 0.4)); }
+          50%      { filter: drop-shadow(0 0 9px rgba(232, 181, 99, 0.75)); }
+        }
 
         .et-origin-dot {
           fill: var(--et-accent);
@@ -559,6 +658,60 @@ function ExperienceTimeline() {
         .et-item.win .et-item-tag {
           color: var(--et-accent-warm);
         }
+        .et-item.internship .et-item-tag {
+          color: var(--et-accent-warm);
+        }
+
+        /* Internship cards read as a place you *are*, not a result you got:
+           a hairline warm rule down the left edge, slightly roomier body.
+           The rule is only drawn once the card is lit — before that the card
+           is transparent but still laid out, and a lone floating hairline
+           reads as a stray line on the road. */
+        .et-item.internship .et-item-body {
+          padding-left: 1.1rem;
+          /* marker (10px) + the flex gap (1.2rem) are gone — pull back so the
+             card's left edge lands where competition card bodies sit. */
+          margin-left: calc(-10px - 1.2rem + 1.1rem);
+          border-left: 1px solid transparent;
+          transition: border-color 0.6s ease;
+        }
+        .et-item.internship.lit .et-item-body {
+          border-left-color: rgba(232, 181, 99, 0.35);
+        }
+        /* Internship cards don't get a marker at all. A competition card's
+           dot reaches up to touch the road; an internship's tie to the
+           timeline IS the warm road segment, which already sits on the line.
+           A second dot floating in the gap between the segment and the
+           (lower, taller) card just reads as a stray pulsing circle. */
+        .et-item.internship .et-marker { display: none; }
+
+        .et-live {
+          font-family: var(--font-ui);
+          font-weight: 700;
+          font-size: 0.58rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--et-accent-warm);
+          border: 1px solid rgba(232, 181, 99, 0.4);
+          border-radius: 999px;
+          padding: 0.12em 0.5em;
+          margin-left: 0.7rem;
+          position: relative;
+        }
+        .et-live::before {
+          content: "";
+          display: inline-block;
+          width: 5px; height: 5px;
+          border-radius: 50%;
+          background: var(--et-accent-warm);
+          margin-right: 0.4em;
+          vertical-align: middle;
+          animation: etLiveBlink 2s ease-in-out infinite;
+        }
+        @keyframes etLiveBlink {
+          0%, 100% { opacity: 1; }
+          50%      { opacity: 0.25; }
+        }
         
         /* Tag horizontal dash line */
         .et-item-tag::after {
@@ -601,8 +754,8 @@ function ExperienceTimeline() {
           filter: blur(0);
         }
         .et-item-title {
-          font-size: clamp(2rem, 3.8vw, 3.2rem);
-          line-height: 1.08;
+          font-size: clamp(1.7rem, 3vw, 2.5rem);
+          line-height: 1.1;
         }
         
         /* Breathing letter-spacing on hover */
@@ -751,6 +904,12 @@ function ExperienceTimeline() {
           color: var(--et-ink-faint); z-index: 3; opacity: 0; transition: opacity 0.6s ease;
         }
         .et-progress-note.show { opacity: 1; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .et-stage-seg.ongoing,
+          .et-live::before,
+          .et-marker-dot::after { animation: none; }
+        }
       `}</style>
     </section>
   );

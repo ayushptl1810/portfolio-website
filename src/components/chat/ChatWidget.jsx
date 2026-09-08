@@ -289,6 +289,7 @@ export default function ChatWidget({ open, onClose, theme = "default" }) {
                 }-400/20`}
                 placeholder="Ask about Ayush or his work..."
                 aria-label="Message"
+                maxLength={2000}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}

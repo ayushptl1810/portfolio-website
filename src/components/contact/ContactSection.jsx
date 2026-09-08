@@ -15,6 +15,7 @@ function ContactSection({ theme = "default" }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [gotcha, setGotcha] = useState(""); // honeypot — hidden from real users
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
 
   const formValid = /.+@.+\..+/.test(email) && message.trim().length > 0;
@@ -34,6 +35,7 @@ function ContactSection({ theme = "default" }) {
           subject: "Portfolio Inquiry",
           message,
           replyVia: "Email",
+          _gotcha: gotcha,
           meta: { ua: navigator.userAgent, ts: Date.now() },
         }),
       });
@@ -183,6 +185,24 @@ function ContactSection({ theme = "default" }) {
                   className="mt-6 max-w-md mx-auto text-left overflow-hidden"
                 >
                   <div className="space-y-3">
+                    {/* Honeypot: off-screen, hidden from AT and autofill.
+                        Real users never touch it; bots fill every field. */}
+                    <input
+                      type="text"
+                      name="_gotcha"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      value={gotcha}
+                      onChange={(e) => setGotcha(e.target.value)}
+                      style={{
+                        position: "absolute",
+                        left: "-9999px",
+                        width: "1px",
+                        height: "1px",
+                        opacity: 0,
+                      }}
+                    />
                     <input
                       value={name}
                       onChange={(e) => setName(e.target.value)}

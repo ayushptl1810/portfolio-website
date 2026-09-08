@@ -4,6 +4,11 @@ import { pathToFileURL } from "url";
 
 const normalize = (s = "") => s.toLowerCase().replace(/\s+/g, " ").trim();
 
+// Bound what we forward to the LLM. The rate limiters cap request COUNT;
+// this caps request SIZE so one big prompt can't run up the token bill.
+const MAX_QUERY_CHARS = Number(process.env.LLM_MAX_QUERY_CHARS ?? 2000);
+const MAX_HISTORY_CHARS = Number(process.env.LLM_MAX_HISTORY_CHARS ?? 8000);
+
 async function readTextFile(p) {
   try {
     return await fs.readFile(p, "utf8");
@@ -46,6 +51,24 @@ export default async function llmHandler(req, res) {
     const { query, history } = req.body || {};
     if (!query || typeof query !== "string") {
       return res.status(400).json({ ok: false, error: "Query is required" });
+    }
+    if (query.length > MAX_QUERY_CHARS) {
+      return res.status(413).json({
+        ok: false,
+        error: `Message too long (max ${MAX_QUERY_CHARS} characters).`,
+      });
+    }
+    if (Array.isArray(history)) {
+      const historyChars = history.reduce(
+        (n, h) => n + (typeof h?.text === "string" ? h.text.length : 0),
+        0,
+      );
+      if (historyChars > MAX_HISTORY_CHARS) {
+        return res.status(413).json({
+          ok: false,
+          error: "Conversation too long. Please start a new chat.",
+        });
+      }
     }
 
     const apiKey = process.env.GROQ_API_KEY;
@@ -134,10 +157,13 @@ export default async function llmHandler(req, res) {
     );
 
     if (!response.ok) {
-      const errorText = await response.text();
+      // Log the upstream detail server-side only — returning it to the client
+      // can leak model names, quota state and internal messages.
+      const errorText = await response.text().catch(() => "");
+      console.error("LLM upstream error", response.status, errorText.slice(0, 500));
       return res
         .status(502)
-        .json({ ok: false, error: `LLM error: ${errorText}` });
+        .json({ ok: false, error: "The assistant is unavailable right now." });
     }
 
     const json = await response.json();

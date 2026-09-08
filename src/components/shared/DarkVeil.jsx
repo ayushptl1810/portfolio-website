@@ -87,8 +87,12 @@ export default function DarkVeil({
     const canvas = ref.current;
     const parent = canvas.parentElement;
 
+    // Full-viewport CPPN shader — expensive per pixel. Cap dpr at 1 (was 2):
+    // quarters the fragment work, and the aurora is soft/moving so there's no
+    // visible loss. resolutionScale can push it lower but ogl misrenders at
+    // sub-1 dpr, so it's clamped to [1, ...] here.
     const renderer = new Renderer({
-      dpr: Math.min(window.devicePixelRatio, 2),
+      dpr: Math.max(1, Math.min(window.devicePixelRatio, 1) * resolutionScale),
       canvas,
     });
 
@@ -114,7 +118,12 @@ export default function DarkVeil({
     const resize = () => {
       const w = parent.clientWidth,
         h = parent.clientHeight;
-      renderer.setSize(w * resolutionScale, h * resolutionScale);
+      // setSize drives both the drawing buffer (w*h*dpr px) and the canvas
+      // CSS box (w*h). dpr already carries resolutionScale, so pass the full
+      // parent size here — the element fills, the buffer is downscaled.
+      renderer.setSize(w, h);
+      canvas.style.width = "100%";
+      canvas.style.height = "100%";
       program.uniforms.uResolution.value.set(w, h);
     };
 
@@ -124,7 +133,23 @@ export default function DarkVeil({
     const start = performance.now();
     let frame = 0;
 
+    // Skip rendering while the tab is hidden or the shader's container is
+    // scrolled off-screen. It's a fixed full-viewport background, so once the
+    // user is well past the fold nobody sees it — no reason to keep burning
+    // GPU on it. uTime still advances from the wall clock so it picks up
+    // mid-animation, not from a frozen frame, when it comes back.
+    let onScreen = true;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        onScreen = e.isIntersecting;
+      },
+      { rootMargin: "20% 0px 20% 0px" },
+    );
+    io.observe(parent);
+
     const loop = () => {
+      frame = requestAnimationFrame(loop);
+      if (!onScreen || document.hidden) return;
       program.uniforms.uTime.value =
         ((performance.now() - start) / 1000) * speed;
       program.uniforms.uHueShift.value = hueShift;
@@ -133,13 +158,13 @@ export default function DarkVeil({
       program.uniforms.uScanFreq.value = scanlineFrequency;
       program.uniforms.uWarp.value = warpAmount;
       renderer.render({ scene: mesh });
-      frame = requestAnimationFrame(loop);
     };
 
     loop();
 
     return () => {
       cancelAnimationFrame(frame);
+      io.disconnect();
       window.removeEventListener("resize", resize);
     };
   }, [

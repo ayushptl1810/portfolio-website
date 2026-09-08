@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import { randomBytes } from "crypto";
 dotenv.config();
 
 const SPOTIFY_CLIENT_ID = process.env.SPOTIFY_CLIENT_ID;
@@ -8,16 +9,34 @@ const DEPLOYED_URL = process.env.DEPLOYED_URL || "https://ayush.info";
 // In-memory storage for demo purposes (use Redis/database in production)
 const tokenStore = new Map();
 
+// Pending OAuth `state` values -> issued-at timestamp. Verified in the
+// callback so a forged authorization code can't be swapped in (CSRF).
+const pendingStates = new Map();
+const STATE_TTL_MS = 10 * 60 * 1000;
+const rememberState = (s) => {
+  const now = Date.now();
+  for (const [k, ts] of pendingStates) {
+    if (now - ts > STATE_TTL_MS) pendingStates.delete(k);
+  }
+  pendingStates.set(s, now);
+};
+const consumeState = (s) => {
+  if (!s || !pendingStates.has(s)) return false;
+  const ts = pendingStates.get(s);
+  pendingStates.delete(s);
+  return Date.now() - ts <= STATE_TTL_MS;
+};
+
 export default async function spotifyHandler(req, res) {
   try {
-    const { action, code, refresh_token } = req.body;
+    const { action, code, state, refresh_token } = req.body;
 
     switch (action) {
       case "authorize":
         return handleAuthorization(req, res);
 
       case "callback":
-        return handleCallback(req, res, code);
+        return handleCallback(req, res, code, state);
 
       case "refresh":
         return handleRefresh(req, res, refresh_token);
@@ -39,6 +58,7 @@ export default async function spotifyHandler(req, res) {
 
 async function handleAuthorization(req, res) {
   const state = generateRandomString(16);
+  rememberState(state);
   const scope = "user-read-currently-playing user-read-recently-played";
 
   const authUrl = new URL("https://accounts.spotify.com/authorize");
@@ -51,9 +71,12 @@ async function handleAuthorization(req, res) {
   return res.json({ authUrl: authUrl.toString(), state });
 }
 
-async function handleCallback(req, res, code) {
+async function handleCallback(req, res, code, state) {
   if (!code) {
     return res.status(400).json({ error: "Authorization code required" });
+  }
+  if (!consumeState(state)) {
+    return res.status(400).json({ error: "Invalid or expired state" });
   }
 
   try {
@@ -360,13 +383,8 @@ async function handleGetRecent(req, res) {
 }
 
 function generateRandomString(length) {
-  const possible =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let text = "";
-  for (let i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
+  // CSPRNG — this value guards the OAuth flow, Math.random() isn't enough.
+  return randomBytes(length).toString("hex").slice(0, length);
 }
 
 // Internal helper for refreshing tokens avoiding self-fetch

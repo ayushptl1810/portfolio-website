@@ -22,18 +22,16 @@ export const fetchReadme = async (owner, repoName, retryCount = 0) => {
   }
 
   try {
-    // Try with authentication first (if token exists)
-    const githubToken = import.meta.env.VITE_GITHUB_TOKEN;
-
+    // No token here on purpose: this runs in the browser, so any token would
+    // be bundled into the client and exposed to every visitor. Public repos
+    // don't need auth — GitHub allows 60 unauthenticated req/hr/IP, and the
+    // raw.githubusercontent.com fallback below has no meaningful limit for a
+    // portfolio.
     const headers = {
       Accept: "application/vnd.github.v3.raw",
       "User-Agent": "Mozilla/5.0 (compatible; Portfolio-Website/1.0)",
       "X-GitHub-Api-Version": "2022-11-28",
     };
-
-    if (githubToken) {
-      headers["Authorization"] = `token ${githubToken}`;
-    }
 
     const response = await fetch(
       `https://api.github.com/repos/${owner}/${repoName}/readme`,

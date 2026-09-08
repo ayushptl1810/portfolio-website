@@ -30,17 +30,12 @@ const BackgroundPrefetcher = () => {
       import("./pages/Home");
 
       // Prefetch 3D Asset Files
-      const assets = [
-        "https://prod.spline.design/Gk679KS3f4vvT-Vv/scene.splinecode",
-        "/src/assets/birb.riv",
-      ];
+      const assets = ["/src/assets/birb.riv"];
 
       assets.forEach((url) => {
         const link = document.createElement("link");
         link.rel = "prefetch";
         link.href = url;
-        // Use 'as: fetch' for Spline files to help the browser understand the type
-        if (url.endsWith(".splinecode")) link.as = "fetch";
         document.head.appendChild(link);
       });
     }, 500);

@@ -21,6 +21,13 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 const DEPLOYED_URL = process.env.DEPLOYED_URL || "https://ayush.info";
 
+// Behind a reverse proxy / CDN in production (Render, Vercel, Cloudflare, …)
+// req.ip is the proxy's address unless we trust the X-Forwarded-For hop —
+// without this, every rate limiter below buckets ALL users together.
+// TRUST_PROXY: number of proxy hops (default 1), or "false" to disable locally.
+const trustProxy = process.env.TRUST_PROXY ?? "1";
+app.set("trust proxy", trustProxy === "false" ? false : Number(trustProxy));
+
 // Security Headers
 app.use(
   helmet({
@@ -51,8 +58,26 @@ app.use(
 );
 
 // Middleware
-app.use(cors());
-app.use(express.json());
+// Lock CORS to our own origins — without this any site can call /api/* from
+// a visitor's browser and burn our LLM / email quota.
+const allowedOrigins = [
+  DEPLOYED_URL,
+  "http://localhost:5173",
+  "http://localhost:3001",
+  ...(process.env.EXTRA_CORS_ORIGINS
+    ? process.env.EXTRA_CORS_ORIGINS.split(",").map((s) => s.trim())
+    : []),
+];
+app.use(
+  cors({
+    origin(origin, cb) {
+      // allow same-origin / curl / server-to-server (no Origin header)
+      if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+      return cb(new Error("Not allowed by CORS"));
+    },
+  }),
+);
+app.use(express.json({ limit: "16kb" }));
 app.use(express.static(join(__dirname, "dist")));
 
 // --- Helpers for LLM system prompt composition ---
@@ -135,7 +160,7 @@ const fetchProjectReadme = async (owner, repo) => {
       Accept: "application/vnd.github.v3.raw",
       "User-Agent": "Portfolio-Website-Server",
     };
-    const token = process.env.GITHUB_TOKEN || process.env.VITE_GITHUB_TOKEN;
+    const token = process.env.GITHUB_TOKEN;
     if (token) headers["Authorization"] = `token ${token}`;
     const apiUrl = `https://api.github.com/repos/${owner}/${repo}/readme`;
     const r = await fetch(apiUrl, { headers });
@@ -174,10 +199,23 @@ const apiLimiter = rateLimit({
   legacyHeaders: false,
 });
 
+// Burst guard — keeps a single client from hammering the LLM endpoint.
 const llmLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
   max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
   message: { error: "Chat limit reached. Please wait a minute." },
+});
+
+// Cost ceiling — the burst guard alone still allows ~14k calls/IP/day.
+// This caps sustained abuse from one IP to a bounded LLM spend per day.
+const llmDailyLimiter = rateLimit({
+  windowMs: 24 * 60 * 60 * 1000,
+  max: Number(process.env.LLM_DAILY_MAX ?? 150),
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Daily chat limit reached. Please try again tomorrow." },
 });
 
 const contactLimiter = rateLimit({
@@ -187,7 +225,9 @@ const contactLimiter = rateLimit({
 });
 
 // API Routes
-app.post("/api/llm", llmLimiter, (req, res) => llmHandler(req, res));
+app.post("/api/llm", llmDailyLimiter, llmLimiter, (req, res) =>
+  llmHandler(req, res),
+);
 
 app.post("/api/contact", contactLimiter, (req, res) => contactHandler(req, res));
 
@@ -195,7 +235,7 @@ app.post("/api/spotify", apiLimiter, (req, res) => spotifyHandler(req, res));
 
 // Spotify OAuth callback route
 app.get("/callback", async (req, res) => {
-  const { code, error } = req.query;
+  const { code, state, error } = req.query;
 
   if (error) {
     return res.redirect(
@@ -208,11 +248,11 @@ app.get("/callback", async (req, res) => {
   }
 
   try {
-    // Exchange code for tokens
+    // Exchange code for tokens (state is verified server-side in the handler)
     const tokenResponse = await fetch(`${DEPLOYED_URL}/api/spotify`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "callback", code }),
+      body: JSON.stringify({ action: "callback", code, state }),
     });
 
     if (tokenResponse.ok) {
